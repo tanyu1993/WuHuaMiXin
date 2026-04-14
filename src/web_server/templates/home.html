@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>物华弥新工具中心</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: "PingFang SC", "Microsoft YaHei", -apple-system, sans-serif; 
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh; color: #fff; 
+        }
+        
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        
+        .header {
+            text-align: center; margin-bottom: 50px;
+        }
+        .header h1 { 
+            font-size: 2.5rem; margin-bottom: 10px;
+            background: linear-gradient(90deg, #ffd700, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .header p { color: rgba(255,255,255,0.6); font-size: 1.1rem; }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .module-card {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .module-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .module-icon { font-size: 3rem; margin-bottom: 15px; }
+        .module-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 10px; }
+        .module-desc { 
+            color: rgba(255,255,255,0.6); font-size: 0.95rem; 
+            line-height: 1.5; margin-bottom: 15px;
+        }
+        .module-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag {
+            padding: 4px 12px; border-radius: 20px;
+            font-size: 0.8rem; font-weight: 500;
+        }
+        .tag-valuation { background: rgba(46,204,113,0.2); color: #2ecc71; }
+        .tag-ganwen { background: rgba(155,89,182,0.2); color: #9b59b6; }
+        .tag-status { background: rgba(52,152,219,0.2); color: #3498db; }
+        .tag-search { background: rgba(230,126,34,0.2); color: #e67e22; }
+        
+        .admin-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .admin-title {
+            color: rgba(255,255,255,0.4); font-size: 0.9rem;
+            text-transform: uppercase; letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        .admin-links {
+            display: flex; gap: 15px; flex-wrap: wrap;
+        }
+        .admin-link {
+            padding: 12px 25px; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; color: rgba(255,255,255,0.7);
+            text-decoration: none; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .admin-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        
+        .footer {
+            margin-top: 50px; text-align: center;
+            color: rgba(255,255,255,0.3); font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏺 物华弥新工具中心</h1>
+            <p>选择模块开始工作</p>
+        </div>
+        
+        <div class="modules-grid">
+            <a href="/" class="module-card">
+                <div class="module-icon">💰</div>
+                <div class="module-title">账号估值引擎</div>
+                <div class="module-desc">
+                    录入游戏账号截图，自动识别器者、致知、武器配置，生成综合估值报告。支持多账号管理和批量分析。
+                </div>
+                <div class="module-tags">
+                    <span class="tag tag-valuation">OCR识别</span>
+                    <span class="tag tag-valuation">智能评分</span>
+                </div>
+            </a>
+            
+            <a href="/tagger" class="module-card">
+                <div class="module-icon">📜</div>
+                <div class="module-title">感闻打标系统</div>
+                <div class="module-desc">
+                    管理物华弥新感闻数据，为每条感闻添加标签分类。快速检索、批量编辑，追踪打标进度。
+                </div>
+                <div class="module-tags">
+                    <span class="tag tag-ganwen">感闻管理</span>
+                    <span class="tag tag-ganwen">标签分类</span>
+                </div>
+            </a>
+            
+            <a href="/status_tagger" class="module-card">
+                <div class="module-icon">⚔️</div>
+                <div class="module-title">状态打标工具</div>
+                <div class="module-desc">
+                    查看和管理器者状态库。为流失、脆弱、易伤等状态添加标签，便于理解和搜索。
+                </div>
+                <div class="module-tags">
+                    <span class="tag tag-status">状态库</span>
+                    <span class="tag tag-status">标签管理</span>
+                </div>
+            </a>
+            
+            <a href="/static/status_search.html" class="module-card">
+                <div class="module-icon">🔍</div>
+                <div class="module-title">状态搜索引擎</div>
+                <div class="module-desc">
+                    通过关键词快速搜索状态库。支持标签筛选和模糊匹配，快速定位所需状态信息。
+                </div>
+                <div class="module-tags">
+                    <span class="tag tag-search">全文搜索</span>
+                    <span class="tag tag-search">标签筛选</span>
+                </div>
+            </a>
+        </div>
+        
+        <div class="admin-section">
+            <div class="admin-title">管理工具</div>
+            <div class="admin-links">
+                <a href="/analysis" class="admin-link">📊 账号综合分析</a>
+                <a href="/update_metadata" class="admin-link">🔄 更新图鉴(Excel)</a>
+                <a href="/config" class="admin-link">⚙️ 估值模型配置</a>
+                <a href="/report" class="admin-link">📋 生成报告</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>WuHuaMiXin 工具中心 · 端口 8888</p>
+        </div>
+    </div>
+</body>
+</html>
