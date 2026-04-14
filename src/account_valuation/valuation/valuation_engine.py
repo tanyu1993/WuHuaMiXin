@@ -18,7 +18,7 @@ class ValuationEngine:
         # 2. 加载配置 (如果不传，则从模块默认位置找 settings.json)
         if not settings_path:
             _MODULE_DIR = os.path.dirname(__file__)  # src/account_valuation/valuation/
-            settings_path = os.path.join(os.path.dirname(_MODULE_DIR), 'core', 'settings.json')
+            settings_path = os.path.join(_MODULE_DIR, 'settings.json')  # valuation/settings.json
         self.cfg = ValuationSettings(settings_path)
 
         # 3. 加载顾问层 (阵容模拟)
@@ -68,17 +68,27 @@ class ValuationEngine:
             is_lim = self.db.char_data[name]['is_limited']
             premium = self.cfg.data.get('LIMITED_PREMIUM', 1.4) if is_lim else 1.0
             
-            order = self.db.get_order(name)
-            decay = self.cfg.get_order_decay(order, is_lim)
+            # actual_max 仅基于有 valuation_order 的角色计算（排除2024/04/19常驻特出）
+            v_order = self.db.char_data[name].get('valuation_order')
+            val_orders_in_pool = [self.db.char_data[n].get('valuation_order') for n in pool
+                                  if self.db.char_data[n].get('valuation_order')]
+            actual_max = max(val_orders_in_pool) if val_orders_in_pool else 50
+            # 限定器者不贬值（is_lim=True → get_order_decay 返回 1.0）
+            # 常驻器者按 valuation_order 计算贬值；无 valuation_order 的按 DECAY_FLOOR 处理
+            if v_order is None:
+                decay = self.cfg.data.get('DECAY_FLOOR', 0.3)
+            else:
+                decay = self.cfg.get_order_decay(v_order, is_limited=is_lim, actual_max_order=actual_max)
             
-            # 器者估值 (不乘 pull_value)
-            val_units = base * zz_w * s_w * premium * decay
+            # val_units = 期望RMB（base抽 × pull_val/抽 × 各系数），汇总时不重复乘 pull_val
+            pull_val = self.cfg.pull_value
+            val_units = base * pull_val * zz_w * s_w * premium * decay
             char_total_val += val_units
             
             details['top_assets'].append({
-                'name': name, 'value': round(val_units * self.cfg.pull_value, 1), 
+                'name': name, 'value': round(val_units, 1),
                 'zhizhi': zz, 'tier': tier,
-                'formula': f"基{base}×致{zz_w}×强{s_w}×{'限' if premium>1 else '常'}{premium}×贬{decay:.2f}"
+                'formula': f"基{base}抽×{pull_val}元={base*pull_val:.2f}×致{zz_w}×强{s_w}×{'限' if premium>1 else '常'}{premium}×贬{decay:.2f}"
             })
 
         # --- 2. 额外资源价值计算 ---
@@ -132,8 +142,9 @@ class ValuationEngine:
         lim_penalty_coeff = self.cfg.data.get('MISSING_LIMITED_PENALTY', 0.95)
         lim_penalty_mult = (lim_penalty_coeff or 1.0) ** len(missing_limited)
         
-        # 最终总价 = (器者价值 * 各种折扣) + 额外资源价值 (资源不打折扣，因为是活的)
-        final_rmb = (char_total_val * pull_val * comp_mult * lim_penalty_mult) + res_total_rmb
+        # 最终总价 = (器者RMB * 各种折扣) + 额外资源RMB
+        # 注意: char_total_val 已是RMB (已含 pull_val * base)，汇总时不重复乘 pull_val
+        final_rmb = (char_total_val * comp_mult * lim_penalty_mult) + res_total_rmb
         
         # 记录扣分
         if missing_limited:

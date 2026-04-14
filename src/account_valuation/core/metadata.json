@@ -1,620 +1,1121 @@
 {
-    "last_updated": "2026-04-14 13:03:46",
+    "last_updated": "2026-04-14 15:31:46",
     "characters": {
-        "卷云金喇叭": {
-            "order": 34,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "太阳神鸟": {
-            "order": 33,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "金石录": {
-            "order": 32,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "赤壁赋页": {
-            "order": 31,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "小宋香炉": {
-            "order": 30,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "青瓷莲花尊": {
-            "order": 29,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "海错图": {
-            "order": 28,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "天球仪": {
-            "order": 27,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "睡莲": {
-            "order": 26,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "向日葵": {
-            "order": 25,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "星月夜": {
-            "order": 25,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "王氏书翰卷": {
-            "order": 24,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "银雀山汉简": {
-            "order": 23,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "真珠宝幢": {
-            "order": 23,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "素纱单衣": {
-            "order": 22,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "水晶杯": {
-            "order": 21,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "百花图卷": {
-            "order": 21,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "三兔藻井": {
-            "order": 20,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "莫高窟记": {
-            "order": 19,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "酒帐": {
-            "order": 19,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "鹿王本生图": {
-            "order": 18,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "微缩家具": {
-            "order": 17,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "万工轿": {
-            "order": 17,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "海水江崖炉": {
-            "order": 16,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "麟趾马蹄金": {
-            "order": 15,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "铜壶滴漏": {
-            "order": 15,
-            "rarity": "限定",
-            "is_limited": true
-        },
-        "亚长牛尊": {
-            "order": 14,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "铜坐龙": {
-            "order": 14,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "青铜仙鹤": {
-            "order": 13,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "铜车马": {
-            "order": 12,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "秦公镈": {
-            "order": 12,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "商周十供": {
-            "order": 11,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "莫高窟220": {
-            "order": 10,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "彩凤鸣岐": {
-            "order": 10,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "五弦琵琶": {
-            "order": 9,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "断臂维纳斯": {
-            "order": 8,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "愿望杯": {
-            "order": 8,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "鸟音山水钟": {
-            "order": 7,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "溪山行旅图": {
-            "order": 6,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "雪景寒林图": {
-            "order": 6,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "T形帛画": {
-            "order": 5,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "上阳台帖": {
-            "order": 4,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "银香囊": {
-            "order": 4,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "千里江山图": {
-            "order": 3,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "十二花卉杯": {
-            "order": 2,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "洛神赋图": {
-            "order": 2,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "狸猫盘": {
-            "order": 1,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "金瓯永固杯": {
-            "order": 1,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "金蝉玉叶": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "贾湖骨笛": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "兔形陶埙": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "四龙四凤座": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "五星出东方": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "芙蓉炉": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "越王勾践剑": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "浑天仪": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "云雷纹大铙": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "利簋": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "毛公鼎": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "铜奔马": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "鎏金骑士": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "莲塘乳鸭图": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "宋金项饰": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "白石散乐": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "敦煌飞天": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "曾侯乙编钟": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "午门": {
-            "order": 0,
-            "rarity": "特出",
-            "is_limited": false
-        },
-        "商周铜人": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "茶叶生产画": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "皇后之玺": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "大神龛": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "聊斋图说": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "琉璃塔拱门": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "阴山岩画": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "宴猎攻战壶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "妇好鸮尊": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "吴王夫差矛": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "大盂鼎": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "夜行铜牌": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "样式雷": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "商鞅方升": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "战国铜冰鉴": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "少虡剑": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "鎏金银壶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "制盐砖": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "天亡簋": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
         "七盘舞砖": {
-            "order": 0,
+            "order": 1,
             "rarity": "优异",
-            "is_limited": false
-        },
-        "扯淡碑": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "跪射俑": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "克拉克瓷": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "外销壁纸": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "鹿角立鹤": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "格萨尔唐卡": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "自来火二号": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
         },
         "万国全图": {
-            "order": 0,
+            "order": 2,
             "rarity": "优异",
-            "is_limited": false
-        },
-        "粉白双耳瓶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "针铺铜版": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "长信宫灯": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "玉琮王": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "蝠桃瓶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "天蓝瓶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "诗文执壶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "晋侯鸟尊": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
-        },
-        "白龙梅瓶": {
-            "order": 0,
-            "rarity": "优异",
-            "is_limited": false
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
         },
         "丙午神钩": {
-            "order": 0,
+            "order": 3,
             "rarity": "优异",
-            "is_limited": false
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
         },
-        "玛雅陶碗": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
+        "云雷纹大铙": {
+            "order": 4,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
         },
-        "战国铜餐具": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "人头瓶": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "白釉绿彩瓶": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "驿使图砖": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "宝石冠": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "蒙医药袋": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "蛙锣": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "可爱花束": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "山水人物镜": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "心形枪": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "龙纹陶盘": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "鹦鹉银罐": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "天气卜骨": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "冷暖自知印": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "果树双管瓶": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
-        },
-        "舞蹈陶盆": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
+        "五星出东方": {
+            "order": 5,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
         },
         "五柱器": {
-            "order": 0,
-            "rarity": "新生",
-            "is_limited": false
+            "order": 6,
+            "rarity": "未知",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "人头瓶": {
+            "order": 7,
+            "rarity": "未知",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "兔形陶埙": {
+            "order": 8,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "冷暖自知印": {
+            "order": 9,
+            "rarity": "未知",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "利簋": {
+            "order": 10,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "制盐砖": {
+            "order": 11,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "吴王夫差矛": {
+            "order": 12,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "商鞅方升": {
+            "order": 13,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "四龙四凤座": {
+            "order": 14,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "大盂鼎": {
+            "order": 15,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "大神龛": {
+            "order": 16,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "天亡簋": {
+            "order": 17,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "天气卜骨": {
+            "order": 18,
+            "rarity": "未知",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "天蓝瓶": {
+            "order": 19,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "妇好鸮尊": {
+            "order": 20,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "宋金项饰": {
+            "order": 21,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "宝石冠": {
+            "order": 22,
+            "rarity": "未知",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "宴猎攻战壶": {
+            "order": 23,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "少虡剑": {
+            "order": 24,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "山水人物镜": {
+            "order": 25,
+            "rarity": "未知",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "心形枪": {
+            "order": 26,
+            "rarity": "未知",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "战国铜冰鉴": {
+            "order": 27,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "战国铜餐具": {
+            "order": 28,
+            "rarity": "未知",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "扯淡碑": {
+            "order": 29,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "晋侯鸟尊": {
+            "order": 30,
+            "rarity": "优异",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "曾侯乙编钟": {
+            "order": 31,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "果树双管瓶": {
+            "order": 32,
+            "rarity": "未知",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "样式雷": {
+            "order": 33,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "格萨尔唐卡": {
+            "order": 34,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "毛公鼎": {
+            "order": 35,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "狸猫盘": {
+            "order": 36,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": true,
+            "valuation_order": 1
+        },
+        "玉琮王": {
+            "order": 37,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "玛雅陶碗": {
+            "order": 38,
+            "rarity": "未知",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "琉璃塔拱门": {
+            "order": 39,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "白石散乐": {
+            "order": 40,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "白釉绿彩瓶": {
+            "order": 41,
+            "rarity": "未知",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "白龙梅瓶": {
+            "order": 42,
+            "rarity": "优异",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "粉白双耳瓶": {
+            "order": 43,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "聊斋图说": {
+            "order": 44,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "自来火二号": {
+            "order": 45,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "舞蹈陶盆": {
+            "order": 46,
+            "rarity": "未知",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "芙蓉炉": {
+            "order": 47,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "茶叶生产画": {
+            "order": 48,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "莲塘乳鸭图": {
+            "order": 49,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "蒙医药袋": {
+            "order": 50,
+            "rarity": "未知",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "蛙锣": {
+            "order": 51,
+            "rarity": "未知",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "蝠桃瓶": {
+            "order": 52,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "贾湖骨笛": {
+            "order": 53,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "越王勾践剑": {
+            "order": 54,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "金瓯永固杯": {
+            "order": 55,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": true,
+            "valuation_order": 2
+        },
+        "金蝉玉叶": {
+            "order": 56,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "鎏金银壶": {
+            "order": 57,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "鎏金骑士": {
+            "order": 58,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "铜奔马": {
+            "order": 59,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "长信宫灯": {
+            "order": 60,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "阴山岩画": {
+            "order": 61,
+            "rarity": "优异",
+            "job": "宿卫",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "驿使图砖": {
+            "order": 62,
+            "rarity": "未知",
+            "job": "轻锐",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "鹦鹉银罐": {
+            "order": 63,
+            "rarity": "未知",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "鹿角立鹤": {
+            "order": 64,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "龙纹陶盘": {
+            "order": 65,
+            "rarity": "未知",
+            "job": "构术",
+            "impl_date": "2024/04/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "十二花卉杯": {
+            "order": 66,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/05/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 3
+        },
+        "可爱花束": {
+            "order": 67,
+            "rarity": "未知",
+            "job": "远击",
+            "impl_date": "2024/05/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "夜行铜牌": {
+            "order": 68,
+            "rarity": "优异",
+            "job": "轻锐",
+            "impl_date": "2024/05/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "洛神赋图": {
+            "order": 69,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/05/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 4
+        },
+        "千里江山图": {
+            "order": 70,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/05/18",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 5
+        },
+        "上阳台帖": {
+            "order": 71,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/05/30",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 6
+        },
+        "皇后之玺": {
+            "order": 72,
+            "rarity": "优异",
+            "job": "战略",
+            "impl_date": "2024/05/30",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "诗文执壶": {
+            "order": 73,
+            "rarity": "优异",
+            "job": "战略",
+            "impl_date": "2024/05/30",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "银香囊": {
+            "order": 74,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/05/30",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 7
+        },
+        "T形帛画": {
+            "order": 75,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/06/20",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 8
+        },
+        "外销壁纸": {
+            "order": 76,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/06/20",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "溪山行旅图": {
+            "order": 77,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/07/11",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 9
+        },
+        "雪景寒林图": {
+            "order": 78,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/07/11",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 10
+        },
+        "鸟音山水钟": {
+            "order": 79,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/08/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 11
+        },
+        "克拉克瓷": {
+            "order": 80,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/08/22",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "愿望杯": {
+            "order": 81,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/08/22",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 12
+        },
+        "断臂维纳斯": {
+            "order": 82,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/08/22",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 13
+        },
+        "五弦琵琶": {
+            "order": 83,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/09/12",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 14
+        },
+        "彩凤鸣岐": {
+            "order": 84,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/10/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 15
+        },
+        "莫高窟220": {
+            "order": 85,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/10/01",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 16
+        },
+        "针铺铜版": {
+            "order": 86,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/10/23",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "商周十供": {
+            "order": 87,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2024/10/24",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 17
+        },
+        "秦公镈": {
+            "order": 88,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2024/11/14",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 18
+        },
+        "跪射俑": {
+            "order": 89,
+            "rarity": "优异",
+            "job": "远击",
+            "impl_date": "2024/11/14",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "铜车马": {
+            "order": 90,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/11/14",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 19
+        },
+        "青铜仙鹤": {
+            "order": 91,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2024/12/05",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 20
+        },
+        "亚长牛尊": {
+            "order": 92,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2024/12/24",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 21
+        },
+        "铜坐龙": {
+            "order": 93,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2024/12/24",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 22
+        },
+        "午门": {
+            "order": 94,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2025/01/23",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "铜壶滴漏": {
+            "order": 95,
+            "rarity": "限·特出",
+            "job": "构术",
+            "impl_date": "2025/01/23",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 23
+        },
+        "麟趾马蹄金": {
+            "order": 96,
+            "rarity": "限·特出",
+            "job": "远击",
+            "impl_date": "2025/01/23",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 24
+        },
+        "海水江崖炉": {
+            "order": 97,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2025/02/12",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 25
+        },
+        "万工轿": {
+            "order": 98,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2025/03/06",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 26
+        },
+        "微缩家具": {
+            "order": 99,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2025/03/06",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 27
+        },
+        "鹿王本生图": {
+            "order": 100,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2025/03/27",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 28
+        },
+        "敦煌飞天": {
+            "order": 101,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2025/04/17",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 29
+        },
+        "酒帐": {
+            "order": 102,
+            "rarity": "限·特出",
+            "job": "轻锐",
+            "impl_date": "2025/04/17",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 30
+        },
+        "莫高窟记": {
+            "order": 103,
+            "rarity": "限·特出",
+            "job": "构术",
+            "impl_date": "2025/04/30",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 31
+        },
+        "三兔藻井": {
+            "order": 104,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2025/05/08",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 32
+        },
+        "水晶杯": {
+            "order": 105,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2025/05/29",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 33
+        },
+        "百花图卷": {
+            "order": 106,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2025/05/29",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 34
+        },
+        "素纱单衣": {
+            "order": 107,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2025/06/19",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 35
+        },
+        "真珠宝幢": {
+            "order": 108,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2025/07/10",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 36
+        },
+        "银雀山汉简": {
+            "order": 109,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2025/07/17",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 37
+        },
+        "王氏书翰卷": {
+            "order": 110,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2025/07/31",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 38
+        },
+        "向日葵": {
+            "order": 111,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2025/08/21",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 39
+        },
+        "星月夜": {
+            "order": 112,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2025/08/21",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 40
+        },
+        "睡莲": {
+            "order": 113,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2025/09/11",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 41
+        },
+        "天球仪": {
+            "order": 114,
+            "rarity": "限·特出",
+            "job": "远击",
+            "impl_date": "2025/09/30",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 42
+        },
+        "浑天仪": {
+            "order": 115,
+            "rarity": "特出",
+            "job": "战略",
+            "impl_date": "2025/09/30",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "海错图": {
+            "order": 116,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2025/10/23",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 43
+        },
+        "青瓷莲花尊": {
+            "order": 117,
+            "rarity": "特出",
+            "job": "宿卫",
+            "impl_date": "2025/11/13",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 44
+        },
+        "小宋香炉": {
+            "order": 118,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2025/12/04",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 45
+        },
+        "赤壁赋页": {
+            "order": 119,
+            "rarity": "限·特出",
+            "job": "轻锐",
+            "impl_date": "2025/12/25",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 46
+        },
+        "金石录": {
+            "order": 120,
+            "rarity": "特出",
+            "job": "构术",
+            "impl_date": "2026/01/22",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 47
+        },
+        "商周铜人": {
+            "order": 121,
+            "rarity": "优异",
+            "job": "构术",
+            "impl_date": "2026/02/12",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": null
+        },
+        "太阳神鸟": {
+            "order": 122,
+            "rarity": "限·特出",
+            "job": "战略",
+            "impl_date": "2026/02/12",
+            "is_limited": true,
+            "is_up": false,
+            "valuation_order": 48
+        },
+        "卷云金喇叭": {
+            "order": 123,
+            "rarity": "特出",
+            "job": "轻锐",
+            "impl_date": "2026/03/05",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 49
+        },
+        "金冠带": {
+            "order": 124,
+            "rarity": "特出",
+            "job": "远击",
+            "impl_date": "2026/03/26",
+            "is_limited": false,
+            "is_up": false,
+            "valuation_order": 50
         }
     },
     "tiers": {
@@ -648,346 +1149,5 @@
         "亚长牛尊": "T1",
         "T形帛画": "T1"
     },
-    "teams": [
-        {
-            "name": "召唤",
-            "core": [
-                "天球仪"
-            ],
-            "important": [
-                "T形帛画",
-                "太阳神鸟",
-                "王氏书翰卷",
-                "金石录",
-                "利簋"
-            ],
-            "substitutes": [
-                "小宋香炉",
-                "麟趾马蹄金",
-                "浑天仪",
-                "微缩家具",
-                "铜壶滴漏",
-                "青瓷莲花尊",
-                "浑天仪",
-                "断臂维纳斯",
-                "溪山行旅图",
-                "水晶杯",
-                "真珠宝幢",
-                "洛神赋图",
-                "金石录"
-            ],
-            "all": [
-                "水晶杯",
-                "王氏书翰卷",
-                "麟趾马蹄金",
-                "真珠宝幢",
-                "溪山行旅图",
-                "小宋香炉",
-                "天球仪",
-                "金石录",
-                "断臂维纳斯",
-                "微缩家具",
-                "T形帛画",
-                "太阳神鸟",
-                "铜壶滴漏",
-                "青瓷莲花尊",
-                "利簋",
-                "洛神赋图",
-                "浑天仪"
-            ]
-        },
-        {
-            "name": "灼烧",
-            "core": [
-                "向日葵"
-            ],
-            "important": [
-                "银雀山汉简",
-                "皇后之玺",
-                "太阳神鸟",
-                "青瓷莲花尊",
-                "真珠宝幢"
-            ],
-            "substitutes": [
-                "赤壁赋业",
-                "星月夜",
-                "睡莲",
-                "莫高窟记",
-                "莫高窟220",
-                "海水江崖炉",
-                "十二花卉杯",
-                "三兔藻井",
-                "素纱单衣",
-                "百花图卷",
-                "铜壶滴漏",
-                "王氏书翰卷",
-                "商周十供",
-                "洛神赋图",
-                "五星出东方"
-            ],
-            "all": [
-                "王氏书翰卷",
-                "商周十供",
-                "铜壶滴漏",
-                "莫高窟220",
-                "五星出东方",
-                "洛神赋图",
-                "百花图卷",
-                "素纱单衣",
-                "太阳神鸟",
-                "青瓷莲花尊",
-                "银雀山汉简",
-                "向日葵",
-                "海水江崖炉",
-                "十二花卉杯",
-                "星月夜",
-                "莫高窟记",
-                "睡莲",
-                "真珠宝幢",
-                "赤壁赋业",
-                "皇后之玺",
-                "三兔藻井"
-            ]
-        },
-        {
-            "name": "连击",
-            "core": [
-                "海错图"
-            ],
-            "important": [
-                "亚长牛尊",
-                "万工轿",
-                "太阳神鸟",
-                "青瓷莲花尊",
-                "百花图卷"
-            ],
-            "substitutes": [
-                "素纱单衣",
-                "雪景寒林图",
-                "莲塘乳鸭图",
-                "莫高窟记",
-                "麟趾马蹄金",
-                "狸猫盘",
-                "三兔藻井",
-                "铜壶滴漏",
-                "真珠宝幢",
-                "洛神赋图",
-                "鎏金银壶"
-            ],
-            "all": [
-                "雪景寒林图",
-                "莲塘乳鸭图",
-                "鎏金银壶",
-                "麟趾马蹄金",
-                "百花图卷",
-                "素纱单衣",
-                "狸猫盘",
-                "真珠宝幢",
-                "亚长牛尊",
-                "海错图",
-                "万工轿",
-                "三兔藻井",
-                "太阳神鸟",
-                "铜壶滴漏",
-                "青瓷莲花尊",
-                "莫高窟记",
-                "洛神赋图"
-            ]
-        },
-        {
-            "name": "同命常击",
-            "core": [
-                "赤壁赋页"
-            ],
-            "important": [
-                "金石录",
-                "酒账",
-                "素纱单衣",
-                "太阳神鸟",
-                "青瓷莲花尊"
-            ],
-            "substitutes": [],
-            "all": [
-                "素纱单衣",
-                "赤壁赋页",
-                "青瓷莲花尊",
-                "金石录",
-                "太阳神鸟",
-                "酒账"
-            ]
-        },
-        {
-            "name": "同命",
-            "core": [
-                "赤壁赋页"
-            ],
-            "important": [
-                "金石录",
-                "太阳神鸟",
-                "利簋",
-                "百花图卷",
-                "洛神赋图"
-            ],
-            "substitutes": [
-                "莫高窟记",
-                "小宋香炉",
-                "三兔藻井",
-                "素纱单衣",
-                "青瓷莲花尊",
-                "莫高窟220",
-                "王氏书翰卷",
-                "铜壶滴漏",
-                "真珠宝幢",
-                "银香囊"
-            ],
-            "all": [
-                "王氏书翰卷",
-                "百花图卷",
-                "素纱单衣",
-                "真珠宝幢",
-                "赤壁赋页",
-                "小宋香炉",
-                "莫高窟记",
-                "金石录",
-                "莫高窟220",
-                "三兔藻井",
-                "银香囊",
-                "太阳神鸟",
-                "铜壶滴漏",
-                "青瓷莲花尊",
-                "利簋",
-                "洛神赋图"
-            ]
-        },
-        {
-            "name": "回击",
-            "core": [
-                "铜坐龙"
-            ],
-            "important": [
-                "商周十供",
-                "青瓷莲花尊",
-                "太阳神鸟"
-            ],
-            "substitutes": [
-                "素纱单衣",
-                "上阳台帖",
-                "金蝉玉叶",
-                "四龙四凤座",
-                "水晶杯",
-                "溪山行旅图",
-                "铜奔马",
-                "商鞅方升"
-            ],
-            "all": [
-                "上阳台帖",
-                "水晶杯",
-                "太阳神鸟",
-                "素纱单衣",
-                "溪山行旅图",
-                "商周十供",
-                "四龙四凤座",
-                "商鞅方升",
-                "铜坐龙",
-                "铜奔马",
-                "青瓷莲花尊",
-                "金蝉玉叶"
-            ]
-        },
-        {
-            "name": "51晶",
-            "core": [
-                "水晶杯"
-            ],
-            "important": [
-                "太阳神鸟",
-                "聊斋图说",
-                "青瓷莲花尊",
-                "溪山行旅图",
-                "百花图卷"
-            ],
-            "substitutes": [
-                "铜奔马",
-                "莫高窟记",
-                "酒账",
-                "洛神赋图",
-                "素纱单衣",
-                "断臂维纳斯"
-            ],
-            "all": [
-                "水晶杯",
-                "聊斋图说",
-                "百花图卷",
-                "素纱单衣",
-                "溪山行旅图",
-                "酒账",
-                "断臂维纳斯",
-                "铜奔马",
-                "太阳神鸟",
-                "青瓷莲花尊",
-                "莫高窟记",
-                "洛神赋图"
-            ]
-        },
-        {
-            "name": "战略",
-            "core": [
-                "银雀山汉简"
-            ],
-            "important": [
-                "真珠宝幢",
-                "皇后之玺",
-                "海水江崖炉",
-                "莫高窟220"
-            ],
-            "substitutes": [
-                "向日葵",
-                "五星出东方",
-                "十二花卉杯"
-            ],
-            "all": [
-                "十二花卉杯",
-                "真珠宝幢",
-                "皇后之玺",
-                "银雀山汉简",
-                "五星出东方",
-                "莫高窟220",
-                "向日葵",
-                "海水江崖炉"
-            ]
-        },
-        {
-            "name": "技伤",
-            "core": [
-                "赤壁赋页"
-            ],
-            "important": [
-                "莫高窟记",
-                "小宋香炉",
-                "利簋",
-                "素纱单衣"
-            ],
-            "substitutes": [
-                "青瓷莲花尊",
-                "莫高窟220",
-                "洛神赋图",
-                "铜壶滴漏",
-                "王氏书翰卷",
-                "秦公镈"
-            ],
-            "all": [
-                "王氏书翰卷",
-                "秦公镈",
-                "素纱单衣",
-                "赤壁赋页",
-                "小宋香炉",
-                "青瓷莲花尊",
-                "铜壶滴漏",
-                "莫高窟220",
-                "利簋",
-                "莫高窟记",
-                "洛神赋图"
-            ]
-        }
-    ]
+    "teams": []
 }

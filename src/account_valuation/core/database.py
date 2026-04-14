@@ -76,8 +76,10 @@ class CharacterDB:
 
     def get_up_pool_names(self):
         """ 获取所有曾进入 UP 池的红卡（用于计算贬值） """
+        # 特出（包括限·特出/限定特出）、限定，两类红卡计入UP池
         return [n for n, d in self.char_data.items() 
-                if d['rarity'] in ['特出', '限定', '特出(限定)'] and d.get('order', 0) != 0]
+                if (d['rarity'] in ['特出', '限定', '特出(限定)', '限·特出'] or
+                    '特出' in d['rarity'] or '限定' in d['rarity']) and d.get('order', 0) != 0]
 
     def get_rarity(self, name):
         return self.char_data.get(name, {}).get('rarity', '未知')

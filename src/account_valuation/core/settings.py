@@ -42,10 +42,11 @@ class ValuationSettings:
                 return round(interp, 3)
         return points[-1][1] if points else 0.1
 
-    def get_order_decay(self, order, is_limited):
+    def get_order_decay(self, order, is_limited, actual_max_order=None):
         if is_limited: return 1.0
-        current_max_order = 33
-        decay = 1.0 - (current_max_order - order) * self.data.get("DECAY_RATE_PER_ORDER", 0.025)
+        if actual_max_order is None:
+            actual_max_order = self.data.get("CURRENT_MAX_ORDER", 33)
+        decay = 1.0 + (order - actual_max_order) * self.data.get("DECAY_RATE_PER_ORDER", 0.025)
         return max(self.data.get("DECAY_FLOOR", 0.3), decay)
 
     @property

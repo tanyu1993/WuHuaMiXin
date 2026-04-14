@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="btn-group">
-                    <a href="/verify/{{ acc.name_encoded }}" class="btn btn-entry">{{ "重新校验" if acc.is_done else "资产录入" }}</a>
+                    <a href="/audit/{{ acc.name_encoded }}" class="btn btn-entry">{{ "重新校验" if acc.is_done else "资产录入" }}</a>
                     {% if acc.is_done %}
                         <a href="/valuation/{{ acc.name_encoded }}" class="btn btn-val">💰 查看报告</a>
                     {% endif %}
@@ -73,7 +73,8 @@
                 <span>核心元数据快照: {{ last_updated }}</span>
             </div>
             <a href="/analysis" class="btn-tool" style="background: #3498db;">📊 账号综合分析</a>
-            <a href="/update_metadata" class="btn-tool" style="background: #9b59b6;">🔄 更新图鉴(Excel)</a>
+            <a href="/update_wiki" class="btn-tool" style="background: #9b59b6;">📦 更新器者档案</a>
+            <a href="/sync_status_metadata" class="btn-tool" style="background: #e67e22;">🔄 同步状态元数据</a>
             <a href="/config" class="btn-tool" style="background: #34495e;">⚙️ 估值模型配置</a>
         </div>
     </div>

@@ -1,39 +1,36 @@
-﻿{
-    "PULL_MARKET_VALUE": 0.15,
-    "EXPECTED_PULLS_PER_RED": 60,
-    "ZHIZHI_COST_WEIGHT": {
-        "0": 1,
-        "1": 1.5,
-        "2": 2,
-        "3": 3.5,
-        "4": 4,
-        "5": 4.5,
-        "6": 5
-    },
-    "STRENGTH_WEIGHTS": {
-        "T0": 1.6,
-        "T0.5": 1.2,
-        "T1": 0.7,
-        "T2": 0.1,
-        "DEFAULT": 0.1
-    },
-    "LIMITED_PREMIUM": 1.4,
-    "MISSING_LIMITED_PENALTY": 0.5,
+{
+  "STRENGTH_WEIGHTS": {
+    "T0": 1.6,
+    "T0.5": 1.2,
+    "T1": 0.7,
+    "T2": 0.1,
+    "DEFAULT": 0.1
+  },
+  "ZHIZHI_COST_WEIGHT": {
+    "0": 1,
+    "1": 1.5,
+    "2": 2,
+    "3": 3.5,
+    "4": 4,
+    "5": 4.5,
+    "6": 5
+  },
+  "PULL_MARKET_VALUE": 0.15,
+  "EXPECTED_PULLS_PER_RED": 60,
+  "LIMITED_PREMIUM": 1.4,
+  "MISSING_LIMITED_PENALTY": 0.5,
+  "DECAY_RATE_PER_ORDER": 0.025,
+  "DECAY_FLOOR": 0.3,
+  "LIVE_RESOURCE_BONUS": 1.2,
+  "RED_CARD_TO_PULLS": 8.6,
+  "DAILY_MONTHLY_CARD_VAL": 0.8,
     "COLLECTION_POINTS": [
-        [
-            1.0,
-            1.0
-        ],
-        [
-            0.9,
-            0.9
-        ],
-        [
-            0.0,
-            0.1
-        ]
-    ],
-    "DECAY_RATE_PER_ORDER": 0.025,
-    "DECAY_FLOOR": 0.3,
-    "CURRENT_MAX_ORDER": 33
+      [1.0, 1.0],
+      [0.95, 0.95],
+      [0.90, 0.90],
+      [0.80, 0.60],
+      [0.70, 0.30],
+      [0.50, 0.10],
+      [0.0, 0.05]
+    ]
 }

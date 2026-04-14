@@ -1,7 +1,7 @@
-import os, sys, json, traceback, urllib.parse, threading
+import os, sys, json, traceback, urllib.parse, threading, subprocess
 
-# 确保项目根路径可用
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# 确保项目根路径可用（从 src/web_server/ 上两级到达项目根）
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 
 from src._project_root import PROJECT_ROOT, DATA
 
@@ -99,7 +99,7 @@ def serve_tagger():
 
 @app.route('/static/<path:filename>')
 def serve_static(filename):
-    for d in [PROJECT_ROOT, os.path.dirname(__file__), os.path.join(PROJECT_ROOT, 'src', 'search_tagging')]:
+    for d in [PROJECT_ROOT, os.path.dirname(__file__), os.path.join(PROJECT_ROOT, 'src', 'search_tagging'), os.path.join(PROJECT_ROOT, 'docs')]:
         if os.path.exists(os.path.join(d, filename)):
             return send_from_directory(d, filename)
     return "File not found", 404
@@ -284,7 +284,7 @@ def valuation(account_name):
             return f"<h2>账号 {real_name} 暂无评估数据</h2><a href='/'>返回首页</a>"
         
         with open(data_path, 'r', encoding='utf-8') as f: data = json.load(f)
-        engine = ValuationEngine(DB_PATH)
+        engine = ValuationEngine(DB_PATH, SETTINGS_PATH)
         report = engine.calculate_account_value(real_name, data)
         
         asset_rows = "".join([f'''<div class="asset-row"><div class="asset-main"><span class="asset-name">{a['name']}</span><span class="asset-info">{a['tier']} | {a['zhizhi']}致知</span></div><div class="asset-calc"><span class="formula-label">评估公式:</span><span class="formula-text">{a['formula']}</span></div><div class="asset-final">￥{a['value']:.1f}</div></div>''' for a in report['details']['top_assets']])
@@ -314,7 +314,7 @@ def analysis():
         # 构建summary数据
         acc_dir = v_settings.paths['ACCOUNTS']
         summary = []
-        engine = ValuationEngine(DB_PATH)
+        engine = ValuationEngine(DB_PATH, SETTINGS_PATH)
         
         for d in os.listdir(acc_dir):
             if d.startswith('check_') or d == 'temp_results' or not os.path.isdir(os.path.join(acc_dir, d)):
@@ -354,7 +354,7 @@ def recalculate_all():
     try:
         acc_dir = v_settings.paths['ACCOUNTS']
         count = 0
-        engine = ValuationEngine(DB_PATH)
+        engine = ValuationEngine(DB_PATH, SETTINGS_PATH)
         for d in os.listdir(acc_dir):
             if d.startswith('check_') or d == 'temp_results' or not os.path.isdir(os.path.join(acc_dir, d)):
                 continue
@@ -390,12 +390,155 @@ def update_metadata_route():
         return f"<h2>✅ 元数据已更新</h2><p>更新于: {db.last_updated}</p><a href='/'>返回首页</a>"
     except Exception as e: return f"<pre>{traceback.format_exc()}</pre>"
 
-@app.route('/config')
+@app.route('/config', methods=['GET', 'POST'])
 def config():
     """配置页面"""
+    if request.method == 'POST':
+        try:
+            data = request.json
+            # 更新settings.json
+            import json
+            with open(SETTINGS_PATH, 'w', encoding='utf-8') as f:
+                json.dump(data, f, ensure_ascii=False, indent=2)
+            # 重新加载配置
+            v_settings.load()
+            return jsonify({"status": "ok"})
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
     try:
-        return render_template('config.html')
+        return render_template('config.html',
+            PULL_MARKET_VALUE=v_settings.data.get('PULL_MARKET_VALUE', 0.15),
+            EXPECTED_PULLS_PER_RED=v_settings.data.get('EXPECTED_PULLS_PER_RED', 8.6),
+            STRENGTH_WEIGHTS=v_settings.data.get('STRENGTH_WEIGHTS', {'特出': 1.0, '稀有': 0.5, '传承': 1.5, '感激': 0.3}),
+            ZHIZHI_COST_WEIGHT={str(k): v for k, v in v_settings.data.get('ZHIZHI_COST_WEIGHT', {"1": 1.6, "2": 2.4}).items()},
+            LIMITED_PREMIUM=v_settings.data.get('LIMITED_PREMIUM', 2.0),
+            MISSING_LIMITED_PENALTY=v_settings.data.get('MISSING_LIMITED_PENALTY', 0.5),
+            DECAY_RATE_PER_ORDER=v_settings.data.get('DECAY_RATE_PER_ORDER', 0.005),
+            DECAY_FLOOR=v_settings.data.get('DECAY_FLOOR', 0.3),
+            LIVE_RESOURCE_BONUS=v_settings.data.get('LIVE_RESOURCE_BONUS', 1.2),
+            RED_CARD_TO_PULLS=v_settings.data.get('RED_CARD_TO_PULLS', 8.6),
+            DAILY_MONTHLY_CARD_VAL=v_settings.data.get('DAILY_MONTHLY_CARD_VAL', 0.8)
+        )
     except Exception as e: return f"<pre>{traceback.format_exc()}</pre>"
+
+@app.route('/encyclopedia')
+def encyclopedia():
+    """器者百科"""
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'docs'), 'Encyclopedia.html')
+
+@app.route('/encyclopedia_data.js')
+def encyclopedia_data():
+    """器者百科数据"""
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'docs'), 'encyclopedia_data.js')
+
+@app.route('/update_wiki')
+def update_wiki():
+    """更新器者档案页面"""
+    return '''
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <title>更新器者档案</title>
+        <style>
+            body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #1a1a2e; color: #fff; padding: 40px; }
+            .container { max-width: 600px; margin: 0 auto; }
+            h1 { color: #ffd700; margin-bottom: 30px; }
+            .form-group { margin-bottom: 20px; }
+            label { display: block; margin-bottom: 8px; color: rgba(255,255,255,0.8); }
+            input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); 
+                    background: rgba(255,255,255,0.1); color: #fff; font-size: 16px; box-sizing: border-box; }
+            button { padding: 12px 30px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;
+                     background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; margin-right: 10px; }
+            button:hover { opacity: 0.9; }
+            .info { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+            .info p { margin: 5px 0; color: rgba(255,255,255,0.6); }
+            .back { color: #4ecdc4; text-decoration: none; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>📦 更新器者档案</h1>
+            <div class="info">
+                <p><strong>功能说明：</strong></p>
+                <p>1. 从Wiki抓取器者数据</p>
+                <p>2. 识别并打标状态</p>
+                <p>3. 更新百科和器者数据库</p>
+                <p>4. 建立技能与状态关联</p>
+            </div>
+            <form action="/run_update_wiki" method="POST">
+                <div class="form-group">
+                    <label>器者名称（留空则更新所有）:</label>
+                    <input type="text" name="char_name" placeholder="例如: 青铜龙首">
+                </div>
+                <button type="submit">🚀 开始更新</button>
+                <a href="/" class="back">← 返回首页</a>
+            </form>
+        </div>
+    </body>
+    </html>
+    '''
+
+@app.route('/run_update_wiki', methods=['POST'])
+def run_update_wiki():
+    """执行更新器者档案"""
+    try:
+        char_name = request.form.get('char_name', '').strip()
+        wiki_pipeline = os.path.join(PROJECT_ROOT, 'src', 'Wiki_Pipeline', 'whmx_master_pipeline.py')
+        
+        if char_name:
+            cmd = [sys.executable, wiki_pipeline, char_name]
+        else:
+            cmd = [sys.executable, wiki_pipeline, '--rebuild-all']
+        
+        import subprocess
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=PROJECT_ROOT)
+        
+        output = (result.stdout or '') + (result.stderr or '')
+        
+        return f'''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <title>更新结果</title>
+            <style>
+                body {{ font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #1a1a2e; color: #fff; padding: 40px; }}
+                .container {{ max-width: 800px; margin: 0 auto; }}
+                h1 {{ color: #2ecc71; }}
+                pre {{ background: rgba(0,0,0,0.3); padding: 20px; border-radius: 8px; overflow-x: auto; 
+                      white-space: pre-wrap; word-wrap: break-word; max-height: 400px; }}
+                .back {{ color: #4ecdc4; text-decoration: none; margin-top: 20px; display: inline-block; }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>{'✅ 更新完成' if result.returncode == 0 else '❌ 更新失败'}</h1>
+                <pre>{output[-3000:]}</pre>
+                <a href="/update_wiki" class="back">← 继续更新</a>
+                <br>
+                <a href="/" class="back">← 返回首页</a>
+            </div>
+        </body>
+        </html>
+        '''
+    except Exception as e:
+        return f"<pre>错误: {traceback.format_exc()}</pre><a href='/update_wiki'>返回</a>"
+
+@app.route('/sync_status_metadata')
+def sync_status_metadata():
+    """同步状态元数据"""
+    try:
+        script_path = os.path.join(PROJECT_ROOT, "src", "wiki_pipeline", "step5_sync_status_metadata.py")
+        result = subprocess.run([sys.executable, script_path], capture_output=True, text=True, cwd=PROJECT_ROOT)
+        output = (result.stdout or '') + (result.stderr or '')
+        if result.returncode == 0:
+            return f"<h2>✅ 状态元数据已同步</h2><pre>{output[-2000:]}</pre><a href='/'>返回首页</a>"
+        else:
+            return f"<h2>⚠️ 同步完成</h2><pre>{output[-2000:]}</pre><a href='/'>返回首页</a>"
+    except Exception as e:
+        return f"<pre>{traceback.format_exc()}</pre><a href='/'>返回首页</a>"
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8888, debug=False, threaded=False)

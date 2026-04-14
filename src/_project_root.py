@@ -7,17 +7,19 @@ import os
 def get_project_root():
     """
     从当前文件向上查找项目根目录。
-    项目根目录特征：包含 src/ 目录
+    WuHuaMiXin项目特征：src/ 目录下有 _project_root.py 自身
     """
     _FILE_DIR = os.path.dirname(os.path.realpath(__file__))
     _ROOT = _FILE_DIR
     while True:
+        # _project_root.py 位于 src/ 下，检查当前 _ROOT/src/_project_root.py 是否存在
+        if os.path.exists(os.path.join(_ROOT, '_project_root.py')):
+            # 找到了 _project_root.py 自身，说明当前是 src/ 目录
+            return os.path.dirname(_ROOT)  # 返回 src 的父目录，即项目根
         _parent = os.path.dirname(_ROOT)
         if _parent == _ROOT:
             # 到达文件系统根，无法继续
             break
-        if os.path.isdir(os.path.join(_ROOT, 'src')) and os.path.isdir(os.path.join(_ROOT, 'data')):
-            return _ROOT
         _ROOT = _parent
     # 兜底：尝试 cwd
     return os.getcwd()

@@ -28,6 +28,17 @@ def run_command(cmd):
         print(f"[Pipeline ERROR] Executing {cmd} failed: {e}")
         return False
 
+def run_valuation_metadata_update():
+    """更新估值模块的metadata.json"""
+    try:
+        metadata_script = os.path.join(_PROJECT_ROOT, "src", "account_valuation", "core", "metadata_manager.py")
+        subprocess.run([sys.executable, metadata_script], check=True, cwd=_PROJECT_ROOT)
+        print("[OK] Valuation metadata updated successfully.")
+        return True
+    except Exception as e:
+        print(f"[Pipeline ERROR] Valuation metadata update failed: {e}")
+        return False
+
 def main():
     if len(sys.argv) < 2:
         print("Usage:")
@@ -51,7 +62,13 @@ def main():
         print(">>> [Phase 5] Syncing Status Metadata (Grouped & Sorted)...")
         if not run_command("step5_sync_status_metadata.py"): return
         
-        print(f"\n>>> FULL REBUILD COMPLETE! View: {status_search_path}")
+        print(">>> [Phase 6] Building Encyclopedia Data...")
+        if not run_command("step7_build_encyclopedia.py"): return
+        
+        print(">>> [Phase 7] Updating Valuation Metadata...")
+        if not run_valuation_metadata_update(): return
+        
+        print(f"\n>>> FULL REBUILD COMPLETE!")
     else:
         print(f"\n>>> [Pipeline 3.0] STARTING AUTOMATED FLOW FOR: {target} <<<")
         
@@ -85,6 +102,16 @@ def main():
         if not run_command("step5_sync_status_metadata.py"):
             print(f"Pipeline ABORTED: Step 5 failed for {target}.")
             return
+        
+        # 6. Build Encyclopedia
+        print(f"\n>>> [Step 6] Building Encyclopedia Data...")
+        if not run_command("step7_build_encyclopedia.py"):
+            print(f"Pipeline WARNING: Encyclopedia build failed.")
+        
+        # 7. Update Valuation Metadata
+        print(f"\n>>> [Step 7] Updating Valuation Metadata...")
+        if not run_valuation_metadata_update():
+            print(f"Pipeline WARNING: Valuation metadata update failed.")
         
         # Final Success Message
         status_search_path = os.path.join(_PROJECT_ROOT, "data", "status_viewer.html")
