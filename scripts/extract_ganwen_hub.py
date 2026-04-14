@@ -1,21 +1,19 @@
 ﻿
+
 import os, sys
-# 1. 模块自适应注入
+# 项目根路径解析（使用统一方法）
 _FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
+_PROJECT_ROOT = os.path.dirname(_FILE_DIR)  # scripts -> 项目根
+sys.path.insert(0, _PROJECT_ROOT)
+sys.path.insert(0, os.path.join(_PROJECT_ROOT, 'src'))
 
 import json, re, glob
 
-# --- Path Configuration ---
-REF_DIR = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
-SKILL_DB_PATH = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "skill_db.json")
-STATUS_SSOT_PATH = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-GANWEN_HUB_PATH = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "ganwen_hub.json")
+# --- Path Configuration (新结构) ---
+REF_DIR = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "refined_v10")
+SKILL_DB_PATH = os.path.join(_PROJECT_ROOT, "data", "skill_db.json")
+STATUS_SSOT_PATH = os.path.join(_PROJECT_ROOT, "data", "status_library_ssot.json")
+GANWEN_HUB_PATH = os.path.join(_PROJECT_ROOT, "data", "ganwen_hub.json")
 
 def load_resources():
     with open(SKILL_DB_PATH, 'r', encoding='utf-8') as f: skill_db = json.load(f)

@@ -1,6 +1,11 @@
 import json
 
-with open(r'C:\Users\Administrator\projects\WuHuaMiXin\DATA_ASSETS\skill_db.json', encoding='utf-8') as f:
+import os
+# 项目根目录
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SKILL_DB_PATH = os.path.join(PROJECT_ROOT, 'data', 'skill_db.json')
+
+with open(SKILL_DB_PATH, encoding='utf-8') as f:
     data = json.load(f)
 
 print(f"总技能数: {len(data)}\n")

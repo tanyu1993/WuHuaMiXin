@@ -78,5 +78,9 @@ def process_all(input_folder, output_folder):
             print(f"Error processing {name}: {e}")
 
 if __name__ == "__main__":
-    process_all(r"whmx\wiki_data\markdown_archives", r"whmx\wiki_data\sanitized")
+    # 项目根路径
+    PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    INPUT_DIR = os.path.join(PROJECT_ROOT, "data", "wiki_data", "markdown_archives")
+    OUTPUT_DIR = os.path.join(PROJECT_ROOT, "data", "wiki_data", "sanitized")
+    process_all(INPUT_DIR, OUTPUT_DIR)
     print("Minimalist cleaning finished.")

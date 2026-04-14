@@ -15,8 +15,9 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 
 # === 配置 ===
-INPUT_FILE = r'C:\Users\Administrator\projects\WuHuaMiXin\DATA_ASSETS\skill_db.json'
-OUTPUT_FILE = r'C:\Users\Administrator\projects\WuHuaMiXin\DATA_ASSETS\物华弥新_技能库.xlsx'
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+INPUT_FILE = os.path.join(PROJECT_ROOT, 'data', 'skill_db.json')
+OUTPUT_FILE = os.path.join(PROJECT_ROOT, 'data', '物华弥新_技能库.xlsx')
 
 # === 清理函数：去除 Markdown 和 emoji ===
 def clean_text(text):
