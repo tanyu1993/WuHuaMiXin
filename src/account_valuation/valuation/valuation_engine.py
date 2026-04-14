@@ -169,8 +169,10 @@ class ValuationEngine:
 
     def _save_report(self, account_name, report):
         """ 将评估结果 JSON 持久化到账号文件夹 """
-        base_dir = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-        acc_path = os.path.join(base_dir, 'accounts', account_name)
+        # 使用正确的accounts路径
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+        from src._project_root import PROJECT_ROOT
+        acc_path = os.path.join(PROJECT_ROOT, '.private', 'accounts', account_name)
         if not os.path.exists(acc_path): os.makedirs(acc_path)
         
         target = os.path.join(acc_path, 'valuation_result.json')
