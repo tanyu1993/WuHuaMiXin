@@ -1,0 +1,373 @@
+{
+    "account_name": "闲鱼账号咕咕嘎嘎_待售550",
+    "timestamp": "2026-04-14 13:04:52",
+    "rmb": 2.6,
+    "completion": 0.9583333333333334,
+    "missing_count": 1,
+    "details": {
+        "top_assets": [
+            {
+                "name": "太阳神鸟",
+                "value": 1.3,
+                "zhizhi": 3,
+                "tier": "T0",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "天球仪",
+                "value": 1.3,
+                "zhizhi": 6,
+                "tier": "T0",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "莫高窟记",
+                "value": 1.3,
+                "zhizhi": 1,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "酒帐",
+                "value": 1.3,
+                "zhizhi": 6,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "麟趾马蹄金",
+                "value": 1.3,
+                "zhizhi": 0,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "铜壶滴漏",
+                "value": 1.3,
+                "zhizhi": 3,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×限1.4×贬1.00"
+            },
+            {
+                "name": "金石录",
+                "value": 0.9,
+                "zhizhi": 1,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.97"
+            },
+            {
+                "name": "小宋香炉",
+                "value": 0.8,
+                "zhizhi": 0,
+                "tier": "T1",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.93"
+            },
+            {
+                "name": "青瓷莲花尊",
+                "value": 0.8,
+                "zhizhi": 0,
+                "tier": "T0",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.90"
+            },
+            {
+                "name": "海错图",
+                "value": 0.8,
+                "zhizhi": 0,
+                "tier": "T0.5",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.88"
+            },
+            {
+                "name": "睡莲",
+                "value": 0.7,
+                "zhizhi": 0,
+                "tier": "T2",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.82"
+            },
+            {
+                "name": "向日葵",
+                "value": 0.7,
+                "zhizhi": 0,
+                "tier": "T0",
+                "formula": "基60×致1.0×强0.1×常1.0×贬0.80"
+            }
+        ],
+        "deductions": [
+            {
+                "item": "缺失限定 x1",
+                "impact": "整体折算系数 0.950",
+                "list": [
+                    "赤壁赋页"
+                ]
+            },
+            {
+                "item": "图鉴进度 95.8%",
+                "impact": "系数 0.1"
+            }
+        ]
+    },
+    "team_recommendations": [
+        {
+            "team_name": "召唤",
+            "members": [
+                {
+                    "name": "天球仪",
+                    "zz": 6,
+                    "is_core": true
+                },
+                {
+                    "name": "太阳神鸟",
+                    "zz": 3,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "T形帛画",
+                    "zz": 2,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "金石录",
+                    "zz": 1,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "利簋",
+                    "zz": 1,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "王氏书翰卷",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        },
+        {
+            "team_name": "灼烧",
+            "members": [
+                {
+                    "name": "向日葵",
+                    "zz": 0,
+                    "is_core": true
+                },
+                {
+                    "name": "太阳神鸟",
+                    "zz": 3,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "真珠宝幢",
+                    "zz": 2,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "银雀山汉简",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "青瓷莲花尊",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "五星出东方",
+                    "zz": 4,
+                    "priority": 2,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        },
+        {
+            "team_name": "连击",
+            "members": [
+                {
+                    "name": "海错图",
+                    "zz": 0,
+                    "is_core": true
+                },
+                {
+                    "name": "太阳神鸟",
+                    "zz": 3,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "亚长牛尊",
+                    "zz": 1,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "万工轿",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "青瓷莲花尊",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "百花图卷",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        },
+        {
+            "team_name": "回击",
+            "members": [
+                {
+                    "name": "铜坐龙",
+                    "zz": 0,
+                    "is_core": true
+                },
+                {
+                    "name": "太阳神鸟",
+                    "zz": 3,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "商周十供",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "青瓷莲花尊",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "金蝉玉叶",
+                    "zz": 6,
+                    "priority": 2,
+                    "is_core": false
+                },
+                {
+                    "name": "四龙四凤座",
+                    "zz": 5,
+                    "priority": 2,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        },
+        {
+            "team_name": "51晶",
+            "members": [
+                {
+                    "name": "水晶杯",
+                    "zz": 0,
+                    "is_core": true
+                },
+                {
+                    "name": "太阳神鸟",
+                    "zz": 3,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "溪山行旅图",
+                    "zz": 1,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "青瓷莲花尊",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "百花图卷",
+                    "zz": 0,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "洛神赋图",
+                    "zz": 3,
+                    "priority": 2,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        },
+        {
+            "team_name": "战略",
+            "members": [
+                {
+                    "name": "银雀山汉简",
+                    "zz": 0,
+                    "is_core": true
+                },
+                {
+                    "name": "真珠宝幢",
+                    "zz": 2,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "莫高窟220",
+                    "zz": 2,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "海水江崖炉",
+                    "zz": 1,
+                    "priority": 1,
+                    "is_core": false
+                },
+                {
+                    "name": "五星出东方",
+                    "zz": 4,
+                    "priority": 2,
+                    "is_core": false
+                },
+                {
+                    "name": "十二花卉杯",
+                    "zz": 1,
+                    "priority": 2,
+                    "is_core": false
+                }
+            ],
+            "is_complete": true
+        }
+    ],
+    "roadmap": [
+        {
+            "priority": "Critical",
+            "title": "P1: 扩充图鉴",
+            "content": "优先补齐：卷云金喇叭, 赤壁赋页。"
+        },
+        {
+            "priority": "High",
+            "title": "P2: 核心质变激活",
+            "content": "器者 真珠宝幢, 海错图, 向日葵, 青瓷莲花尊 建议补至 3 致知。"
+        },
+        {
+            "priority": "Medium",
+            "title": "P3: 巅峰强度冲刺",
+            "content": "【太阳神鸟】可考虑冲击满致知。"
+        }
+    ]
+}

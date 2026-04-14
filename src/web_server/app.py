@@ -135,6 +135,11 @@ STATUS_JS_PATH = os.path.join(PROJECT_ROOT, 'src', 'search_tagging', 'status_dat
 def serve_status_tagger():
     return send_from_directory(os.path.join(PROJECT_ROOT, 'src', 'search_tagging'), 'status_tagger_ui.html')
 
+@app.route('/status_data.js')
+def serve_status_data_js():
+    """状态打标工具的数据文件"""
+    return send_from_directory(os.path.join(PROJECT_ROOT, 'src', 'search_tagging'), 'status_data.js', mimetype='application/javascript')
+
 @app.route('/api/verify_status', methods=['POST'])
 def api_verify_status():
     data = request.json
@@ -306,8 +311,76 @@ def valuation(account_name):
 def analysis():
     """综合分析"""
     try:
-        return render_template('analysis.html', version=VERSION_INFO['version'])
+        # 构建summary数据
+        acc_dir = v_settings.paths['ACCOUNTS']
+        summary = []
+        engine = ValuationEngine(DB_PATH)
+        
+        for d in os.listdir(acc_dir):
+            if d.startswith('check_') or d == 'temp_results' or not os.path.isdir(os.path.join(acc_dir, d)):
+                continue
+            data_path = os.path.join(acc_dir, d, 'assets_report.json')
+            if os.path.exists(data_path):
+                try:
+                    with open(data_path, 'r', encoding='utf-8') as f: data = json.load(f)
+                    report = engine.calculate_account_value(d, data)
+                    # 检查是否有价格配置
+                    price_path = os.path.join(acc_dir, d, 'price.txt')
+                    price = 0
+                    if os.path.exists(price_path):
+                        with open(price_path, 'r') as f: price = float(f.read().strip() or 0)
+                    # 获取更新时间
+                    mtime = os.path.getmtime(data_path)
+                    from datetime import datetime
+                    timestamp = datetime.fromtimestamp(mtime).strftime('%Y-%m-%d')
+                    
+                    summary.append({
+                        "name": d,
+                        "rmb": report['rmb'],
+                        "completion": report['completion'],
+                        "missing_limited": sum(1 for a in data.values() if isinstance(a, dict) and a.get('tier') == '特出' and a.get('zhizhi', 0) < 3),
+                        "price": price,
+                        "discount": price / report['rmb'] if price > 0 else 0,
+                        "timestamp": timestamp
+                    })
+                except: pass
+        
+        return render_template('analysis.html', summary=summary, version=VERSION_INFO['version'])
     except Exception as e: return f"<pre>{traceback.format_exc()}</pre>"
+
+@app.route('/recalculate_all')
+def recalculate_all():
+    """按照当前配置重新计算所有账号"""
+    try:
+        acc_dir = v_settings.paths['ACCOUNTS']
+        count = 0
+        engine = ValuationEngine(DB_PATH)
+        for d in os.listdir(acc_dir):
+            if d.startswith('check_') or d == 'temp_results' or not os.path.isdir(os.path.join(acc_dir, d)):
+                continue
+            data_path = os.path.join(acc_dir, d, 'assets_report.json')
+            if os.path.exists(data_path):
+                try:
+                    with open(data_path, 'r', encoding='utf-8') as f: data = json.load(f)
+                    engine.calculate_account_value(d, data)
+                    count += 1
+                except: pass
+        return jsonify({"status": "ok", "count": count})
+    except Exception as e: return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/save_price', methods=['POST'])
+def save_price():
+    """保存账号标价"""
+    try:
+        data = request.json
+        name = data.get('name')
+        price = data.get('price', 0)
+        acc_dir = v_settings.paths['ACCOUNTS']
+        price_path = os.path.join(acc_dir, name, 'price.txt')
+        with open(price_path, 'w') as f:
+            f.write(str(price))
+        return jsonify({"status": "ok"})
+    except Exception as e: return jsonify({"error": str(e)}), 500
 
 @app.route('/update_metadata')
 def update_metadata_route():
