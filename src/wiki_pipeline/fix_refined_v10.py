@@ -16,9 +16,9 @@ if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
 if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
 
 # --- Path Configuration ---
-src_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "structured_v10")
-dst_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
-STATUS_SSOT = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
+src_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "structured_v10")
+dst_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "refined_v10")
+STATUS_SSOT = os.path.join(_PROJECT_ROOT, "data", "status_library_ssot.json")
 
 def load_status_keys():
     if os.path.exists(STATUS_SSOT):
@@ -221,7 +221,7 @@ def run():
             f.write(res)
     
     if NEW_DISCOVERIES:
-        with open(os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "pending_entries.json"), 'w', encoding='utf-8-sig') as f:
+        with open(os.path.join(_PROJECT_ROOT, "data", "pending_entries.json"), 'w', encoding='utf-8-sig') as f:
             json.dump([{"char": s.split(": ")[0], "term": s.split(": ")[1]} for s in sorted(NEW_DISCOVERIES)], f, ensure_ascii=False, indent=2)
         print(f"\n>>> [SUCCESS] All files re-refined. {len(NEW_DISCOVERIES)} pending entries found.")
 

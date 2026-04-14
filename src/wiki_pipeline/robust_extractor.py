@@ -8,17 +8,6 @@ _DATA_ROOT = os.path.join(_PROJECT_ROOT, "data")
 if _WIKI_PIPELINE_DIR not in sys.path: sys.path.insert(0, _WIKI_PIPELINE_DIR)
 if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
 # -*- coding: utf-8 -*-
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-
 import os, sys
 
 import os
@@ -27,7 +16,7 @@ import json
 import glob
 
 # 配置
-REF_DIR = 'DATA_ASSETS/wiki_data/refined_v10'
+REF_DIR = 'data/wiki_data/refined_v10'
 
 def load_known_statuses():
     if not os.path.exists(STATUS_DB_PATH): return set()

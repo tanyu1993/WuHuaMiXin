@@ -19,9 +19,18 @@ import time
 # --- Path Configuration ---
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# 1. 动态链接全局爬虫库
-GLOBAL_LIB_PATH = os.path.join(os.path.expanduser("~"), ".gemini/skills/web-crawler-master/lib")
-if os.path.exists(GLOBAL_LIB_PATH):
+# 1. 动态链接全局爬虫库（兼容新旧路径）
+possible_paths = [
+    os.path.join(os.path.expanduser("~"), ".workbuddy/skills/web-crawler-master/lib"),  # 新路径
+    os.path.join(os.path.expanduser("~"), ".gemini/skills/web-crawler-master/lib"),      # 旧路径
+]
+GLOBAL_LIB_PATH = None
+for p in possible_paths:
+    if os.path.exists(p):
+        GLOBAL_LIB_PATH = p
+        break
+
+if GLOBAL_LIB_PATH:
     sys.path.append(GLOBAL_LIB_PATH)
     try:
         from crawler_orchestrator import orchestrator
@@ -29,7 +38,7 @@ if os.path.exists(GLOBAL_LIB_PATH):
         print("[Step 1 ERROR] Global library found but CrawlerOrchestrator failed to load.")
         sys.exit(1)
 else:
-    print(f"[Step 1 ERROR] Global library not found at: {GLOBAL_LIB_PATH}")
+    print(f"[Step 1 ERROR] Global library not found. Searched: {possible_paths}")
     sys.exit(1)
 
 def fetch_wiki_industrialized(char_name):
@@ -37,7 +46,7 @@ def fetch_wiki_industrialized(char_name):
     使用全局 Orchestrator 进行高成功率抓取 (P0 -> P1 -> P2)
     """
     # 2. 动态定位 save_dir
-    save_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "raw")
+    save_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "raw")
     if not os.path.exists(save_dir): os.makedirs(save_dir)
     save_path = os.path.join(save_dir, f"{char_name}.md")
     

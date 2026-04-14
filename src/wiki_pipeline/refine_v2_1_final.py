@@ -193,8 +193,8 @@ def refine_v2_1(content, global_lib):
 
 def run_refine():
     global_lib = load_global_lib()
-    src_dir = 'DATA_ASSETS/wiki_data/structured_v10'
-    dst_dir = 'DATA_ASSETS/wiki_data/refined_v10'
+    src_dir = 'data/wiki_data/structured_v10'
+    dst_dir = 'data/wiki_data/refined_v10'
     if not os.path.exists(dst_dir): os.makedirs(dst_dir)
     for f_path in glob.glob(os.path.join(src_dir, "*.md")):
         name = os.path.basename(f_path)

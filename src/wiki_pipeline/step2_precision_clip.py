@@ -11,8 +11,8 @@ if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
 import os, re, html, glob, sys
 
 # --- Path Configuration ---
-inf_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "raw")
-out_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "structured_v10")
+inf_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "raw")
+out_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "structured_v10")
 
 def precision_clean(input_path, output_dir):
     filename = os.path.basename(input_path).replace(".md", "")

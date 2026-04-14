@@ -87,7 +87,7 @@ def main():
             return
         
         # Final Success Message
-        status_search_path = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_viewer.html")
+        status_search_path = os.path.join(_PROJECT_ROOT, "data", "status_viewer.html")
         print(f"\n>>> [Pipeline SUCCESS] '{target}' processed from Wiki to Intelligence Hub! <<<")
         print(f">>> View results in: {status_search_path}")
 

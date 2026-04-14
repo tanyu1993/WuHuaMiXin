@@ -21,8 +21,8 @@ if os.path.exists(_data_root):
     dst_dir = os.path.join(_data_root, "wiki_data", "refined_v10")
 else:
     # 旧结构兼容
-    src_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "structured_v10")
-    dst_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
+    src_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "structured_v10")
+    dst_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "refined_v10")
 
 def load_global_lib():
     paths = [

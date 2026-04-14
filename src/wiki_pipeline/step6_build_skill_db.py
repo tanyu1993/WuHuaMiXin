@@ -7,18 +7,7 @@ _DATA_ROOT = os.path.join(_PROJECT_ROOT, "data")
 
 if _WIKI_PIPELINE_DIR not in sys.path: sys.path.insert(0, _WIKI_PIPELINE_DIR)
 if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-# -*- coding: utf-8 -*-
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-import os
+# -*- coding: utf-8 -*-import os
 import re
 import json
 import glob
@@ -28,10 +17,10 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Path Configuration ---
-REF_DIR = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
-STATUS_DB_PATH = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-SKILL_OUTPUT = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "skill_db.json")
-REVERSE_MAP_OUTPUT = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_to_skills.json")
+REF_DIR = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "refined_v10")
+STATUS_DB_PATH = os.path.join(_PROJECT_ROOT, "data", "status_library_ssot.json")
+SKILL_OUTPUT = os.path.join(_PROJECT_ROOT, "data", "skill_db.json")
+REVERSE_MAP_OUTPUT = os.path.join(_PROJECT_ROOT, "data", "status_to_skills.json")
 
 def load_all_status_names():
     if not os.path.exists(STATUS_DB_PATH): return []

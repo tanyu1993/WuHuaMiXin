@@ -8,17 +8,6 @@ _DATA_ROOT = os.path.join(_PROJECT_ROOT, "data")
 if _WIKI_PIPELINE_DIR not in sys.path: sys.path.insert(0, _WIKI_PIPELINE_DIR)
 if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
 # -*- coding: utf-8 -*-
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-
 import os, sys
 
 import sys
@@ -40,18 +29,18 @@ def run_missing_sync():
     print(f"--- [FINAL 15 SYNC] Starting Consistency-First Task ---")
     print(f"Method: P0 (defuddle.md) | Strategy: Dual-Exit Auto-Rotation\n")
     
-    os.makedirs("DATA_ASSETS/wiki_data/raw", exist_ok=True)
+    os.makedirs("data/wiki_data/raw", exist_ok=True)
     
     for i, name in enumerate(missing_list):
         print(f"[{i+1}/15] Targeting: {name}")
-        url = f"https://wiki.biligame.com/DATA_ASSETS/{name}"
+        url = f"https://wiki.biligame.com/{name}"
         
         try:
             # 严格调用 P0 逻辑
             content = orchestrator.get_content_smart(url)
             
             if content:
-                file_path = f"DATA_ASSETS/wiki_data/raw/{name}.md"
+                file_path = f"data/wiki_data/raw/{name}.md"
                 with open(file_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 print(f"  SUCCESS: {name} saved to Markdown.")

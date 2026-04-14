@@ -18,9 +18,9 @@ import sys
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # --- Path Configuration ---
-src_dir = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
-dst_json = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-dst_html = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_viewer.html")
+src_dir = os.path.join(_PROJECT_ROOT, "data", "wiki_data", "refined_v10")
+dst_json = os.path.join(_PROJECT_ROOT, "data", "status_library_ssot.json")
+dst_html = os.path.join(_PROJECT_ROOT, "data", "status_viewer.html")
 
 def build_status_hub():
     
