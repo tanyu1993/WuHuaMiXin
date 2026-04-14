@@ -16,6 +16,7 @@ build/
 data/accounts/
 data/*.xlsx
 data/*.json
+data/wiki_data/refined_v10/
 
 # Generated
 generated-images/
