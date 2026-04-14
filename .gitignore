@@ -1,3 +1,6 @@
+# Private / local only (never commit)
+.private/
+
 # Python
 __pycache__/
 *.pyc
@@ -9,19 +12,13 @@ dist/
 build/
 .eggs/
 
-# Data (too large for GitHub)
-DATA_ASSETS/
+# Data
+data/accounts/
+data/*.xlsx
+data/*.json
 
 # Generated
 generated-images/
-
-# Memory/internal
-memory/
-
-# Environment
-.env
-*.env
-.env.*
 
 # OS
 .DS_Store
