@@ -18,7 +18,18 @@ app = Flask(__name__)
 
 # 初始化核心系统
 VALUATION_SRC = os.path.join(PROJECT_ROOT, 'src', 'account_valuation')
-SETTINGS_PATH = os.path.join(VALUATION_SRC, 'core', 'settings.json')
+SETTINGS_PATH = os.path.join(VALUATION_SRC, 'valuation', 'settings.json')
+
+# 如果settings.json不存在，创建一个默认的
+if not os.path.exists(SETTINGS_PATH):
+    os.makedirs(os.path.dirname(SETTINGS_PATH), exist_ok=True)
+    default_settings = {
+        "valuation": {
+            "BASE_PRICE": 0.8, "TIER_MULTIPLIERS": {"特出": 1.0, "稀有": 0.5, "传承": 1.5, "感激": 0.3}
+        }
+    }
+    with open(SETTINGS_PATH, 'w', encoding='utf-8') as f:
+        json.dump(default_settings, f, ensure_ascii=False, indent=2)
 
 v_settings = ValuationSettings(SETTINGS_PATH)
 v_settings.paths['ACCOUNTS'] = os.path.join(PROJECT_ROOT, '.private', 'accounts')
@@ -154,6 +165,38 @@ def api_verify_status():
         f.write(f"const STATUS_DATA = {json.dumps(status_list, ensure_ascii=False, indent=2)};")
 
     return jsonify({"ok": True})
+
+@app.route('/api/statuses')
+def get_all_statuses():
+    """获取所有状态数据"""
+    try:
+        with open(SSOT_PATH, 'r', encoding='utf-8-sig') as f:
+            ssot = json.load(f)
+        statuses = []
+        for k, v in ssot.items():
+            if k in ("version", "tags"): continue
+            if 'name' not in v: v['name'] = k
+            statuses.append(v)
+        return jsonify(statuses)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/api/search')
+def search_status():
+    """搜索状态"""
+    query = request.args.get('q', '').lower()
+    try:
+        with open(SSOT_PATH, 'r', encoding='utf-8-sig') as f:
+            ssot = json.load(f)
+        results = []
+        for k, v in ssot.items():
+            if k in ("version", "tags"): continue
+            if query in k.lower() or query in v.get('description', '').lower():
+                v['name'] = k
+                results.append(v)
+        return jsonify(results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 # ====== 缺失的估值模块路由 ======
 
