@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物华弥新：全量器者百科 (Knowledge Graph V3.7)</title>
+    <style>
+        :root {
+            --primary: #4ecca3;
+            --sidebar-bg: #1a1c2c;
+            --main-bg: #f8f9fa;
+            --card-bg: #fff;
+            --cat1: #27ae60; --cat2: #e74c3c; --cat3: #8e44ad; --cat5: #f39c12; --cat6: #7f8c8d;
+            --tag-phys: #c0392b; --tag-elem: #2980b9; --tag-true: #f1c40f;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+            --meta-range: #3498db; --meta-cost: #f1c40f; --meta-cd: #e67e22; --meta-trigger: #9b59b6;
+        }
+        body { font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--main-bg); overflow: hidden; color: #1a1c2c; }
+        #sidebar { width: 350px; background: var(--sidebar-bg); color: #fff; display: flex; flex-direction: column; box-shadow: 2px 0 10px rgba(0,0,0,0.2); }
+        .sidebar-header { padding: 25px; background: rgba(0,0,0,0.2); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .omni-search { width: 100%; padding: 12px; border-radius: 8px; border: none; background: #2d3047; color: #fff; box-sizing: border-box; outline: none; font-size: 14px; border: 1px solid #3d415e; }
+        .omni-search:focus { border-color: var(--primary); }
+        #list-container { flex: 1; overflow-y: auto; padding: 10px; }
+        .index-category { margin-bottom: 10px; }
+        .index-summary { padding: 12px 15px; background: rgba(255,255,255,0.05); border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 14px; transition: 0.2s; list-style: none; }
+        .index-summary::-webkit-details-marker { display: none; }
+        .index-summary:hover { background: rgba(255,255,255,0.1); }
+        .index-summary::after { content: '▸'; transition: 0.3s; color: var(--primary); }
+        .index-category[open] .index-summary::after { transform: rotate(90deg); }
+        .index-content { background: rgba(0,0,0,0.1); border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; max-height: 400px; overflow-y: auto; }
+        .item-row { padding: 8px 15px 8px 25px; cursor: pointer; transition: 0.1s; font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .item-row:hover { background: #2d3047; padding-left: 30px; color: var(--primary); }
+        .item-row.active { background: var(--primary); color: #1a1c2c; font-weight: bold; }
+        .item-tag { font-size: 9px; padding: 1px 4px; border-radius: 3px; background: rgba(255,255,255,0.1); }
+
+        #main-view { flex: 1; overflow-y: auto; padding: 40px; scroll-behavior: smooth; }
+        .view-content { max-width: 1000px; margin: 0 auto; display: none; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .welcome-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; color: #999; }
+        .char-header { border-bottom: 3px solid var(--primary); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: baseline; }
+        .char-title { font-size: 42px; font-weight: 800; }
+        .section-title { font-size: 22px; font-weight: 700; margin: 40px 0 20px; display: flex; align-items: center; border-left: 8px solid var(--primary); padding-left: 15px; }
+        
+        .skill-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 30px; }
+        .skill-card { background: var(--card-bg); border-radius: 12px; padding: 0; box-shadow: var(--shadow); border: 1px solid #eee; transition: 0.3s; overflow: hidden; display: flex; flex-direction: column; }
+        .skill-card.highlight { border-color: var(--primary); box-shadow: 0 0 20px rgba(78, 204, 163, 0.4); transform: scale(1.02); }
+        .skill-card-inner { padding: 25px; flex: 1; }
+        .skill-head { font-size: 19px; font-weight: 700; color: #2d3436; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .skill-body { font-size: 14px; line-height: 1.7; color: #444; white-space: pre-wrap; background: #fdfdfd; padding: 15px; border-radius: 8px; border: 1px solid #f1f1f1; margin-bottom: 15px; }
+        
+        .meta-bar { background: #f1f2f6; padding: 10px 20px; display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #eee; }
+        .meta-pill { font-size: 11px; font-weight: 800; padding: 3px 10px; border-radius: 20px; color: #fff; text-transform: uppercase; }
+        .m-range { background: var(--meta-range); } .m-cost { background: var(--meta-cost); color: #1a1c2c; } .m-cd { background: var(--meta-cd); } .m-trigger { background: var(--meta-trigger); }
+
+        .status-pill { padding: 6px 14px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; color: #fff; transition: 0.2s; border: none; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 5px; margin-right: 5px; }
+        .tag-sub { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.2); }
+        .tag-special-phys { background-color: var(--tag-phys) !important; }
+        .tag-special-elem { background-color: var(--tag-elem) !important; }
+        .tag-special-true { background-color: var(--tag-true) !important; color: #1a1c2c !important; }
+        .cat-1 { background: var(--cat1); color: #fff; } .cat-2 { background: var(--cat2); color: #fff; } .cat-3 { background: var(--cat3); color: #fff; } .cat-4 { background: var(--tag-elem); color: #fff; } .cat-5 { background: var(--cat5); color: #fff; } .cat-6 { background: var(--cat6); color: #fff; } .cat- { background: #95a5a6; color: #fff; }
+
+        .hub-card { background: #fff; border-radius: 16px; padding: 40px; box-shadow: var(--shadow); border: 1px solid #eee; }
+        .hub-title { font-size: 32px; font-weight: 800; margin-bottom: 10px; color: var(--primary); }
+        .hub-desc { font-size: 18px; line-height: 1.8; color: #555; background: #f9f9f9; padding: 25px; border-radius: 12px; margin: 25px 0; border-left: 10px solid #ddd; }
+        .owner-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
+        .owner-chip { padding: 12px; background: #fff; border: 1px solid #eee; border-radius: 10px; text-align: center; cursor: pointer; transition: 0.2s; font-weight: 600; }
+        .owner-chip:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-3px); }
+
+        .ganwen-item { background: #fff; border: 1px solid #e0e0e0; padding: 20px; border-radius: 12px; margin-bottom: 15px; border-left: 6px solid var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+        .ganwen-desc { font-size: 15px; line-height: 1.6; margin-bottom: 15px; color: #2c3e50; font-weight: 500; white-space: pre-wrap; }
+        .link-group { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; border-top: 1px solid #f1f1f1; padding-top: 12px; }
+        .tag-badge { background: #e8f0fe; color: #1a73e8; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 500; cursor: pointer; border: 1px solid #d2e3fc; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <div class="sidebar-header">
+            <h2 style="margin: 0 0 20px 0; color: var(--primary);">物华弥新：百科 3.7</h2>
+            <input type="text" id="omni-input" class="omni-search" placeholder="搜索器者/感闻/状态/技能/标签..." oninput="handleSearch(this.value)">
+        </div>
+        <div id="list-container"></div>
+    </div>
+    
+    <div id="main-view">
+        <div class="welcome-screen" id="view-welcome">
+            <h1 style="font-size: 80px; margin-bottom: 20px;">🏛️</h1>
+            <p>选择左侧目类，开启知识探索之旅</p>
+        </div>
+
+        <div class="view-content" id="view-char">
+            <div class="char-header">
+                <div class="char-title" id="c-name"></div>
+                <div id="c-order-tag" style="color: #666; font-weight: bold; font-size: 12px; background: #eee; padding: 4px 10px; border-radius: 4px;">RELEASE #0</div>
+            </div>
+            <div id="skills-render-area"></div>
+            <div class="section-title" id="c-ganwen-section">🌙 焕彰感闻 (HuanZhang)</div>
+            <div id="c-ganwen"></div>
+        </div>
+
+        <div class="view-content" id="view-hub">
+            <div class="hub-card">
+                <div id="hub-type" style="font-size: 12px; color: #999; text-transform: uppercase;">DETAIL</div>
+                <div class="hub-title" id="hub-name"></div>
+                <div id="hub-tags" class="pill-container" style="margin-top: 15px; display: flex; gap: 8px;"></div>
+                <div class="hub-desc" id="hub-desc"></div>
+                <div class="section-title" id="hub-relation-title">关联项目</div>
+                <div class="owner-list" id="hub-owners"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="encyclopedia_data.js?v=5"></script>
+    <script>
+        const listCont = document.getElementById('list-container');
+        const mainView = document.getElementById('main-view');
+        const views = { welcome: document.getElementById('view-welcome'), char: document.getElementById('view-char'), hub: document.getElementById('view-hub') };
+
+        function switchView(viewId) {
+            Object.values(views).forEach(v => v.style.display = 'none');
+            views[viewId].style.display = 'block';
+            mainView.scrollTop = 0;
+        }
+
+        function getStatusClass(st) {
+            if (st.tags.includes('额外物理伤害')) return 'tag-special-phys';
+            if (st.tags.includes('额外构素伤害')) return 'tag-special-elem';
+            if (st.tags.includes('额外真实伤害')) return 'tag-special-true';
+            return `cat-${st.cat}`;
+        }
+
+        function handleSearch(q) {
+            q = q.trim().toLowerCase();
+            if (!q) { renderDefaultList(); return; }
+            listCont.innerHTML = '';
+            const r = { chars: [], ganwens: [], statuses: [], tags: [], skills: [] };
+            Object.keys(ENCYCLOPEDIA_DATA.CHARS).forEach(n => { if(n.toLowerCase().includes(q)) r.chars.push(n); });
+            Object.keys(ENCYCLOPEDIA_DATA.GANWENS).forEach(n => { if(n.toLowerCase().includes(q)) r.ganwens.push(n); });
+            
+            // 状态搜索包含通用与专属
+            const all_st = Object.keys(ENCYCLOPEDIA_DATA.STATUSES_GENERAL).concat(Object.keys(ENCYCLOPEDIA_DATA.STATUSES_EXCLUSIVE));
+            all_st.forEach(n => { if(n.toLowerCase().includes(q)) r.statuses.push(n); });
+            
+            Object.keys(ENCYCLOPEDIA_DATA.TAGS).forEach(n => { if(n.toLowerCase().includes(q)) r.tags.push(n); });
+            Object.keys(ENCYCLOPEDIA_DATA.SKILLS).forEach(n => { if(n.toLowerCase().includes(q)) r.skills.push(n); });
+            renderSearchResults(r);
+        }
+
+        function renderDefaultList() {
+            listCont.innerHTML = '';
+            const charNames = Object.keys(ENCYCLOPEDIA_DATA.CHARS); // 后端已完成 Order 降序 + 拼音升序
+            const ganwenNames = Object.keys(ENCYCLOPEDIA_DATA.GANWENS).sort((a,b) => {
+                const charA = ENCYCLOPEDIA_DATA.GANWENS[a];
+                const charB = ENCYCLOPEDIA_DATA.GANWENS[b];
+                return (ENCYCLOPEDIA_DATA.CHARS[charB].order || 0) - (ENCYCLOPEDIA_DATA.CHARS[charA].order || 0) || a.localeCompare(b, 'zh-CN');
+            });
+            const skillNames = Object.keys(ENCYCLOPEDIA_DATA.SKILLS).sort((a,b) => {
+                const infoA = ENCYCLOPEDIA_DATA.SKILLS[a];
+                const infoB = ENCYCLOPEDIA_DATA.SKILLS[b];
+                const orderA = ENCYCLOPEDIA_DATA.CHARS[infoA.char]?.order || 0;
+                const orderB = ENCYCLOPEDIA_DATA.CHARS[infoB.char]?.order || 0;
+                if (orderA !== orderB) return orderB - orderA;
+                if (infoA.char !== infoB.char) return infoA.char.localeCompare(infoB.char, 'zh-CN');
+                return (infoA.sk != null ? infoA.sk : 99) - (infoB.sk != null ? infoB.sk : 99);
+            });
+
+            const cats = [
+                { name: '器者', icon: '👤', data: charNames, handler: showCharacter },
+                { name: '焕彰感闻', icon: '📜', data: ganwenNames, handler: (n) => showCharacter(ENCYCLOPEDIA_DATA.GANWENS[n], { scrollTo: 'ganwen' }) },
+                { name: '通用状态', icon: '✨', data: Object.keys(ENCYCLOPEDIA_DATA.STATUSES_GENERAL), handler: showStatus },
+                { name: '专属状态', icon: '🔒', data: Object.keys(ENCYCLOPEDIA_DATA.STATUSES_EXCLUSIVE).sort((a,b) => a.localeCompare(b, 'zh-CN')), handler: showStatus },
+                { name: '技能索引', icon: '⚔️', data: skillNames, handler: (n) => { const info = ENCYCLOPEDIA_DATA.SKILLS[n]; showCharacter(info.char, { scrollTo: info.skill }); } },
+                { name: '标签矩阵', icon: '🏷️', data: Object.keys(ENCYCLOPEDIA_DATA.TAGS).sort((a,b) => a.localeCompare(b, 'zh-CN')), handler: showTag }
+            ];
+            cats.forEach(c => {
+                const det = document.createElement('details');
+                det.className = 'index-category';
+                if (c.name === '器者') det.open = true;
+                const sum = document.createElement('summary');
+                sum.className = 'index-summary';
+                sum.innerHTML = `<span>${c.icon} ${c.name}</span><span class="item-tag">${c.data.length}</span>`;
+                const content = document.createElement('div');
+                content.className = 'index-content';
+                c.data.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'item-row';
+                    row.innerHTML = `<span>${item}</span>`;
+                    row.onclick = () => { document.querySelectorAll('.item-row').forEach(i => i.classList.remove('active')); row.classList.add('active'); c.handler(item); };
+                    content.appendChild(row);
+                });
+                det.appendChild(sum); det.appendChild(content); listCont.appendChild(det);
+            });
+        }
+
+        function renderSearchResults(r) {
+            const addSec = (title, items, handler) => {
+                if(!items.length) return;
+                const div = document.createElement('div');
+                div.innerHTML = `<div style="font-size:11px; color:#636e72; margin:10px 0 5px 10px;">${title}</div>`;
+                items.forEach(it => {
+                    const row = document.createElement('div'); row.className = 'item-row'; row.innerHTML = `<span>${it}</span>`;
+                    row.onclick = () => handler(it); div.appendChild(row);
+                });
+                listCont.appendChild(div);
+            };
+            addSec('匹配器者', r.chars, showCharacter);
+            addSec('匹配感闻', r.ganwens, (n) => showCharacter(ENCYCLOPEDIA_DATA.GANWENS[n], { scrollTo: 'ganwen' }));
+            addSec('匹配状态', r.statuses, showStatus);
+            addSec('匹配标签', r.tags, showTag);
+            addSec('匹配技能', r.skills, (n) => { const info = ENCYCLOPEDIA_DATA.SKILLS[n]; showCharacter(info.char, { scrollTo: info.skill }); });
+        }
+
+        function showCharacter(name, options = {}) {
+            const data = ENCYCLOPEDIA_DATA.CHARS[name]; if(!data) return;
+            switchView('char'); document.getElementById('c-name').innerText = name;
+            document.getElementById('c-order-tag').innerText = `RELEASE #${data.order || '?'}`;
+            
+            const area = document.getElementById('skills-render-area');
+            area.innerHTML = '';
+            
+            const sections = [
+                { title: "致知强化 (关键升级)", key: "zhizhi" },
+                { title: "本体核心技能 (常击/职业/绝技)", key: "core" },
+                { title: "被动技能", key: "passive" },
+                { title: "召唤物技能", key: "summons" }
+            ];
+            
+            sections.forEach(sec => {
+                let skills = data.reordered_skills[sec.key];
+                if (!skills || !skills.length) return;
+
+                // 召唤物技能：嵌套结构 -> 展平 + 分组标题
+                if (sec.key === 'summons') {
+                    const title = document.createElement('div'); title.className = 'section-title'; title.innerText = sec.title;
+                    area.appendChild(title);
+                    skills.forEach(summonGroup => {
+                        if (!summonGroup.skills || !summonGroup.skills.length) return;
+                        const groupTitle = document.createElement('div');
+                        groupTitle.style.cssText = 'font-size:14px; color:var(--accent); margin:12px 0 8px; font-weight:bold;';
+                        groupTitle.innerText = '🐾 ' + summonGroup.summon_name;
+                        const grid = document.createElement('div'); grid.className = 'skill-grid';
+                        summonGroup.skills.forEach(s => grid.appendChild(createSkillCard(s)));
+                        area.appendChild(groupTitle); area.appendChild(grid);
+                    });
+                    return;
+                }
+
+                const title = document.createElement('div'); title.className = 'section-title'; title.innerText = sec.title;
+                const grid = document.createElement('div'); grid.className = 'skill-grid';
+                skills.forEach(s => grid.appendChild(createSkillCard(s)));
+                area.appendChild(title); area.appendChild(grid);
+            });
+
+            const gwCont = document.getElementById('c-ganwen');
+            gwCont.innerHTML = data.ganwen.length ? data.ganwen.map((g, idx) => `
+                <div class="ganwen-item" id="ganwen-item-${idx}">
+                    <div style="font-weight:bold; color:var(--primary); margin-bottom:10px; font-size:18px;">${g.skill_name || '焕彰感闻'}</div>
+                    <div class="ganwen-desc">${g.desc}</div>
+                    <div class="link-group">
+                        ${g.tags && g.tags.length ? `<span style="font-size:11px;color:#999;margin-right:10px;">标签:</span> ` + g.tags.map(t => `<span class="tag-badge" onclick="showTag('${t}')">${t}</span>`).join('') : ''}
+                    </div>
+                </div>
+            `).join('') : '<div style="color:#aaa;text-align:center;padding:20px;">暂无感闻描述</div>';
+
+            if (options.scrollTo) {
+                setTimeout(() => {
+                    let target = null;
+                    if (options.scrollTo === 'ganwen') {
+                        target = document.getElementById('c-ganwen-section');
+                    } else {
+                        target = document.getElementById(`skill-${options.scrollTo}`);
+                    }
+                    if (target) {
+                        const mainRect = mainView.getBoundingClientRect();
+                        const targetRect = target.getBoundingClientRect();
+                        const scrollPos = targetRect.top - mainRect.top + mainView.scrollTop;
+                        mainView.scrollTo({ top: scrollPos - 20, behavior: 'smooth' });
+                        if (options.scrollTo !== 'ganwen') {
+                            target.classList.add('highlight');
+                            setTimeout(() => target.classList.remove('highlight'), 2000);
+                        }
+                    }
+                }, 300);
+            }
+        }
+
+        function createSkillCard(s) {
+            const card = document.createElement('div'); card.className = 'skill-card'; card.id = `skill-${s.name}`;
+            
+            // Meta Bar
+            if (s.meta && Object.keys(s.meta).length > 0) {
+                const metaBar = document.createElement('div'); metaBar.className = 'meta-bar';
+                if (s.meta.range) metaBar.innerHTML += `<span class="meta-pill m-range">📍 ${s.meta.range}</span>`;
+                if (s.meta.cost) metaBar.innerHTML += `<span class="meta-pill m-cost">💎 消耗:${s.meta.cost}</span>`;
+                if (s.meta.cd) metaBar.innerHTML += `<span class="meta-pill m-cd">⏳ 冷却:${s.meta.cd}</span>`;
+                if (s.meta.trigger) metaBar.innerHTML += `<span class="meta-pill m-trigger">⚡ ${s.meta.trigger}</span>`;
+                card.appendChild(metaBar);
+            }
+
+            const inner = document.createElement('div'); inner.className = 'skill-card-inner';
+            const statusHtml = (s.status_details || []).map(st => `
+                <button class="status-pill ${getStatusClass(st)}" onclick="showStatus('${st.name}')">
+                    ${st.name}
+                    ${st.tags.map(t => `<span class="tag-sub">${t}</span>`).join('')}
+                </button>`).join('');
+            
+            inner.innerHTML = `<div class="skill-head">${s.name}</div><div class="skill-body">${s.description}</div><div class="pill-container">${statusHtml}</div>`;
+            card.appendChild(inner);
+            return card;
+        }
+
+        function showStatus(name) {
+            let st = ENCYCLOPEDIA_DATA.STATUSES_GENERAL[name] || ENCYCLOPEDIA_DATA.STATUSES_EXCLUSIVE[name];
+            if(!st) return;
+            switchView('hub'); document.getElementById('hub-type').innerText = 'STATUS DETAIL';
+            document.getElementById('hub-name').innerText = name;
+            document.getElementById('hub-desc').innerText = st.desc;
+            document.getElementById('hub-tags').innerHTML = (st.tags || []).map(t => `<span class="tag-badge" onclick="showTag('${t}')">${t}</span>`).join('');
+            renderOwnerChips(st.all_owners);
+        }
+
+        function showTag(tagName) {
+            const tag = ENCYCLOPEDIA_DATA.TAGS[tagName]; if(!tag) return;
+            switchView('hub'); document.getElementById('hub-type').innerText = 'TAG HUB';
+            document.getElementById('hub-name').innerText = `标签: ${tagName}`;
+            let descHtml = `<div style="margin-bottom:15px;"><strong>包含状态机制:</strong> ` + 
+                (tag.statuses.length ? tag.statuses.map(s => `<span class="tag-badge" style="margin:2px" onclick="showStatus('${s}')">${s}</span>`).join(' ') : '<span style="color:#999">无直接关联状态</span>') + `</div>`;
+            if (tag.ganwens && tag.ganwens.length) {
+                descHtml += `<div><strong>关联感闻技能:</strong> ` + 
+                    tag.ganwens.map(g => `<span class="tag-badge" style="margin:2px; background:#f39c12; border-color:#d35400; color:white;" onclick="showCharacter('${ENCYCLOPEDIA_DATA.GANWENS[g]}', { scrollTo: 'ganwen' })">${g}</span>`).join(' ') + `</div>`;
+            }
+            document.getElementById('hub-desc').innerHTML = descHtml;
+            renderOwnerChips(tag.chars);
+        }
+
+        function renderOwnerChips(owners) {
+            const cont = document.getElementById('hub-owners');
+            // 按推出顺序排序
+            const sorted = owners.sort((a,b) => (ENCYCLOPEDIA_DATA.CHARS[b].order || 0) - (ENCYCLOPEDIA_DATA.CHARS[a].order || 0) || a.localeCompare(b));
+            cont.innerHTML = sorted.map(o => `<div class="owner-chip" onclick="showCharacter('${o}')">${o}</div>`).join('');
+        }
+
+        renderDefaultList();
+    </script>
+</body>
+</html>

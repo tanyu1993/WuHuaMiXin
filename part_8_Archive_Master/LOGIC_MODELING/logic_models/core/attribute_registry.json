@@ -1,0 +1,80 @@
+{
+  "version": "1.2.0",
+  "ATTRIBUTES": {
+    "BASE": {
+      "HP": "生命上限",
+      "ATK": "攻击力",
+      "DEF_P": "物理防御",
+      "DEF_C": "构素防御",
+      "SPD": "速度",
+      "MOVE": "移动力"
+    },
+    "COMBAT": {
+      "CRIT_RATE": "暴击率",
+      "CRIT_DMG": "暴击伤害",
+      "CRIT_RESIST": "暴击抵抗",
+      "EVASION": "闪避率",
+      "BLOCK_RATE": "格挡率",
+      "BLOCK_POWER": "格挡强度",
+      "HIT_RATE": "命中率",
+      "DEF_PEN": "防御穿透",
+      "THRU_PROB": "贯穿概率",
+      "THRU_STRENGTH": "贯穿强度",
+      "COUNTER_RATE": "回击率"
+    },
+    "RESOURCE": {
+      "EN_INIT": "初始能量",
+      "EN_MAX": "能量上限",
+      "EN_AUTO": "能量自动获取",
+      "AMMO_CAP": "最大礼弹上限",
+      "EXTRA_RELOAD": "额外装填礼弹"
+    },
+    "SUPPORT": {
+      "HEAL_OUT": "治疗量提高",
+      "HEAL_IN": "受治疗提升",
+      "LIFESTEAL": "生命偷取率",
+      "AIM_CD_RED": "瞄准冷却率"
+    },
+    "DAMAGE_MOD": {
+      "NORMAL_DMG_INC": "常击伤害提高",
+      "SKILL_DMG_INC": "技能伤害提高",
+      "ULT_DMG_INC": "绝技伤害提高",
+      "ALL_DMG_INC": "全伤害提高",
+      "EXTRA_DMG_INC": "额外伤害提高",
+      "CRIT_DMG_INC": "暴击伤害提高",
+      "PHYS_DMG_INC": "物理伤害提高",
+      "CONST_DMG_INC": "构素伤害提高",
+      "COUNTER_DMG_INC": "回击伤害提高",
+      "COMBO_DMG_INC": "连击伤害提高",
+      "SENTINEL_DMG_INC": "警戒伤害提高",
+      "PURSUIT_DMG_INC": "追击伤害提高"
+    },
+    "SURVIVAL_MOD": {
+      "PHYS_DMG_RED": "物理伤害降低",
+      "CONST_DMG_RED": "构素伤害降低",
+      "ALL_DMG_RED": "全伤害降低",
+      "DOT_DMG_RED": "持续伤害降低",
+      "NORMAL_DMG_TAKEN_INC": "常击受击伤害提高",
+      "SKILL_DMG_TAKEN_INC": "技能受击伤害提高",
+      "ULT_DMG_TAKEN_INC": "绝技受击伤害提高",
+      "EXTRA_DMG_TAKEN_INC": "额外受击伤害提高",
+      "COUNTER_DMG_TAKEN_INC": "回击受击伤害提高",
+      "COMBO_DMG_TAKEN_INC": "连击受击伤害提高",
+      "PURSUIT_DMG_TAKEN_INC": "追击受击伤害提高",
+      "CRIT_DMG_TAKEN_INC": "暴击受击伤害提高"
+    },
+    "LOGIC_MOD": {
+      "NORMAL_RANGE": "常击射程修正",
+      "SKILL_RANGE": "技能射程修正",
+      "ULT_RANGE": "绝技射程修正",
+      "SENTINEL_RANGE": "警戒射程修正",
+      "NORMAL_ATK_MULT": "常击倍率修正",
+      "SKILL_ATK_MULT": "技能倍率修正",
+      "ULT_ATK_MULT": "绝技倍率修正"
+    },
+    "SPECIAL": {
+      "JUMP_H": "水平跳跃",
+      "JUMP_V": "垂直跳跃"
+    }
+  }
+}

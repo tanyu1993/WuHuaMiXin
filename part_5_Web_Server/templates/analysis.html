@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>全账号综合分析 - 物华弥新评估</title>
+    <style>
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f2f5; padding: 40px; margin: 0; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        
+        .header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        h1 { display: flex; align-items: center; gap: 15px; margin: 0; }
+        h1::before { content: '📊'; }
+        
+        .filter-bar { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; }
+        .search-input { 
+            padding: 10px 15px; border: 2px solid #eef; border-radius: 10px; width: 250px; 
+            outline: none; transition: 0.3s; font-size: 0.9em;
+        }
+        .search-input:focus { border-color: #3498db; background: #f8fbff; }
+
+        .btn-refresh-all {
+            background: #9b59b6; color: white; border: none; padding: 10px 20px; border-radius: 10px;
+            font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 0.9em;
+        }
+        .btn-refresh-all:hover { background: #8e44ad; transform: translateY(-2px); }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #f8f9fa; text-align: left; padding: 15px; font-weight: 600; color: #666; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; }
+        tr:hover { background: #fcfdfe; }
+        tr.hidden { display: none; }
+        
+        .val-tag { font-weight: bold; color: #2ecc71; font-size: 1.1em; }
+        .comp-bar { background: #eee; width: 100px; height: 10px; border-radius: 5px; overflow: hidden; display: inline-block; vertical-align: middle; }
+        .comp-fill { background: #3498db; height: 100%; }
+        
+        .badge { padding: 4px 10px; border-radius: 6px; font-size: 0.85em; font-weight: bold; }
+        .badge-red { background: #fff1f0; color: #f5222d; }
+        .badge-blue { background: #e6f7ff; color: #1890ff; }
+        
+        .price-input { width: 80px; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+        .btn { 
+            text-decoration: none; padding: 8px 20px; border-radius: 8px; font-weight: 600; 
+            font-size: 0.9em; transition: 0.3s; white-space: nowrap; display: inline-block;
+        }
+        .btn-view { background: #e6f7ff; color: #1890ff; min-width: 50px; text-align: center; }
+        .btn-view:hover { background: #1890ff; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-bar">
+            <h1>全账号综合分析看板</h1>
+            <div>
+                <button class="btn-refresh-all" onclick="recalculateAll()">🔄 按照新配置重算所有账号</button>
+                <a href="/" style="color: #666; text-decoration: none; font-weight: 600; margin-left: 20px;">← 返回首页</a>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <span style="color: #666; font-size: 0.9em; font-weight: 600;">筛选账号:</span>
+            <input type="text" id="accSearch" class="search-input" placeholder="输入账号名称关键词..." oninput="filterTable()">
+            <span id="matchCount" style="color: #999; font-size: 0.8em; margin-left: 10px;"></span>
+        </div>
+
+        <table id="analysisTable">
+            <thead>
+                <tr>
+                    <th>账号名称</th>
+                    <th>估值 (RMB)</th>
+                    <th>图鉴进度</th>
+                    <th>缺失限定</th>
+                    <th>标价 (可选)</th>
+                    <th>折扣率</th>
+                    <th>更新日期</th>
+                    <th style="text-align: center;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in summary %}
+                <tr class="acc-row">
+                    <td class="acc-name" style="font-weight: 600;">{{ s.name }}</td>
+                    <td><span class="val-tag">￥{{ s.rmb }}</span></td>
+                    <td>
+                        <div class="comp-bar"><div class="comp-fill" style="width: {{ s.completion * 100 }}%;"></div></div>
+                        <span style="font-size: 0.85em; margin-left: 5px;">{{ (s.completion * 100)|round(1) }}%</span>
+                    </td>
+                    <td><span class="badge {{ 'badge-red' if s.missing_limited > 0 else 'badge-blue' }}">缺失 {{ s.missing_limited }}</span></td>
+                    <td><input type="number" class="price-input" placeholder="输入售价" onchange="updatePrice('{{ s.name }}', this.value)" value="{{ s.price if s.price > 0 else '' }}"></td>
+                    <td>
+                        {% if s.discount > 0 %}
+                            <strong style="color: {{ '#cf1322' if s.discount > 0.5 else '#3f8600' }}">{{ (s.discount * 10)|round(1) }} 折</strong>
+                        {% else %}
+                            <span style="color: #ccc;">-</span>
+                        {% endif %}
+                    </td>
+                    <td style="font-size: 0.8em; color: #999;">{{ s.timestamp }}</td>
+                    <td style="text-align: center;"><a href="/valuation/{{ s.name | urlencode }}" class="btn btn-view">查看详情</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function recalculateAll() {
+            if (!confirm('确定要按照当前模型配置重新计算所有已录入账号的价值吗？这可能需要几秒钟。')) return;
+            
+            const btn = document.querySelector('.btn-refresh-all');
+            const oldText = btn.innerText;
+            btn.innerText = '⏳ 正在重算中...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch('/recalculate_all');
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    alert(`重算完成！已更新 ${data.count} 个账号。`);
+                    window.location.reload();
+                } else {
+                    alert('重算失败：' + data.message);
+                }
+            } catch (e) {
+                alert('网络异常');
+            } finally {
+                btn.innerText = oldText;
+                btn.disabled = false;
+            }
+        }
+
+        function filterTable() {
+            const keyword = document.getElementById('accSearch').value.toLowerCase();
+            const rows = document.querySelectorAll('.acc-row');
+            let count = 0;
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.acc-name').innerText.toLowerCase();
+                if (name.includes(keyword)) {
+                    row.classList.remove('hidden');
+                    count++;
+                } else {
+                    row.classList.add('hidden');
+                }
+            });
+            
+            document.getElementById('matchCount').innerText = keyword ? `匹配到 ${count} 个账号` : '';
+        }
+
+        async function updatePrice(name, price) {
+            await fetch('/save_price', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, price: parseFloat(price) })
+            });
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>

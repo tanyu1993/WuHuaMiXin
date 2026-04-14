@@ -1,0 +1,94 @@
+{
+  "character_id": "whmx-sunbird",
+  "name": "太阳神鸟",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": ["NORMAL_ATTACK", "CLASS_SKILL", "ULTIMATE_SKILL"]
+  },
+  "initial_stats": {
+    "atk": 2736,
+    "energy_max": 2,
+    "ammo_limit": 9
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "SOLAR_MELT",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "CONSTRUCT",
+      "multiplier": 1.2,
+      "range": "CROSS_3"
+    },
+    "class_skill": {
+      "id": "RING_FLARE",
+      "type": "CLASS_SKILL",
+      "energy_cost": 0,
+      "cd": 2,
+      "on_execute": [
+        { "action": "APPLY_STATUS", "id": "天时往复", "target": "self" },
+        { "action": "SET_AMMO", "value": 4 },
+        { "action": "ENTER_MODE", "id": "SENTINEL", "range": 3, "dmg_mult": 1.0 }
+      ]
+    },
+    "ultimate": {
+      "id": "SUN_BIRD_SCORCH",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 2,
+      "on_execute": [
+        { "action": "APPLY_STATUS", "id": "四季同鸣", "duration_rounds": 2 }
+      ]
+    }
+  },
+  "passive_listeners": [
+    {
+      "name": "光耀古今",
+      "trigger": "ON_FRIENDLY_DAMAGE_DEALT",
+      "conditions": [
+        { "check": "SELF_HAS_STATUS", "id": "天时往复" },
+        { "check": "ATTACK_TYPE_IN_MASK", "mask": "direct_attack_mask" },
+        { "check": "TARGET_DISTANCE_LE", "value": 7 },
+        { "check": "RESOURCE_GE", "id": "ammo", "value": 1 }
+      ],
+      "actions": [
+        { "action": "CONSUME_RESOURCE", "id": "ammo", "value": 1 },
+        { "action": "EXECUTE_PURSUIT", "multiplier": 1.0, "type": "CONSTRUCT" },
+        { "action": "ADD_STATUS_STACK", "id": "灿金", "value": 1 },
+        {
+          "if": "STATUS_STACK_GE('灿金', 3)",
+          "then": [
+            { "action": "DEAL_EXTRA_DAMAGE", "multiplier": 2.0, "type": "CONSTRUCT" }
+          ]
+        },
+        {
+          "if": "STATUS_HAS_BOTH('灿金_GE_3', '四季同鸣')",
+          "then": [
+            { "action": "AOE_EXTRA_DAMAGE", "radius": 2, "multiplier": 0.8 }
+          ]
+        },
+        {
+          "if": "STATUS_STACK_REACH('灿金', 3)",
+          "then": [
+            { "action": "GRANT_EXTRA_ACTION", "target": "self" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "天时往复_回填",
+      "trigger": "ON_ANY_UNIT_TURN_END",
+      "conditions": [
+        { "check": "SELF_HAS_STATUS", "id": "天时往复" }
+      ],
+      "actions": [
+        { "action": "SET_AMMO", "value": 4 }
+      ]
+    },
+    {
+      "name": "四季同鸣_清理",
+      "trigger": "ON_STATUS_EXIT",
+      "filter": "四季同鸣",
+      "actions": [
+        { "action": "CLEAR_STATUS_STACKS", "id": "灿金" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0f1220;
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    display: flex; justify-content: center; padding: 32px 16px;
+  }
+  .card {
+    width: 680px;
+    background: linear-gradient(160deg, #1a2040 0%, #141828 100%);
+    border-radius: 16px;
+    border: 1px solid #2e3a5c;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  }
+
+  /* 标题 */
+  .card-title {
+    background: linear-gradient(90deg, #c8a84b 0%, #f0d070 50%, #c8a84b 100%);
+    color: #1a1a1a;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    padding: 18px 0 14px;
+  }
+  .card-subtitle {
+    background: #1e2540;
+    text-align: center;
+    color: #8a9bbf;
+    font-size: 12px;
+    padding: 6px 0 8px;
+    letter-spacing: 1px;
+  }
+
+  /* 区块 */
+  .section { padding: 0 20px 16px; margin-top: 16px; }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #4fc3f7;
+    letter-spacing: 1px;
+    border-left: 3px solid #4fc3f7;
+    padding-left: 8px;
+    margin-bottom: 10px;
+  }
+
+  /* 氪金月卡 */
+  .krypton-header {
+    display: flex; gap: 12px; margin-bottom: 10px;
+  }
+  .krypton-badge {
+    flex: 1; background: #22304a; border-radius: 8px;
+    text-align: center; padding: 10px 4px;
+    border: 1px solid #2e4070;
+  }
+  .krypton-badge .price { color: #f0d070; font-size: 20px; font-weight: 900; }
+  .krypton-badge .label { color: #8a9bbf; font-size: 11px; margin-top: 2px; }
+  .cards-row { display: flex; gap: 8px; }
+  .mc {
+    flex: 1; background: #1e2b42; border-radius: 6px;
+    text-align: center; padding: 7px 4px;
+    border: 1px solid #2a3a5a;
+  }
+  .mc .mc-price { color: #f0d070; font-size: 14px; font-weight: 700; }
+  .mc .mc-name { color: #c8d8f0; font-size: 11px; margin-bottom: 2px; }
+  .mc .mc-days { color: #6a7fa0; font-size: 10px; }
+
+  /* 资源双栏 */
+  .res-row { display: flex; gap: 12px; }
+  .res-box {
+    flex: 1; background: #1e2b42; border-radius: 8px;
+    padding: 10px 12px; border: 1px solid #2a3a5a;
+  }
+  .res-box .res-title { color: #4fc3f7; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .res-box .res-total { color: #f0d070; font-size: 18px; font-weight: 900; margin-bottom: 6px; }
+  .res-item { display: flex; justify-content: space-between; padding: 2px 0; }
+  .res-item .ri-label { color: #8a9bbf; font-size: 11px; }
+  .res-item .ri-val { color: #c8d8f0; font-size: 11px; font-weight: 600; }
+  .res-item .ri-free { color: #66bb6a; font-size: 10px; }
+  .res-item .ri-paid { color: #ff8a65; font-size: 10px; }
+
+  /* 抽卡策略表 */
+  .pull-table { width: 100%; border-collapse: collapse; }
+  .pull-table th {
+    background: #1e2b42; color: #4fc3f7;
+    font-size: 11px; padding: 6px 8px; text-align: center;
+    border-bottom: 1px solid #2e3a5c;
+  }
+  .pull-table td {
+    padding: 7px 8px; text-align: center;
+    border-bottom: 1px solid #1e2a40;
+    font-size: 12px; color: #c8d8f0;
+  }
+  .pull-table tr:last-child td { border-bottom: none; }
+  .pull-table .type-limited { color: #ff8a65; font-weight: 700; }
+  .pull-table .type-strong  { color: #4db6ac; font-weight: 700; }
+  .pull-table .type-gallery { color: #9575cd; font-weight: 700; }
+  .pull-table .zz-badge {
+    display: inline-block; padding: 1px 7px; border-radius: 10px;
+    font-size: 11px; font-weight: 700;
+  }
+  .zz3 { background: #ff8a2220; color: #ff8a65; border: 1px solid #ff8a6560; }
+  .zz0 { background: #4db6ac20; color: #4db6ac; border: 1px solid #4db6ac60; }
+  .pull-table .total-row td {
+    background: linear-gradient(90deg, #1e2e18, #1e2820);
+    color: #a5d6a7; font-weight: 700; font-size: 12px;
+  }
+  .pull-table .total-row .gold { color: #f0d070; }
+
+  /* 红卡策略 */
+  .red-summary {
+    background: #1e2b42; border-radius: 8px; padding: 8px 12px;
+    border: 1px solid #2a3a5a; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .red-summary .rs-label { color: #8a9bbf; font-size: 11px; }
+  .red-summary .rs-val { color: #f48fb1; font-size: 18px; font-weight: 900; }
+  .red-summary .rs-note { color: #8a9bbf; font-size: 10px; margin-left: auto; }
+
+  .routes { display: flex; gap: 10px; }
+  .route {
+    flex: 1; border-radius: 8px; padding: 12px;
+  }
+  .route-a { background: #2a1e10; border: 1px solid #ff8a6580; }
+  .route-b { background: #0e2018; border: 1px solid #66bb6a80; }
+  .route .route-label { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .route-a .route-label { color: #ff8a65; }
+  .route-b .route-label { color: #66bb6a; }
+  .route .route-target { color: #ffffff; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .route .route-formula { color: #8a9bbf; font-size: 10px; margin-bottom: 6px; }
+  .route .route-cost { font-size: 16px; font-weight: 900; margin-bottom: 2px; }
+  .route-a .route-cost { color: #ffcc80; }
+  .route-b .route-cost { color: #a5d6a7; }
+  .route .route-period { font-size: 10px; }
+  .route-a .route-period { color: #ff8a6580; }
+  .route-b .route-period { color: #66bb6a80; }
+
+  .route-note {
+    text-align: center; color: #6a7fa0; font-size: 10px;
+    margin-top: 8px; padding-top: 8px;
+    border-top: 1px solid #2e3a5c;
+  }
+
+  /* 分隔线 */
+  .divider { height: 1px; background: #2e3a5c; margin: 4px 20px 0; }
+
+  /* 底部 */
+  .footer {
+    text-align: center; color: #3a4a6a; font-size: 10px;
+    padding: 10px 0 14px; letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="card-title">物华弥新 · B档氪金策略总览</div>
+  <div class="card-subtitle">2026年度 · 长线养成规划</div>
+
+  <!-- 氪金方案 -->
+  <div class="section">
+    <div class="section-title">💰 氪金方案</div>
+    <div class="krypton-header">
+      <div class="krypton-badge">
+        <div class="price">¥152</div>
+        <div class="label">月均费用</div>
+      </div>
+      <div class="krypton-badge">
+        <div class="price">¥1,824</div>
+        <div class="label">年度总费用</div>
+      </div>
+    </div>
+    <div class="cards-row">
+      <div class="mc">
+        <div class="mc-name">大月卡</div>
+        <div class="mc-price">¥60</div>
+        <div class="mc-days">42天</div>
+      </div>
+      <div class="mc">
+        <div class="mc-name">普通月卡</div>
+        <div class="mc-price">¥30</div>
+        <div class="mc-days">30天</div>
+      </div>
+      <div class="mc">
+        <div class="mc-name">增效月卡</div>
+        <div class="mc-price">¥30</div>
+        <div class="mc-days">30天</div>
+      </div>
+      <div class="mc">
+        <div class="mc-name">活动月卡</div>
+        <div class="mc-price">¥30</div>
+        <div class="mc-days">21天</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 年度资源 -->
+  <div class="section">
+    <div class="section-title">📦 年度资源获取</div>
+    <div class="res-row">
+      <div class="res-box">
+        <div class="res-title">⚔️ 抽数</div>
+        <div class="res-total">1,603 抽 / 年</div>
+        <div class="res-item">
+          <span class="ri-label">版本免费产出</span>
+          <span class="ri-val">1,100抽 <span class="ri-free">免费</span></span>
+        </div>
+        <div class="res-item">
+          <span class="ri-label">└ 4限定×80 + 13普通×60</span>
+          <span class="ri-val"></span>
+        </div>
+        <div class="res-item">
+          <span class="ri-label">月卡订阅</span>
+          <span class="ri-val">503抽 <span class="ri-paid">付费</span></span>
+        </div>
+      </div>
+      <div class="res-box">
+        <div class="res-title">🃏 通行红卡</div>
+        <div class="res-total">~55 张 / 年</div>
+        <div class="res-item">
+          <span class="ri-label">红票兑换</span>
+          <span class="ri-val">24张 <span class="ri-free">免费</span></span>
+        </div>
+        <div class="res-item">
+          <span class="ri-label">月卡直给</span>
+          <span class="ri-val">29张 <span class="ri-paid">付费</span></span>
+        </div>
+        <div class="res-item">
+          <span class="ri-label">积分兑换</span>
+          <span class="ri-val">~2张</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 抽卡策略 -->
+  <div class="section">
+    <div class="section-title">🎯 抽卡策略</div>
+    <table class="pull-table">
+      <tr>
+        <th>类型</th>
+        <th>数量</th>
+        <th>每个投入</th>
+        <th>获得</th>
+        <th>年消耗</th>
+      </tr>
+      <tr>
+        <td class="type-limited">限定器者</td>
+        <td>4个/年</td>
+        <td>180抽（含吃井）</td>
+        <td><span class="zz-badge zz3">ZZ3</span> 3本+1井</td>
+        <td>720 抽</td>
+      </tr>
+      <tr>
+        <td class="type-strong">强力器者</td>
+        <td>5个/年</td>
+        <td>60.2抽（1UP即停）</td>
+        <td><span class="zz-badge zz0">ZZ0</span> 1本体</td>
+        <td>301 抽</td>
+      </tr>
+      <tr>
+        <td class="type-gallery">图鉴器者</td>
+        <td>8个/年</td>
+        <td>60.2抽（1UP即停）</td>
+        <td><span class="zz-badge zz0">ZZ0</span> 1本体</td>
+        <td>482 抽</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="2">合计消耗</td>
+        <td class="gold">1,503 抽</td>
+        <td>年余</td>
+        <td class="gold">+100 抽</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 红卡策略 -->
+  <div class="section">
+    <div class="section-title">🃏 红卡策略（抽卡阶段零消耗，全部留存）</div>
+    <div class="red-summary">
+      <div>
+        <div class="rs-label">年度积累</div>
+        <div class="rs-val">55 张</div>
+      </div>
+      <div style="color:#2e3a5c; font-size:20px;">|</div>
+      <div>
+        <div class="rs-label">兑换比例</div>
+        <div style="color:#c8d8f0; font-size:13px; font-weight:700;">4张红卡 = 1致知</div>
+      </div>
+      <div class="rs-note">看版本质量灵活选择路线</div>
+    </div>
+    <div class="routes">
+      <div class="route route-a">
+        <div class="route-label">路线 A · 限定满命</div>
+        <div class="route-target">限定 ZZ3 → ZZ6</div>
+        <div class="route-formula">4限定 × 3致知 × 4张</div>
+        <div class="route-cost">需 48 张</div>
+        <div class="route-period">约 1 年积累可凑齐</div>
+      </div>
+      <div class="route route-b">
+        <div class="route-label">路线 B · 强力强化</div>
+        <div class="route-target">强力 ZZ0 → ZZ3</div>
+        <div class="route-formula">5强力 × 3致知 × 4张</div>
+        <div class="route-cost">需 60 张</div>
+        <div class="route-period">约 1 年积累可凑齐</div>
+      </div>
+    </div>
+    <div class="route-note">两条路线均约 1 年一轮 · 当期版本强度高则优先对应路线</div>
+  </div>
+
+  <div class="footer">物华弥新策略规划 · 2026-04-13</div>
+</div>
+</body>
+</html>

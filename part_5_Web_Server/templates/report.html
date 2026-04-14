@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>账号价值评估报告 - {{ account_name }}</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: #f0f2f5; margin: 0; padding: 40px 20px; color: #333; line-height: 1.6; }
+        .container { max-width: 950px; margin: 0 auto; position: relative; }
+        .section { background: #fff; border-radius: 24px; padding: 40px; box-shadow: 0 10px 40px rgba(0,0,0,0.06); margin-bottom: 30px; }
+        .hero { text-align: center; background: linear-gradient(135deg, #4834d4 0%, #686de0 100%); color: white; padding: 70px 20px; }
+        .price-val { font-size: 110px; font-weight: 900; margin: 15px 0; text-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .badge { background: rgba(255,255,255,0.2); padding: 8px 25px; border-radius: 30px; font-size: 14px; margin: 5px; display:inline-block; backdrop-filter: blur(5px); }
+        h2 { font-size: 26px; color: #4834d4; margin: 0 0 30px 0; border-left: 8px solid #4834d4; padding-left: 18px; }
+        .asset-row { background: #f8f9fa; border: 1px solid #eee; padding: 20px; border-radius: 15px; margin-bottom: 15px; display: flex; flex-direction: column; }
+        .asset-main { display: flex; justify-content: space-between; align-items: center; }
+        .asset-name { font-size: 20px; font-weight: bold; color: #2c3e50; }
+        .asset-final { font-size: 26px; font-weight: 900; color: #eb4d4b; }
+        .asset-formula { margin-top: 10px; padding: 10px; background: #fff; border-radius: 8px; font-size: 12px; color: #999; border: 1px solid #f0f0f0; }
+        .team-panel { background: #f1f2f6; padding: 25px; border-radius: 20px; margin-bottom: 20px; border: 1px solid #e0e0e0; }
+        .m-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 15px; }
+        .m-item { background: #fff; padding: 10px; border-radius: 10px; font-size: 14px; border: 1px solid #eee; text-align: center; }
+        .m-core { border-color: #eb4d4b; background: #fff5f5; color: #eb4d4b; font-weight: bold; }
+        .step-card { padding: 25px; border-radius: 20px; margin-bottom: 15px; border: 1px solid #eee; border-left-width: 10px; background: #fff; }
+        .critical { border-left-color: #6c5ce7; background: #f3f0ff; }
+        .high { border-left-color: #eb4d4b; background: #fff5f5; }
+        .medium { border-left-color: #f0932b; background: #fff9f1; }
+        .low { border-left-color: #22a6b3; background: #f0fbff; }
+        .export-btn { position: fixed; top: 20px; right: 20px; padding: 12px 30px; background: #ff4757; color: white; border: none; border-radius: 35px; font-weight: bold; cursor: pointer; box-shadow: 0 8px 20px rgba(255,71,87,0.3); z-index: 1000; transition: all 0.2s; }
+        .export-btn:hover { transform: scale(1.05); background: #ff6b81; }
+    </style>
+</head>
+<body>
+    <button class="export-btn" onclick="exportImage()">📸 导出评估长图</button>
+    <div id="capture-area" class="container">
+        <div class="section hero">
+            <h1>物华弥新账号价值评估报告</h1>
+            <div class="price-val">￥{{ rmb }}</div>
+            <div>
+                <span class="badge">账号: {{ account_name }}</span>
+                <span class="badge">UP池进度: {{ completion }}%</span>
+                <span class="badge">缺失限定: {{ missing_count }}位</span>
+            </div>
+        </div>
+        <div class="section">
+            <h2>💎 价值基因审计明细</h2>
+            {{ asset_rows | safe }}
+            <div style="margin-top:40px; border-top:2px dashed #eee; padding-top:30px;">
+                <h4 style="color:#666; font-size:16px; margin-bottom:20px;">市场损耗与折价项目</h4>
+                {{ deductions_html | safe }}
+            </div>
+        </div>
+        <div class="section">
+            <h2>🏹 推荐实战阵容</h2>
+            {{ teams_html | safe }}
+        </div>
+        <div class="section">
+            <h2>🗺️ 下阶段养成建议</h2>
+            {{ roadmap_html | safe }}
+        </div>
+        <div style="text-align:center; margin-top:40px;">
+            <a href="/" style="color:#95a5a6; text-decoration:none; font-weight:bold; font-size:16px;">← 返回评估首页</a>
+        </div>
+    </div>
+    <script>
+    function exportImage() {
+        const btn = document.querySelector('.export-btn');
+        btn.style.opacity = '0';
+        html2canvas(document.querySelector("#capture-area"), {
+            useCORS: true,
+            scale: 2,
+            backgroundColor: "#f0f2f5"
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = '物华弥新评估报告_{{ account_name }}.png';
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+            btn.style.opacity = '1';
+        });
+    }
+    </script>
+</body>
+</html>

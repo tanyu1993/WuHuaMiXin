@@ -1,0 +1,13 @@
+﻿@echo off
+chcp 65001 >nul
+title 物华弥新评估系统 - 启动器
+echo [1/3] 正在清理旧的服务器进程...
+for /f "tokens=5" %%a in ('netstat -aon ^| findstr :8888 ^| findstr LISTENING') do taskkill /f /pid %%a >nul 2>&1
+echo [2/3] 正在启动 Flask 服务器 (端口 8888)...
+start /min "WHMX_SERVER" python app.py
+echo [3/3] 等待服务器初始化 (约5秒)...
+timeout /t 5 /nobreak >nul
+echo 正在打开浏览器...
+start http://127.0.0.1:8888
+echo 启动完成！
+exit

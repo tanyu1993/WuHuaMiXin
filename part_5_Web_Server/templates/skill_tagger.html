@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物华弥新：技能多维打标工作站</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/3.3.4/vue.global.prod.js"></script>
+    <style>
+        body { background: #f4f7f6; height: 100vh; display: flex; flex-direction: column; }
+        .sidebar { width: 300px; overflow-y: auto; background: white; border-right: 1px solid #ddd; }
+        .main-content { flex: 1; overflow-y: auto; padding: 20px; }
+        .skill-card { background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 15px; border-left: 5px solid #eee; }
+        .skill-card.has-status { border-left-color: #007bff; }
+        .skill-card.no-status { border-left-color: #6c757d; }
+        .skill-card.is-tagged { background-color: #f0fff4; border-left-color: #28a745; }
+        .tag-btn { margin-right: 5px; margin-bottom: 5px; }
+        .progress-header { background: #343a40; color: white; padding: 10px 20px; }
+        .badge-status { font-size: 0.8em; float: right; }
+        .active-char { background: #e9ecef; }
+        .char-item { cursor: pointer; padding: 10px 15px; border-bottom: 1px solid #f1f1f1; }
+        .char-item:hover { background: #f8f9fa; }
+        .sticky-top-bar { position: sticky; top: 0; background: white; z-index: 100; padding: 10px 0; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+<div id="app" class="d-flex h-100 w-100">
+    {% raw %}
+    <!-- 侧边栏 -->
+    <div class="sidebar d-flex flex-column">
+        <div class="p-3 bg-light border-bottom">
+            <h5>器者列表 ({{ chars.length }})</h5>
+            <div class="progress mt-2" style="height: 10px;">
+                <div class="progress-bar bg-success" :style="{width: globalProgress + '%'}"></div>
+            </div>
+            <small class="text-muted">进度: {{ totalDone }} / {{ totalSkills }} ({{ globalProgress }}%)</small>
+        </div>
+        <div class="flex-grow-1 overflow-auto">
+            <div v-for="char in filteredChars" 
+                 :key="char.name" 
+                 @click="selectChar(char)"
+                 :class="['char-item', activeChar && activeChar.name === char.name ? 'active-char' : '']">
+                <span>{{ char.name }}</span>
+                <span :class="['badge badge-status', char.done === char.total ? 'bg-success' : 'bg-secondary text-white']">
+                    {{ char.done }}/{{ char.total }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主内容区 -->
+    <div class="main-content">
+        <div v-if="!activeChar" class="text-center mt-5">
+            <h3>请从左侧选择器者开始打标</h3>
+        </div>
+        
+        <div v-else>
+            <div class="sticky-top-bar d-flex justify-content-between align-items-center">
+                <h2>【{{ activeChar.name }}】</h2>
+                <div>
+                    <button class="btn btn-outline-primary me-2" @click="filterMode = 'status'">仅显示有状态</button>
+                    <button class="btn btn-outline-secondary me-2" @click="filterMode = 'no-status'">仅显示无状态</button>
+                    <button class="btn btn-outline-dark" @click="filterMode = 'all'">显示全部</button>
+                </div>
+            </div>
+
+            <div v-for="skill in filteredSkills" :key="skill.id" 
+                 :class="['skill-card p-3', skill.has_status ? 'has-status' : 'no-status', skill.is_tagged ? 'is-tagged' : '']">
+                <div class="d-flex justify-content-between">
+                    <h5>{{ skill.name }} 
+                        <span v-if="skill.has_status" class="badge bg-primary ms-2" style="font-size: 0.5em">带状态</span>
+                    </h5>
+                    <span class="text-muted small">📍 {{ skill.range || '无范围' }}</span>
+                </div>
+                <p class="text-muted small mt-1">{{ skill.desc }}</p>
+                
+                <div class="mt-2">
+                    <div class="mb-2">
+                        <small class="text-secondary d-block mb-1">范围维:</small>
+                        <button v-for="t in ['单体', '群体', '自身']" 
+                                :class="['btn btn-sm tag-btn', skill.tags.includes(t) ? 'btn-info' : 'btn-outline-info']"
+                                @click="toggleTag(skill, t)">{{ t }}</button>
+                    </div>
+                    <div class="mb-2">
+                        <small class="text-secondary d-block mb-1">功能维:</small>
+                        <button v-for="t in ['伤害', '增益', '减益', '恢复', '特殊']" 
+                                :class="['btn btn-sm tag-btn', skill.tags.includes(t) ? 'btn-warning' : 'btn-outline-warning']"
+                                @click="toggleTag(skill, t)">{{ t }}</button>
+                    </div>
+                </div>
+                
+                <div class="mt-3 text-end">
+                    <button class="btn btn-success btn-sm" @click="saveSkill(skill)">确认并保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endraw %}
+</div>
+
+<script>
+    const { createApp, ref, computed, onMounted } = Vue;
+
+    createApp({
+        setup() {
+            const chars = ref([]);
+            const activeChar = ref(null);
+            const filterMode = ref('all');
+            const totalSkills = ref(0);
+            const totalDone = ref(0);
+
+            const fetchData = async () => {
+                const res = await fetch('/api/data');
+                const data = await res.json();
+                chars.value = data;
+                
+                let total = 0;
+                let done = 0;
+                data.forEach(c => {
+                    total += c.total;
+                    done += c.done;
+                });
+                totalSkills.value = total;
+                totalDone.value = done;
+            };
+
+            const filteredChars = computed(() => chars.value);
+            
+            const filteredSkills = computed(() => {
+                if (!activeChar.value) return [];
+                if (filterMode.value === 'status') return activeChar.value.skills.filter(s => s.has_status);
+                if (filterMode.value === 'no-status') return activeChar.value.skills.filter(s => !s.has_status);
+                return activeChar.value.skills;
+            });
+
+            const globalProgress = computed(() => {
+                if (totalSkills.value === 0) return 0;
+                return Math.round((totalDone.value / totalSkills.value) * 100);
+            });
+
+            const selectChar = (char) => {
+                activeChar.value = char;
+            };
+
+            const toggleTag = (skill, tag) => {
+                const idx = skill.tags.indexOf(tag);
+                if (idx > -1) {
+                    skill.tags.splice(idx, 1);
+                } else {
+                    skill.tags.push(tag);
+                }
+            };
+
+            const saveSkill = async (skill) => {
+                const res = await fetch('/api/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: skill.id, tags: skill.tags })
+                });
+                if (res.ok) {
+                    if (!skill.is_tagged) {
+                        skill.is_tagged = true;
+                        activeChar.value.done++;
+                        totalDone.value++;
+                    }
+                }
+            };
+
+            onMounted(fetchData);
+
+            return {
+                chars, activeChar, filterMode, totalSkills, totalDone,
+                filteredChars, filteredSkills, globalProgress,
+                selectChar, toggleTag, saveSkill
+            };
+        }
+    }).mount('#app');
+</script>
+
+</body>
+</html>

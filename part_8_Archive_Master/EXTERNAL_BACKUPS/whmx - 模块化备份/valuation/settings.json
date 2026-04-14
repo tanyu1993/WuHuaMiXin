@@ -1,0 +1,33 @@
+{
+    "PULL_MARKET_VALUE": 0.15,
+    "EXPECTED_PULLS_PER_RED": 60,
+    "ZHIZHI_COST_WEIGHT": {
+        "0": 1.0,
+        "1": 1.6,
+        "2": 2.4,
+        "3": 3.5,
+        "4": 4.0,
+        "5": 4.5,
+        "6": 5.0
+    },
+    "STRENGTH_WEIGHTS": {
+        "T0": 1.6,
+        "T0.5": 1.2,
+        "T1": 0.7,
+        "T2": 0.1,
+        "DEFAULT": 0.1
+    },
+    "LIMITED_PREMIUM": 1.4,
+    "MISSING_LIMITED_PENALTY": 0.5,
+    "COLLECTION_POINTS": [
+        [1.0, 1.0],
+        [0.95, 0.95],
+        [0.90, 0.90],
+        [0.80, 0.60],
+        [0.70, 0.30],
+        [0.50, 0.10],
+        [0.0, 0.05]
+    ],
+    "DECAY_RATE_PER_ORDER": 0.025,
+    "DECAY_FLOOR": 0.3
+}

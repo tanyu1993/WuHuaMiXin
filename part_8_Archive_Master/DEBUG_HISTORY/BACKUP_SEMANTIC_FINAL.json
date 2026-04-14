@@ -1,0 +1,2676 @@
+﻿{
+  "version": "3.1.0",
+  "description": "物华弥新器者状态逻辑库 - 语义回溯恢复终极版",
+  "STATUS_LOGIC": {
+    "瞄准": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": 4
+      },
+      "consume_on": "EVENT_BUS.ACTION.ACTION_END"
+    },
+    "礼弹": {
+      "type": "RESOURCE_GATE",
+      "unlock_condition": "AMMO_CAP > 0",
+      "trigger_action": "SENTINEL_MODE",
+      "on_act": "ACTION_LIBRARY.RESOURCE.MODIFY_AMMO(-1)",
+      "on_zero": "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+    },
+    "蓄势": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 2
+    },
+    "啸剑": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 2
+    },
+    "额外物理伤害": {
+      "type": "EXTRA_DAMAGE",
+      "damage_type": "PHYSICAL",
+      "properties": [
+        "NO_CRIT",
+        "NO_THRU",
+        "NO_BLOCK"
+      ]
+    },
+    "脆弱": {
+      "type": "STACK_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.3
+      },
+      "consume_on": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "duration": 2
+    },
+    "降攻": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": -0.2
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "援护": {
+      "type": "REDIRECT_DAMAGE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.TAKE_DAMAGE_FOR_ALLY",
+      "condition": "SINGLE_TARGET_ONLY"
+    },
+    "肃静": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS",
+      "duration": 1
+    },
+    "震怒": {
+      "type": "TAUNT",
+      "target": "APPLIER"
+    },
+    "流失": {
+      "type": "DOT_PROC",
+      "trigger": "MOVE_GRID",
+      "params": {
+        "type": "PHYSICAL",
+        "ratio": 0.05,
+        "multiplier": "GRIDS"
+      },
+      "duration": 2,
+      "max_stacks": 5
+    },
+    "额外构素伤害": {
+      "type": "EXTRA_DAMAGE",
+      "damage_type": "CONSTRUCT",
+      "properties": [
+        "NO_CRIT",
+        "NO_THRU",
+        "NO_BLOCK"
+      ]
+    },
+    "破甲": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": -0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "眩晕": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION"
+    },
+    "裳衫": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.3
+      },
+      "duration": 2,
+      "max_stacks": 2
+    },
+    "附加移动力": {
+      "type": "DYNAMIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": "STACKS"
+      },
+      "consume_on": "MOVE_PER_GRID"
+    },
+    "寒天": {
+      "type": "STACK_TRANSFORM",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      },
+      "threshold": 3,
+      "target_status": "霜冻"
+    },
+    "解构": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": -0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "灼烧": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "params": {
+        "type": "CONSTRUCT",
+        "ratio": 0.2,
+        "source": "APPLIER"
+      },
+      "duration": 2,
+      "max_stacks": 5
+    },
+    "滞缓": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "止戈": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION",
+      "sub_type": "NORMAL_ATTACK",
+      "duration": 1
+    },
+    "铁甲": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.3
+      },
+      "duration": 2,
+      "max_stacks": 2
+    },
+    "咒溃": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.DOT_DMG_RED": -0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "融伤": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "params": {
+        "type": "CONSTRUCT",
+        "ratio": 0.1,
+        "source": "LOST_HP"
+      },
+      "duration": 2,
+      "max_stacks": 3
+    },
+    "特殊范围": {
+      "type": "RANGE_TAG",
+      "pattern": "CROSS_4_AND_GEOMETRY.RADIUS.SQUARE_2"
+    },
+    "回溯": {
+      "type": "STATE_SNAPSHOT",
+      "action": "ACTION_LIBRARY.RESOURCE.RESTORE_PREVIOUS_STATE",
+      "targets": [
+        "ATTRIBUTE_REGISTRY.BASE.HP",
+        "EN_MAX",
+        "ATTRIBUTE_REGISTRY.SUPPORT.AIM_CD_RED"
+      ]
+    },
+    "凝神": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.AIM_CD_RED": [
+          0.4,
+          0.5,
+          0.6
+        ]
+      },
+      "duration": 2
+    },
+    "鲁莽": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC": 0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "疏忽": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SENTINEL_DMG_INC": 0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "萧瑟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": -0.2
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "同命": {
+      "type": "DYNAMIC_MODIFIER",
+      "multiplier_stat": "COUNT(ALLIES.STATUS(同命))",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.07
+      },
+      "max": 0.56
+    },
+    "附骨": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": 0.3
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "霜冻": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION",
+      "duration": 1
+    },
+    "禁足": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "duration": 1
+    },
+    "沉睡": {
+      "type": "SLEEP_STATUS",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.CRIT_DMG_TAKEN_INC": 0.3
+      },
+      "wake_on": "EVENT_BUS.DEFENSE.DMG_TAKEN",
+      "duration": 2
+    },
+    "额外真实伤害": {
+      "type": "EXTRA_DAMAGE",
+      "damage_type": "TRUE",
+      "properties": [
+        "IGNORE_DEF",
+        "IGNORE_RED"
+      ]
+    },
+    "余音": {
+      "type": "STACK_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.SKILL_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, 1.0, ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "multiplier_stat": "STACKS",
+      "max_stacks": 5
+    },
+    "共奏": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [0.4, 0.5, 0.6], ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "duration": 2
+    },
+    "迭奏": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": 0.3,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC": 0.3,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": 0.3
+      },
+      "duration": 2
+    },
+    "天星": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "type": "STATIC",
+          "changes": {
+            "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC": "STACKS * [0.2, 0.25, 0.3]"
+          }
+        },
+        {
+          "type": "CHANCE_PROC",
+          "trigger": "EVENT_BUS.ACTION.SKILL_DEALT",
+          "chance": "STACKS * 0.5",
+          "action": "ACTION_LIBRARY.TURN_LOGIC.RESET_SKILL_CD"
+        }
+      ],
+      "max_stacks": 4,
+      "consume_on": "EVENT_BUS.ACTION.SKILL_DEALT"
+    },
+    "凛冬": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "TANK",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED([0.15, 0.2, 0.3])"
+      }
+    },
+    "凛冬-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "TANK",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED([0.15, 0.2, 0.3])"
+      }
+    },
+    "四季同鸣": {
+      "type": "MULTI_MODE",
+      "action": "ACTION_LIBRARY.STATUS.ADD_VIRTUAL_TAGS(['阳春', '炎夏', '暮秋', '凛冬', '恒时'])",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PURSUIT_DMG_INC": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS"
+    },
+    "天时往复": {
+      "type": "RESOURCE_RULE",
+      "trigger": "EVENT_BUS.SYSTEM.ANY_UNIT_TURN_END",
+      "action": "ACTION_LIBRARY.RESOURCE.SET_VAL(AMMO_CAP, 4)"
+    },
+    "恒时": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "STRAT",
+      "logic": {
+        ">=1": "ALLIES.ATTRIBUTE_REGISTRY.BASE.ATK([0.15, 0.2, 0.3])",
+        ">=3": "ALLIES.HEAL_BY_HIT([0.15, 0.2, 0.3])"
+      }
+    },
+    "恒时-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "STRAT",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.BASE.ATK([0.2, 0.3, 0.4])",
+        ">=3": "HEAL_BY_HIT([0.2, 0.3, 0.4])"
+      }
+    },
+    "暮秋": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "CONSTR",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.CONST_DMG_INC([0.15, 0.2, 0.3])"
+      }
+    },
+    "暮秋-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "CONSTR",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.CONST_DMG_INC([0.15, 0.2, 0.3])"
+      }
+    },
+    "灿金": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.02,
+          0.04,
+          0.06
+        ]
+      },
+      "max_stacks": 5,
+      "expiry": "EVENT_BUS.STATUS.STATUS_EXIT(四季同鸣)"
+    },
+    "炎夏": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "SNIPER",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN([0.15, 0.2, 0.3])"
+      }
+    },
+    "炎夏-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "SNIPER",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN([0.15, 0.2, 0.3])"
+      }
+    },
+    "阳春": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "FIGHTER",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG([0.3, 0.45, 0.6])"
+      }
+    },
+    "阳春-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "gate": "FIGHTER",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        ">=1": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC([0.15, 0.2, 0.3])",
+        ">=3": "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG([0.3, 0.45, 0.6])"
+      }
+    },
+    "打卡": {
+      "type": "STACK_BOMB",
+      "threshold": 6,
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.AOE_SPLASH(PHYSICAL, [1.4, 1.7, 2.0], GEOMETRY.RADIUS.SQUARE_2)",
+      "consume": 6,
+      "max_stacks": 9
+    },
+    "抛光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.1,
+          0.15,
+          0.2
+        ],
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PURSUIT_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "duration": 2
+    },
+    "未琢": {
+      "type": "STACK_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.PURSUIT_DMG_TAKEN_INC": 0.3
+      },
+      "consume_on": "EVENT_BUS.ACTION.PURSUIT_ATTACK_DEALT",
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "特例": {
+      "type": "TURN_RULE",
+      "trigger": "EVENT_BUS.ACTION.ULTIMATE_DEALT",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_TURN",
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS",
+      "on_act": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO(1.0)"
+    },
+    "镂金卷云": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ULT_DMG_INC": "PER_STACK"
+      },
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.ULTIMATE_DEALT"
+    },
+    "合金": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.PHYS_DMG_RED": 0.1
+      },
+      "max_stacks": 5,
+      "duration": 2
+    },
+    "秘辛": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.CONST_DMG_RED": 0.2
+      },
+      "duration": 2
+    },
+    "地心说": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.06,
+          0.08,
+          0.1
+        ]
+      },
+      "max_stacks": 4,
+      "expiry": "EVENT_BUS.SYSTEM.ROUND_END"
+    },
+    "地浑环": {
+      "type": "DOMAIN_BUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.1,
+          0.15,
+          0.2
+        ],
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      },
+      "expiry": "EVENT_BUS.DOMAIN.EXIT"
+    },
+    "天常环": {
+      "type": "STACK_BUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "max_stacks": 2,
+      "consume_on": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT"
+    },
+    "子午环": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.7
+      },
+      "duration": 1
+    },
+    "铜锈": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC": [
+          0.05,
+          0.08,
+          0.1
+        ]
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "寒刃": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_START",
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(寒天, 1)",
+      "duration": "TURN_END"
+    },
+    "飞雪域": {
+      "type": "AURA_DOMAIN",
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "trigger": "EVENT_BUS.SYSTEM.ANY_UNIT_TURN_END",
+      "condition": "TARGET_IN_GEOMETRY(GEOMETRY.RADIUS.SQUARE_3)",
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(寒天, 1)",
+      "duration": 2
+    },
+    "似夜奔行": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "type": "ACTION_AUGMENT",
+          "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+          "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [1.8, 2.4, 3.0], ATTRIBUTE_REGISTRY.BASE.DEF_P)"
+        },
+        {
+          "type": "REACTION_HEAL",
+          "trigger": "EVENT_BUS.ACTION.COUNTER_ATTACK_DEALT",
+          "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP(0.05)"
+        }
+      ]
+    },
+    "奇石": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.COUNTER_RATE": 1.0,
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "润水": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_IN": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "耀阳永辉": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": "GEOMETRY.RADIUS.SQUARE_2"
+      },
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_START",
+      "action": [
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(融伤, 1)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(灼烧, 1)"
+      ],
+      "consume_on": "2_ATTACKS"
+    },
+    "和谐之美": {
+      "type": "ACTION_GRANT",
+      "trigger": "EVENT_BUS.ACTION.SKILL_DEALT",
+      "action": [
+        "ACTION_LIBRARY.RESOURCE.MODIFY_EN(2)",
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+      ],
+      "lock": "STATUS(黄金比例)",
+      "consume": "TRUE"
+    },
+    "怒雷": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.2
+      },
+      "max_stacks": 2,
+      "duration": 3
+    },
+    "爱琴之潮": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_ATK_MULT": [
+          0.5,
+          0.65,
+          0.8
+        ]
+      },
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT"
+    },
+    "神人同形": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": 0.1
+      },
+      "max_stacks": 5,
+      "duration": 2
+    },
+    "金星之怒": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_START",
+      "action": "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.1 * (ATTR.ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE / 0.25))",
+      "max_stacks": 4,
+      "consume": "TRUE"
+    },
+    "经变": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.ACTION_END",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.KNOCKBACK(1, GEOMETRY.RADIUS.SQUARE_1)",
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [0.8, 1.1, 1.5], ATTRIBUTE_REGISTRY.BASE.ATK)"
+      ],
+      "duration": 1
+    },
+    "速羽": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "帝势": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      },
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.SKILL_DEALT"
+    },
+    "成窟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.LIFESTEAL": [
+          0.07,
+          0.1,
+          0.15
+        ]
+      },
+      "duration": 2
+    },
+    "铭刻千载": {
+      "type": "SELECTION_MODIFIER",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.DECREASE_AGGRO",
+      "duration": 1
+    },
+    "镌岩": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.05,
+          0.07,
+          0.1
+        ],
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ULT_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "max_stacks": 5,
+      "consume_on": "EVENT_BUS.ACTION.ULTIMATE_DEALT"
+    },
+    "赞文": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.1,
+          0.15,
+          0.2
+        ],
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_STRENGTH": [
+          0.05,
+          0.07,
+          0.1
+        ],
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.05,
+          0.07,
+          0.1
+        ]
+      },
+      "duration": 1
+    },
+    "莲台": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2,
+            "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.2,
+            "ATTRIBUTE_REGISTRY.BASE.MOVE": 2,
+            "ATTRIBUTE_REGISTRY.SUPPORT.LIFESTEAL": 0.05
+          }
+        },
+        {
+          "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+          "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(滞缓, 1, GEOMETRY.RADIUS.SQUARE_2)"
+        }
+      ]
+    },
+    "莲心": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.05,
+          0.07,
+          0.1
+        ]
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "莲花": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.ATK": [
+              0.2,
+              0.4,
+              0.6
+            ],
+            "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC": [
+              0.2,
+              0.4,
+              0.6
+            ]
+          }
+        },
+        {
+          "trigger": "EVENT_BUS.ACTION.COUNTER_ATTACK_DEALT",
+          "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(莲心, 1, GEOMETRY.SCOPE.GLOBAL_ALLIES)"
+        }
+      ]
+    },
+    "澄明": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC": 0.1
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "纸上书": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+          }
+        },
+        {
+          "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+          "action": [
+            "ACTION_LIBRARY.RESOURCE.MODIFY_EN(2)",
+            "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION(ULT_ONLY)"
+          ],
+          "consume": "TRUE"
+        }
+      ]
+    },
+    "才名": {
+      "type": "CONDITIONAL_BRANCHING",
+      "logic": {
+        "IF_CLASS(['FIGHTER', 'TANK'])": "ATTRIBUTE_REGISTRY.BASE.ATK([0.05, 0.1, 0.15]), ATTRIBUTE_REGISTRY.SUPPORT.LIFESTEAL([0.02, 0.04, 0.06])",
+        "IF_CLASS(['SNIPER', 'STRAT', 'CONSTR'])": "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC([0.05, 0.1, 0.15]), ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG([0.1, 0.2, 0.3])"
+      },
+      "duration": 2
+    },
+    "辑录": {
+      "type": "BURST_MODE",
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": 3,
+        "NORMAL_SCOPE": "GEOMETRY.RADIUS.SQUARE_2"
+      },
+      "on_act_end": "DECREASE_SCOPE_STEP",
+      "duration": 2
+    },
+    "有备而行": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "游历": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.4,
+          0.6,
+          0.8
+        ]
+      }
+    },
+    "穿透": {
+      "type": "ACTION_GRANT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "action": [
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_TURN",
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+      ]
+    },
+    "锋钩": {
+      "type": "NEXT_ACTION_BUFF",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_START",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": [
+          0.3,
+          0.4,
+          0.5
+        ]
+      }
+    },
+    "如君亲临": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [0.06, 0.09, 0.12], ATTRIBUTE_REGISTRY.BASE.HP)"
+    },
+    "韬光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 2
+    },
+    "伏龙巡猎": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 4
+    },
+    "皇威": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.COUNTER_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.4)"
+    },
+    "合范成器": {
+      "type": "RECOVERY_HOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "params": {
+        "ratio": [
+          0.05,
+          0.1,
+          0.15
+        ],
+        "stat": "ATTRIBUTE_REGISTRY.BASE.HP"
+      }
+    },
+    "怜悯": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": -0.15,
+        "ATTRIBUTE_REGISTRY.COMBAT.BLOCK_RATE": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      }
+    },
+    "游龙": {
+      "type": "IMMUNITY",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_STATUS(滞缓)"
+    },
+    "龙凤献瑞": {
+      "type": "IMMORTAL",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DEATH",
+      "duration": 1
+    },
+    "供奉": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "SOURCE_HAS_STATUS(瞄准)",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT"
+    },
+    "文武显德": {
+      "type": "SHIELD_GATE",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.SET_DMG_VALUE(0)",
+      "condition": "ACTION_TYPE_IN(['NORMAL', 'SENTINEL'])",
+      "duration": 2,
+      "consume_on": "EVENT_BUS.DEFENSE.HIT_RECEIVED"
+    },
+    "生命偷取": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.LIFESTEAL": [
+          0.03,
+          0.04,
+          0.05
+        ]
+      }
+    },
+    "皇天之赐": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_IN": [
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      "duration": 3
+    },
+    "器韵": {
+      "type": "REACTION_HEAL",
+      "trigger": "EVENT_BUS.DEFENSE.DMG_TAKEN",
+      "condition": "ABSORBED_BY_SHIELD",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP('FLAT_VAL')",
+      "params": {
+        "ratio": [
+          0.03,
+          0.05,
+          0.08
+        ],
+        "base": "ATTRIBUTE_REGISTRY.BASE.HP",
+        "flat": [
+          100,
+          200,
+          300
+        ]
+      },
+      "duration": 2
+    },
+    "环扣": {
+      "type": "STACK_ACCUMULATOR",
+      "max_stacks": 3
+    },
+    "春盛": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.05,
+          0.1,
+          0.15
+        ]
+      }
+    },
+    "活力": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "type": "STATIC",
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1,
+            "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.05
+          }
+        },
+        {
+          "type": "HOT",
+          "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+          "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP(0.1)"
+        }
+      ],
+      "duration": 2
+    },
+    "同赏": {
+      "type": "REDIRECT_DAMAGE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.TAKE_DAMAGE_FOR_ALLY",
+      "range": "GEOMETRY.RADIUS.SQUARE_1",
+      "condition": "SINGLE_TARGET_ONLY",
+      "duration": 1
+    },
+    "不负三光": {
+      "type": "SLEEP_STATUS",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RESIST": -0.3,
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.3
+      },
+      "wake_on": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "on_timeout": "ACTION_LIBRARY.STATUS.APPLY_STATUS(沉睡, 2, GEOMETRY.SCOPE.RANDOM_ENEMIES_2)",
+      "duration": 2
+    },
+    "为道": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO",
+      "params": {
+        "mult": [
+          0.7,
+          0.9,
+          1.1
+        ]
+      }
+    },
+    "有归于无": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_PROB": [
+          0.2,
+          0.4,
+          0.6
+        ]
+      },
+      "duration": 2
+    },
+    "侦探时间": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.2,
+          0.4,
+          0.6
+        ]
+      },
+      "duration": 3
+    },
+    "探源": {
+      "type": "STACK_ACCUMULATOR",
+      "max_stacks": 6
+    },
+    "定宫": {
+      "type": "SHIELD_GATE",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DMG_TYPE(CONSTRUCT)",
+      "on_trigger": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [0.1, 0.15, 0.2], ATTRIBUTE_REGISTRY.BASE.HP)",
+      "duration": 2,
+      "consume_on": "ONCE"
+    },
+    "旋律": {
+      "type": "VIRTUAL_TAG_HOLDER",
+      "sub_tags": [
+        "清乐",
+        "燕乐",
+        "雅乐"
+      ]
+    },
+    "正音": {
+      "type": "ACTION_FAILURE_RATE",
+      "action_type": "NORMAL_ATTACK",
+      "chance": 0.8,
+      "on_failure": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(SELF, 1.0, ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "duration": 1
+    },
+    "警戒治疗": {
+      "type": "SENTINEL_MODE",
+      "sub_type": "HEAL",
+      "condition": "TARGET_HP_PCT < 1.0"
+    },
+    "烫样组件": {
+      "type": "LOCK_SURVIVAL",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.4
+      },
+      "consume_on": "HIT_COUNT([2, 3, 4])",
+      "expiry": "EVENT_BUS.SYSTEM.TURN_START"
+    },
+    "簇刃之锐": {
+      "type": "NEXT_ACTION_BUFF",
+      "trigger": "EVENT_BUS.ACTION.ACTION_START",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PHYS_DMG_INC": [
+          0.6,
+          0.8,
+          1.0
+        ]
+      },
+      "consume_on": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT"
+    },
+    "纸模之损": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.5
+      },
+      "consume_on": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "duration": 1
+    },
+    "禅定": {
+      "type": "STACK_SHIELD",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": "SCALING"
+      },
+      "max_stacks": 4,
+      "consume_on": "EVENT_BUS.DEFENSE.DMG_TAKEN"
+    },
+    "金身": {
+      "type": "STACK_GATE",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.SET_DMG_VALUE(0)",
+      "max_stacks": 5,
+      "consume_on": "EVENT_BUS.DEFENSE.DMG_TAKEN"
+    },
+    "和鸣": {
+      "type": "ACTION_AUGMENT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "duration": 1
+    },
+    "龙印": {
+      "type": "MARKER_SYNERGY",
+      "on_hit_by_allies": {
+        "chance": [
+          0.5,
+          0.75,
+          1.0
+        ],
+        "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(啸剑, 1)"
+      }
+    },
+    "上膛": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ULT_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "on_ult": "ACTION_LIBRARY.LOGIC_GATE.AUGMENT_STATUS_CHANCE(狙击, STUN_PROB)"
+    },
+    "奔袭": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": [
+          0.4,
+          0.7,
+          1.0
+        ]
+      },
+      "on_hit": "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1)"
+    },
+    "狙击": {
+      "type": "STACK_BOMB",
+      "chance_per_stack": [
+        0.15,
+        0.2,
+        0.25
+      ],
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(眩晕, 1)",
+      "max_stacks": 3,
+      "consume_on": "TRIGGER_SUCCESS"
+    },
+    "安可": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": 1,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.CONST_DMG_INC": 0.8
+      },
+      "duration": 1
+    },
+    "应援棒": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "TARGET_CLASS(TANK)",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "duration": 2
+    },
+    "荧光棒": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "TARGET_CLASS(TANK)",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.05,
+          0.07,
+          0.1
+        ]
+      },
+      "duration": 2
+    },
+    "妙笔": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.AIM_CD_RED": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "duration": 1
+    },
+    "丝如雪": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(寒天, 1)"
+    },
+    "增愈": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_IN": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "桃意绵绵": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.CONST_DMG_INC": [
+          0.04,
+          0.05,
+          0.06
+        ]
+      },
+      "max_stacks": 5,
+      "duration": 2
+    },
+    "七孔回音": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "鹤骨悠声": {
+      "type": "RECOVERY_HOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "params": {
+        "ratio": 0.2,
+        "stat": "ATTRIBUTE_REGISTRY.BASE.ATK",
+        "source": "贾湖骨笛"
+      },
+      "max_stacks": 2
+    },
+    "剑鸣": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO",
+      "params": {
+        "mult": [
+          0.4,
+          0.6,
+          0.8
+        ]
+      },
+      "extra_logic": "IF_STATUS(觉醒) THEN MODIFY_EN(1)",
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.COMBO_ATTACK_DEALT"
+    },
+    "蛰伏": {
+      "type": "STACK_TRANSFORM",
+      "threshold": 4,
+      "target_status": "觉醒",
+      "on_transform": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+    },
+    "觉醒": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_PROB": [
+          0.4,
+          0.5,
+          0.6
+        ],
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.3
+      }
+    },
+    "脱壳": {
+      "type": "STACK_SHIELD",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.25
+      },
+      "max_stacks": 2,
+      "consume_on": "EVENT_BUS.ACTION.EVADE_SUCCESS"
+    },
+    "金玉": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.4,
+          0.6,
+          0.8
+        ]
+      },
+      "condition": "ACTION_TYPE(COUNTER)",
+      "duration": 1
+    },
+    "隐蔽": {
+      "type": "STEALTH_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.25
+      },
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "duration": 1
+    },
+    "灵动": {
+      "type": "STACK_TRANSFORM",
+      "trigger": "EVENT_BUS.STATUS.STACK_REACH",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+    },
+    "热诚": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.SPD": 15,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC": 0.1
+      },
+      "max_stacks": 5,
+      "on_turn_start": "DECREASE_STACK(1)"
+    },
+    "犇牛": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.HP": "STACKS * VAL"
+      },
+      "max_stacks": 4
+    },
+    "敏捷": {
+      "type": "STACK_SHIELD",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.EVASION",
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.EVADE_SUCCESS"
+    },
+    "夜灯华": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.15
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "残烛回光": {
+      "type": "IMMORTAL_LOCK",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DEATH",
+        "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION"
+      ],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.2,
+          0.4
+        ]
+      },
+      "overrides": {
+        "HEAL_SCOPE": "GEOMETRY.RADIUS.SQUARE_4"
+      },
+      "on_exit": "ACTION_LIBRARY.TURN_LOGIC.RETIRE",
+      "duration": 2
+    },
+    "残烛回光-超群": {
+      "type": "IMMORTAL_LOCK",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DEATH",
+        "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION"
+      ],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.2,
+          0.4
+        ]
+      },
+      "overrides": {
+        "HEAL_SCOPE": "GEOMETRY.SCOPE.GLOBAL_ALLIES"
+      },
+      "on_exit": "ACTION_LIBRARY.TURN_LOGIC.RETIRE",
+      "duration": 2
+    },
+    "沐光": {
+      "type": "CONDITIONAL_MODIFIER",
+      "trigger": "EVENT_BUS.ACTION.HEAL_DEALT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.25,
+          0.5,
+          0.75
+        ]
+      },
+      "duration": 2
+    },
+    "金戈": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.1
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "金羽": {
+      "type": "STACK_SHIELD",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "max_stacks": 1,
+      "consume_on": "EVENT_BUS.DEFENSE.DMG_TAKEN"
+    },
+    "驾鹤引雷": {
+      "type": "MARKER_SYNERGY",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "condition": "TARGET_HAS_STATUS(嘹唳亭风)",
+      "chance": [
+        0.3,
+        0.4,
+        0.5
+      ],
+      "action": "TRIGGER_STATUS_EFFECT(嘹唳亭风)"
+    },
+    "惊蕊": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SENTINEL_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "max_stacks": 3
+    },
+    "夜刺": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_PROB": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "max_stacks": 3,
+      "duration": 1
+    },
+    "重创": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.2
+      },
+      "max_stacks": 1,
+      "duration": 1
+    },
+    "隐夜": {
+      "type": "STEALTH_MODE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.6,
+          0.8,
+          1.0
+        ]
+      },
+      "duration": 3
+    },
+    "垒岩": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS(峰石) >= 3",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.ULT_ATK_MULT": [
+          1.5,
+          1.8,
+          2.0
+        ],
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": 0.3
+      }
+    },
+    "壑川": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS(峰石)>=1 AND STACKS(流纹)>=2",
+      "overrides": {
+        "ULT_SCOPE": "GEOMETRY.RADIUS.SQUARE_2",
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.ULT_ATK_MULT": [
+          1.1,
+          1.3,
+          1.5
+        ]
+      },
+      "on_hit": "ACTION_LIBRARY.STATUS.APPLY_STATUS(脆弱, 2)"
+    },
+    "步移景异": {
+      "type": "RESOURCE_GEN",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1)",
+      "duration": 2
+    },
+    "涓流": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS(峰石)>=2 AND STACKS(流纹)>=1",
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.ULT_ATK_MULT": [
+          1.3,
+          1.5,
+          1.8
+        ]
+      },
+      "on_hit": [
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(融伤, 1)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(灼烧, 1)"
+      ]
+    },
+    "滔滔": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS(流纹) >= 3",
+      "overrides": {
+        "ULT_SCOPE": "GEOMETRY.RADIUS.SQUARE_2",
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.ULT_ATK_MULT": [
+          1.1,
+          1.3,
+          1.5
+        ]
+      },
+      "on_hit": "ACTION_LIBRARY.STATUS.APPLY_STATUS(寒天, 2)"
+    },
+    "笔底山河": {
+      "type": "RESOURCE_BOOST",
+      "trigger": "EVENT_BUS.STATUS.STATUS_APPLIED",
+      "condition": "STATUS_IN(['峰石', '流纹'])",
+      "action": "ACTION_LIBRARY.STATUS.ADD_STATUS_STACK(1)",
+      "consume": "TRUE"
+    },
+    "青绿设色": {
+      "type": "NEXT_ACTION_MODIFIER",
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.ULT_RANGE": 2
+      },
+      "consume_on": "EVENT_BUS.ACTION.SKILL_DEALT"
+    },
+    "特别印章": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "type": "STATIC",
+          "changes": {
+            "ATTRIBUTE_REGISTRY.LOGIC_MOD.SENTINEL_RANGE": 2
+          }
+        },
+        {
+          "type": "REACTION_CD_RED",
+          "trigger": "EVENT_BUS.ACTION.SENTINEL_CRIT",
+          "action": [
+            "ACTION_LIBRARY.RESOURCE.MODIFY_EN(2, TARGET='皇后之玺')",
+            "ACTION_LIBRARY.TURN_LOGIC.RESET_SKILL_CD(TARGET='皇后之玺')"
+          ],
+          "limit_per_round": 1
+        }
+      ]
+    },
+    "春泥": {
+      "type": "CONDITIONAL_HEAL",
+      "trigger": "EVENT_BUS.STATUS.DISPEL_DEBUFF",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP('FLAT_VAL')",
+      "params": {
+        "ratio": [
+          0.03,
+          0.05,
+          0.08
+        ],
+        "base": "ATTRIBUTE_REGISTRY.BASE.ATK",
+        "flat": [
+          100,
+          200,
+          300
+        ]
+      },
+      "consume": "TRUE"
+    },
+    "妙舞": {
+      "type": "CHANCE_PROC",
+      "trigger": "EVENT_BUS.ACTION.SENTINEL_HEAL",
+      "chance": "STACKS * 0.1",
+      "action": "ACTION_LIBRARY.RESOURCE.CANCEL_CONSUME(AMMO_CAP)",
+      "max_stacks": 5
+    },
+    "余香": {
+      "type": "IMMUNITY",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DOT",
+        "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DEBUFF"
+      ]
+    },
+    "沐芳": {
+      "type": "THRESHOLD_MODIFIER",
+      "condition": "STACKS >= 3",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      },
+      "max_stacks": 10
+    },
+    "香气法则": {
+      "type": "CONDITIONAL_MODIFIER",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_STATUS_COMBINATION",
+      "check": {
+        "啸剑": "MAX",
+        "蓄势": "MAX"
+      },
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC": 0.5
+      },
+      "auto_remove": "IF_NOT_CONDITION"
+    },
+    "香谱": {
+      "type": "EMERGENCY_HEAL",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "ATTRIBUTE_REGISTRY.BASE.HP < 0.5",
+      "action": "ACTION_LIBRARY.RESOURCE.HEAL_BY_STAT_PCT(ATTRIBUTE_REGISTRY.BASE.ATK, 3.0)",
+      "consume": "TRUE"
+    },
+    "落照": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [0.5, 0.7, 0.9], ATTRIBUTE_REGISTRY.BASE.ATK, GEOMETRY.RADIUS.SQUARE_1)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(灼烧, 1, GEOMETRY.RADIUS.SQUARE_1)"
+      ]
+    },
+    "指针": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_START",
+      "chance": [
+        0.5,
+        0.75,
+        1.0
+      ],
+      "action": "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.4, CONSTRUCT)",
+      "duration": 2
+    },
+    "钟表校准": {
+      "type": "ACTION_AUGMENT",
+      "action": [
+        "ACTION_LIBRARY.TURN_LOGIC.RESET_SKILL_CD",
+        "CHANGE_SKILL_SCOPE(GEOMETRY.RADIUS.SQUARE_3)"
+      ],
+      "on_execute": [
+        "ACTION_LIBRARY.RESOURCE.MODIFY_HP(0.1, 0.15, 0.2)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(分秒不差)",
+        "ACTION_LIBRARY.RESOURCE.MODIFY_EN(2)"
+      ]
+    },
+    "锚启": {
+      "type": "ACTION_GRANT",
+      "trigger": "EVENT_BUS.ACTION.ACTION_END",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION",
+      "limit_per_round": 1,
+      "duration": 2
+    },
+    "了悟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": 0.5
+      },
+      "duration": 1
+    },
+    "学海无涯": {
+      "type": "EMERGENCY_GATE",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "ATTRIBUTE_REGISTRY.BASE.HP < 0.5",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.SET_DMG_VALUE(1)",
+        "ACTION_LIBRARY.STATUS.ADD_STATUS_STACK(学分, 1)",
+        "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+      ]
+    },
+    "师恩": {
+      "type": "STEALTH_MODE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "condition": "SKILL_TARGETING_ONLY",
+      "duration": 1
+    },
+    "教学相长": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.04,
+          0.05,
+          0.06
+        ]
+      },
+      "max_stacks": 5,
+      "duration": 2
+    },
+    "游学心得": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC": 0.6
+      },
+      "duration": 1
+    },
+    "解惑": {
+      "type": "REACTION_SYNERGY",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.EXECUTE_SENTINEL(OWNER=商周十供)",
+        "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1, OWNER=商周十供)"
+      ],
+      "consume": 1
+    },
+    "沁声": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SKILL_DMG_INC": 0.3
+      },
+      "global_limit": 2
+    },
+    "灵音": {
+      "type": "AURA_DOMAIN",
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.6
+      },
+      "on_enter": "ACTION_LIBRARY.STATUS.APPLY_STATUS(眩晕, 1)",
+      "on_kill_in_range": "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1)"
+    },
+    "众生一相": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO",
+      "params": {
+        "mult": [
+          1.0,
+          1.1,
+          1.3
+        ]
+      },
+      "duration": 2
+    },
+    "勇毅": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC": [
+          0.12,
+          0.16,
+          0.2
+        ]
+      },
+      "max_stacks": 5
+    },
+    "酣饮": {
+      "type": "REACTION_SYNERGY",
+      "trigger": "EVENT_BUS.ACTION.ALLY_COMBO_DEALT",
+      "action": [
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION",
+        "ACTION_LIBRARY.STATUS.REFRESH_STATUS(['啸剑', '蓄势'])"
+      ],
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_ATK_MULT": 0.01
+      }
+    },
+    "昼时": {
+      "type": "STACK_BRANCHING",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "logic": {
+        "1": "ACTION_LIBRARY.DEFENSE_GATE.SET_DMG_VALUE(0, NEXT_HIT)",
+        "2": "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED([0.2, 0.35, 0.5])",
+        "3": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DMG_TYPE(ALL)"
+      }
+    },
+    "舟浮": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "action": "ACTION_LIBRARY.TURN_LOGIC.SHIFT_ACTION_ORDER(PREVIOUS)"
+        },
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.SPD": [
+              20,
+              30,
+              40
+            ]
+          }
+        }
+      ],
+      "duration": 2
+    },
+    "铜人抱箭": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.03,
+          0.04,
+          0.05
+        ],
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.03,
+          0.04,
+          0.05
+        ]
+      },
+      "max_stacks": 3
+    },
+    "寿海": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.SENTINEL_DMG_INC": [
+          0.3,
+          0.4,
+          0.5
+        ]
+      }
+    },
+    "水痕": {
+      "type": "REACTION_HEAL",
+      "trigger": "EVENT_BUS.ACTION.ALLY_SENTINEL_HEAL",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP('RATIO_OF_ATK')",
+      "params": {
+        "ratio": [
+          0.05,
+          0.08,
+          0.1
+        ],
+        "stat": "ATTRIBUTE_REGISTRY.BASE.ATK"
+      }
+    },
+    "福山": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+              0.6,
+              0.8,
+              1.0
+            ]
+          }
+        },
+        {
+          "trigger": "EVENT_BUS.ACTION.HEAL_DEALT",
+          "action": "ACTION_LIBRARY.STATUS.DISPEL_DEBUFF(RANDOM_1)"
+        }
+      ]
+    },
+    "吉时": {
+      "type": "ACTION_GRANT",
+      "trigger": "EVENT_BUS.ACTION.COMBO_HIT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC": [
+          0.2,
+          0.25,
+          0.3
+        ]
+      },
+      "action": [
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION",
+        "ACTION_LIBRARY.TURN_LOGIC.RESET_SKILL_CD"
+      ]
+    },
+    "浑然天成": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ULT_DMG_INC": [
+          0.6,
+          0.8,
+          1.0
+        ]
+      },
+      "max_stacks": 2,
+      "consume_on": "EVENT_BUS.ACTION.ULTIMATE_DEALT"
+    },
+    "明镜": {
+      "type": "STACK_ACCUMULATOR",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "action": "ACTION_LIBRARY.STATUS.ADD_STATUS_STACK(SELF, 1)"
+    },
+    "庆功酒": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.15,
+          0.22,
+          0.3
+        ],
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": 1
+      },
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_ATK_MULT": 2.0,
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.SKILL_ATK_MULT": 2.0
+      },
+      "on_damage_dealt": "ACTION_LIBRARY.OFFENSE.AOE_SPLASH(EXTRA_TRUE, [0.3, 0.4, 0.5], GEOMETRY.RADIUS.SQUARE_2)",
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS",
+      "duration": 1
+    },
+    "粟酒": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "酿酒": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.05
+      },
+      "max_stacks": 6,
+      "duration": 2
+    },
+    "麦酒": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      }
+    },
+    "花神": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": 0.2
+      },
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "折射": {
+      "type": "STEALTH_MODE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "condition": "MAIN_TARGET_ONLY",
+      "duration": 1
+    },
+    "素纱": {
+      "type": "MOVEMENT_MODIFIER",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.BLINK",
+      "range": "GEOMETRY.RADIUS.SQUARE_1",
+      "target": "ALLIES",
+      "duration": 1
+    },
+    "蚕丝": {
+      "type": "STACK_SHIELD",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.EVASION",
+      "max_stacks": 3,
+      "consume_on": "EVENT_BUS.ACTION.EVADE_SUCCESS"
+    },
+    "超脱": {
+      "type": "ATTACH_MODE",
+      "lock": [
+        "ACTION",
+        "TARGETING",
+        "DAMAGE"
+      ],
+      "duration": 2
+    },
+    "透光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.4,
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.4,
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.4,
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PHYS_DMG_INC": 0.2,
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.15
+      }
+    },
+    "舍利": {
+      "type": "AURA_DOMAIN",
+      "lock": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.3
+      },
+      "on_enter": "ACTION_LIBRARY.STATUS.APPLY_STATUS(肃静, 1)",
+      "on_kill_in_range": "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1)",
+      "duration": "DOMAIN_END"
+    },
+    "虚实": {
+      "type": "STEALTH_MODE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "duration": 1
+    },
+    "临摹": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, 0.6, ATTRIBUTE_REGISTRY.BASE.ATK, OWNER='王氏书翰卷')",
+      "duration": 2
+    },
+    "形似": {
+      "type": "STACK_ACCUMULATOR",
+      "max_stacks": 3,
+      "on_applied": [
+        "ACTION_LIBRARY.RESOURCE.MODIFY_EN(1, TARGET='王氏书翰卷')",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(附加移动力, 1, TARGET='王氏书翰卷')"
+      ],
+      "expiry": "EVENT_BUS.SYSTEM.ROUND_END"
+    },
+    "神似": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.2,
+          0.25,
+          0.3
+        ]
+      },
+      "duration": 1
+    },
+    "星云": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "on_hit": "ACTION_LIBRARY.STATUS.APPLY_STATUS(融伤, 1)",
+      "duration": 2
+    },
+    "烈阳": {
+      "type": "ACTION_AUGMENT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "on_damage_dealt": "ACTION_LIBRARY.STATUS.APPLY_STATUS(灼烧, 2)",
+      "limit_per_target_per_turn": 2,
+      "duration": 2
+    },
+    "瑞莲": {
+      "type": "COMPOSITE_BUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "on_skill": [
+        "ACTION_LIBRARY.OFFENSE.PULL_TARGETS(CROSS_7, 2_GRIDS)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(沉睡, 1, GEOMETRY.RADIUS.SQUARE_1)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(脆弱, 1, GEOMETRY.RADIUS.SQUARE_1)"
+      ],
+      "duration": 2
+    },
+    "质坚": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": [
+          0.03,
+          0.05,
+          0.07
+        ]
+      },
+      "max_stacks": 5,
+      "duration": 1
+    },
+    "烟雾": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": [
+          0.3,
+          0.35,
+          0.4
+        ]
+      },
+      "duration": 2
+    },
+    "若霜": {
+      "type": "VIRTUAL_STATUS",
+      "condition": "HIT_BY(雪景寒林图)",
+      "effect": "TREATED_AS(霜冻)"
+    },
+    "残缺雕像": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.CRIT_DMG_TAKEN_INC": 0.6
+      },
+      "duration": 2
+    },
+    "净土": {
+      "type": "REACTION_BOOST",
+      "trigger": "EVENT_BUS.ACTION.KNOCKBACK",
+      "action": "ACTION_LIBRARY.OFFENSE.DISTANCE_INC(2)",
+      "duration": 2
+    },
+    "车辙": {
+      "type": "REACTION_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.DOT_DMG_RED": -0.3
+      },
+      "on_death": "ACTION_LIBRARY.RESOURCE.MODIFY_EN(2, TARGET='铜车马')",
+      "duration": 1
+    },
+    "错杂": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.COMBO_DMG_TAKEN_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "duration": 2
+    },
+    "蔽空": {
+      "type": "VIRTUAL_STATUS",
+      "condition": "HIT_BY(赤壁赋页)",
+      "effect": "TREATED_AS(同命, MAX_STACKS)"
+    },
+    "蔽空-超群": {
+      "type": "VIRTUAL_STATUS",
+      "condition": "HIT_BY(赤壁赋页)",
+      "effect": [
+        "TREATED_AS(同命, MAX_STACKS)",
+        "EXTRA_DMG_TAKEN_INC(0.5)"
+      ]
+    },
+    "佚失": {
+      "type": "DYNAMIC_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -2
+      },
+      "logic": {
+        "COUNT(STATUS(同命)) >= 4": "ATTRIBUTE_REGISTRY.BASE.ATK([0.1, 0.15, 0.2])",
+        "COUNT(STATUS(同命)) >= 8": [
+          "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+          "ACTION_LIBRARY.STATUS.APPLY_STATUS(肃静, 1)"
+        ]
+      },
+      "duration": 2
+    },
+    "火印": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "params": {
+        "ratio": [
+          0.1,
+          0.2,
+          0.3
+        ],
+        "source": "冷暖自知印"
+      },
+      "duration": 2
+    },
+    "雪渔": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -2
+      },
+      "duration": 2
+    },
+    "冰雨": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.SPD": -30
+      }
+    },
+    "割裂": {
+      "type": "CHANCE_PROC",
+      "trigger": "EVENT_BUS.STATUS.DOT_TICK(流失)",
+      "chance": [
+        0.4,
+        0.7,
+        1.0
+      ],
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, 0.5, ATTRIBUTE_REGISTRY.BASE.ATK)"
+    },
+    "危险食盒": {
+      "type": "MOVEMENT_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      },
+      "on_move": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(PHYSICAL, [0.6, 0.8, 1.0], ATTRIBUTE_REGISTRY.BASE.ATK, GEOMETRY.RADIUS.SQUARE_1)",
+      "duration": 2
+    },
+    "截道者": {
+      "type": "TRANSFORM_MARKER",
+      "trigger": "HIT_BY(战国铜冰鉴)",
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(危险食盒, 1)",
+      "on_trigger": "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)",
+      "global_limit": 1
+    },
+    "粉色惊喜": {
+      "type": "REACTION_DEBUFF",
+      "trigger": "EVENT_BUS.ACTION.COMBO_HIT",
+      "condition": "SOURCE_IS(粉白双耳瓶)",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [0.4, 0.6, 0.8], ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "global_limit": 1
+    },
+    "落花": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.2
+      },
+      "duration": 2
+    },
+    "畅销": {
+      "type": "STACK_MARKER",
+      "trigger": "EVENT_BUS.RESOURCE.MODIFY_EN",
+      "action": "ACTION_LIBRARY.STATUS.ADD_STATUS_STACK(SELF, 1)",
+      "on_hit_by_ult": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, STACKS * [0.15, 0.2, 0.3], ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "max_stacks": 3,
+      "duration": "INFINITE"
+    },
+    "碎瓷": {
+      "type": "REACTION_PROC",
+      "trigger": "EVENT_BUS.ACTION.KNOCKBACK",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.DISTANCE_INC(1)",
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [0.6, 0.8, 1.0], ATTRIBUTE_REGISTRY.BASE.ATK)"
+      ],
+      "duration": 2
+    },
+    "镈鸣": {
+      "type": "STACK_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.SKILL_DMG_TAKEN_INC": [
+          0.05,
+          0.1,
+          0.15
+        ]
+      },
+      "max_stacks": 3,
+      "trigger_at": {
+        "2": "ACTION_LIBRARY.STATUS.APPLY_STATUS(禁足, 1)"
+      },
+      "duration": 2
+    },
+    "乱神": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.CONST_DMG_INC": -0.3
+      },
+      "duration": 2
+    },
+    "天威": {
+      "type": "HP_GATE_DEBUFF",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "ATTRIBUTE_REGISTRY.BASE.HP < 0.35",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, [0.1, 0.15, 0.2], ATTRIBUTE_REGISTRY.BASE.HP)"
+    },
+    "跗骨": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.EXTRA_DMG_TAKEN_INC": 0.3
+      },
+      "duration": 2
+    },
+    "夜刻": {
+      "type": "STACK_BRANCHING",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "logic": {
+        "1": "ACTION_LIBRARY.STATUS.APPLY_STATUS(止戈, 1)",
+        "2": "ACTION_LIBRARY.STATUS.APPLY_STATUS(眩晕, 1)",
+        "3": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, [0.4, 0.5, 0.6], ATTRIBUTE_REGISTRY.BASE.HP)"
+      }
+    },
+    "箭尽": {
+      "type": "COMPOSITE_DEBUFF",
+      "effects": [
+        {
+          "action": "ACTION_LIBRARY.TURN_LOGIC.SHIFT_ACTION_ORDER(NEXT)"
+        },
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.SPD": [
+              -20,
+              -30,
+              -40
+            ]
+          }
+        }
+      ],
+      "duration": 2,
+      "max_stacks": 1
+    },
+    "避让": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.COMBO_DMG_TAKEN_INC": [
+          0.04,
+          0.06,
+          0.08
+        ]
+      },
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "业障": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": -300
+      },
+      "is_flat": "TRUE",
+      "duration": 2
+    },
+    "色散": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.EXTRA_DMG_TAKEN_INC": [
+          0.1,
+          0.2,
+          0.3
+        ],
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.NORMAL_DMG_TAKEN_INC": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "duration": 2
+    },
+    "业报": {
+      "type": "STACK_BOMB",
+      "threshold": 3,
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, [0.4, 0.55, 0.7], ATTRIBUTE_REGISTRY.BASE.HP)",
+      "consume": "ALL"
+    },
+    "业报-超群": {
+      "type": "STACK_BOMB",
+      "threshold": 2,
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, [0.4, 0.55, 0.7], ATTRIBUTE_REGISTRY.BASE.HP)",
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, 0.05, ATTRIBUTE_REGISTRY.BASE.HP)"
+      ],
+      "consume": "ALL"
+    },
+    "将义": {
+      "type": "AURA_DOMAIN_REVERSE",
+      "effect": "TREATED_AS_IN_SENTINEL_RANGE",
+      "range": "GEOMETRY.RADIUS.SQUARE_10"
+    },
+    "泼色": {
+      "type": "DELAYED_PROC",
+      "trigger": "EVENT_BUS.SYSTEM.ANY_UNIT_TURN_END",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [1.0, 1.1, 1.2], ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "on_trigger": "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+    },
+    "迟夜": {
+      "type": "COMPOSITE_DEBUFF",
+      "effects": [
+        {
+          "action": "ACTION_LIBRARY.TURN_LOGIC.SHIFT_ACTION_ORDER(NEXT_MINOR)"
+        },
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.SPD": -20,
+            "ATTRIBUTE_REGISTRY.BASE.ATK": -0.2
+          }
+        }
+      ],
+      "duration": 2
+    },
+    "镂孔": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.SKILL_DMG_TAKEN_INC": 0.3
+      },
+      "duration": 2
+    },
+    "玉敛": {
+      "type": "CONTROL_GATE",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_EN_GAIN",
+      "duration": 1
+    },
+    "金虹乍现": {
+      "type": "REACTION_DEBUFF",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "SOURCE_IS(金瓯永固杯)",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, STACKS * [0.3, 0.4, 0.5], ATTRIBUTE_REGISTRY.BASE.ATK)"
+    },
+    "云峰奇险": {
+      "type": "AURA_TRIGGER",
+      "range": "GEOMETRY.RADIUS.SQUARE_3",
+      "trigger": "BEFORE_ENEMY_HIT",
+      "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(破甲, 1)",
+      "duration": 2
+    },
+    "云峰奇险-超群": {
+      "type": "AURA_TRIGGER",
+      "range": "GEOMETRY.RADIUS.SQUARE_3",
+      "trigger": "BEFORE_ENEMY_HIT",
+      "action": [
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(破甲, 1)",
+        "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.08 * STACKS(['铁甲', '裳衫']))"
+      ],
+      "duration": 2
+    },
+    "乐音": {
+      "type": "STACK_ACCUMULATOR",
+      "trigger": "RECEIVE_DAMAGE_FROM(共奏)",
+      "threshold": 3,
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_CONSTRUCT, [1.2, 1.5, 1.8], ATTRIBUTE_REGISTRY.BASE.ATK)",
+      "on_trigger": "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+    },
+    "散音": {
+      "type": "REACTION_AOE",
+      "trigger": "EVENT_BUS.DEFENSE.DMG_TAKEN",
+      "condition": "ACTION_TYPE_IN(['NORMAL', 'SKILL'])",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [0.7, 0.85, 1.0], ATTRIBUTE_REGISTRY.BASE.ATK, GEOMETRY.RADIUS.SQUARE_3)",
+      "on_trigger": "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+    },
+    "泛音": {
+      "type": "SPECIFIC_STACK_BOMB",
+      "trigger": "HIT_BY(彩凤鸣岐, ULTIMATE)",
+      "action": "ACTION_LIBRARY.OFFENSE.DMG_BASED_ON_STACKS",
+      "max_stacks": 3,
+      "duration": 2
+    },
+    "宿醉": {
+      "type": "COMPOSITE_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.2
+      },
+      "on_hit_received": "ACTION_LIBRARY.OFFENSE.EXECUTE_ADDITIONAL(0.1, OWNER='酒帐')",
+      "duration": 2
+    },
+    "报时": {
+      "type": "PRE_HIT_VULNERABILITY",
+      "condition": "SOURCE_IS_SUMMON",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.7)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(脆弱, 0.5)"
+      ],
+      "duration": "ACTION_END"
+    },
+    "图记": {
+      "type": "MARKER",
+      "on_death": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_TURN(TARGET='海错图')",
+      "duration": 1
+    },
+    "暗影幢幢": {
+      "type": "COMPOSITE_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.DOT_DMG_RED": -0.15
+      },
+      "on_hit_by_applier": {
+        "chance": 0.4,
+        "action": "ACTION_LIBRARY.STATUS.APPLY_STATUS(RANDOM(['流失', '融伤', '灼烧']), 1)"
+      },
+      "duration": 2
+    },
+    "存档": {
+      "type": "EMERGENCY_DEBUFF",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "ATTRIBUTE_REGISTRY.BASE.HP < ATTRIBUTE_REGISTRY.BASE.ATK(茶叶生产画)",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_TRUE, [0.6, 0.8, 1.0], ATTRIBUTE_REGISTRY.BASE.ATK(水粉画))",
+      "duration": 2
+    },
+    "嘹唳亭风": {
+      "type": "CHANCE_TRIGGER",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "chance": [
+        0.3,
+        0.4,
+        0.5
+      ],
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE(EXTRA_PHYS, [0.3, 0.4, 0.5], ATTRIBUTE_REGISTRY.BASE.ATK)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(止戈, 1)"
+      ]
+    },
+    "兔洞": {
+      "type": "ENTITY_TAG",
+      "owner": "兔形陶埙",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SWAP_POSITION",
+      "on_trigger": "ACTION_LIBRARY.ENTITY.DESPAWN"
+    },
+    "孙子兵法": {
+      "type": "MECHANIC_TAG",
+      "sub_type": "SINGLE_TARGET_SPECIALIST"
+    },
+    "孙膑兵法": {
+      "type": "MECHANIC_TAG",
+      "sub_type": "AOE_SPECIALIST"
+    },
+    "回击真实伤害": {
+      "type": "EXTRA_DAMAGE",
+      "damage_type": "TRUE",
+      "trigger": "COUNTER_ATTACK"
+    },
+    "连击真实伤害": {
+      "type": "EXTRA_DAMAGE",
+      "damage_type": "TRUE",
+      "trigger": "COMBO_ATTACK"
+    },
+    "芳蕊": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": [
+          0.2,
+          0.3,
+          0.5
+        ],
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "duration": "NEXT_ACTION"
+    },
+    "江中火": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2,
+            "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": 0.2
+          }
+        },
+        {
+          "type": "NEXT_ACTION_MODIFIER",
+          "overrides": {
+            "ULT_COST_RED": 3
+          },
+          "consume": "TRUE"
+        }
+      ]
+    },
+    "祈鸣": {
+      "type": "ACTION_GRANT",
+      "trigger": "EVENT_BUS.ACTION.SKILL_DEALT",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION",
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 0
+      },
+      "consume": 1
+    },
+    "锋镝清野": {
+      "type": "AURA_DOMAIN",
+      "lock": [
+        "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+        "ACTION_LIBRARY.STATUS.IMMUNIZE_STATUS(瞄准)"
+      ],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": [
+          0.15,
+          0.2,
+          0.25
+        ]
+      },
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": [
+          3,
+          7
+        ],
+        "NORMAL_SCOPE": "GEOMETRY.RADIUS.SQUARE_1"
+      },
+      "duration": "INFINITE"
+    },
+    "峰石": {
+      "type": "STACK_ACCUMULATOR",
+      "description": "千里江山图基础叠加状态",
+      "max_stacks": 3
+    },
+    "流纹": {
+      "type": "STACK_ACCUMULATOR",
+      "description": "千里江山图基础叠加状态",
+      "max_stacks": 3
+    },
+    "分秒不差": {
+      "type": "DYNAMIC_MODIFIER",
+      "description": "曾侯乙编钟联动增益",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.15
+      },
+      "duration": 2
+    },
+    "黄金比例": {
+      "type": "STACK_ACCUMULATOR",
+      "description": "断臂维纳斯核心叠加状态",
+      "max_stacks": 5
+    }
+  }
+}

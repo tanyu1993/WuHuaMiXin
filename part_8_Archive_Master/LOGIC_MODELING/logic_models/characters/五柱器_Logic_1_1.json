@@ -1,0 +1,159 @@
+{
+  "character_id": "whmx-wzq",
+  "name": "五柱器",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": [
+      "NORMAL_ATTACK",
+      "CLASS_SKILL",
+      "ULTIMATE_SKILL",
+      "SENTINEL_ATTACK"
+    ]
+  },
+  "initial_stats": {
+    "rarity": "NEWBORN",
+    "role": "STRATEGY",
+    "tags": [
+      "RANGE",
+      "DEBUFF",
+      "DPS",
+      "AOE"
+    ],
+    "hp": 5571,
+    "atk": 1829,
+    "def_p": 223,
+    "def_c": 223,
+    "spd": 75,
+    "move": 3,
+    "energy_init": 1,
+    "energy_max": 5
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "WANG_LUO_QIE_DUAN",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "CONSTRUCT",
+      "multiplier": 1.2,
+      "range": "RANGE_3",
+      "modifiers": [
+        {
+          "condition": "SELF_HAS_STATUS('信号提升')",
+          "do": [
+            {
+              "type": "SET_STAT_MODIFIER",
+              "stat": "NORMAL_ATK_MULT",
+              "value": 0.85,
+              "note": "ZHI_ZHI_3 bonus"
+            },
+            {
+              "type": "SET_SKILL_RANGE",
+              "range": "SINGLE_TARGET_PLUS_AOE_1"
+            }
+          ]
+        }
+      ],
+      "listeners": [
+        {
+          "trigger": "AFTER_NORMAL_ATTACK",
+          "action": {
+            "type": "REMOVE_STATUS",
+            "status": "信号提升",
+            "target": "self"
+          }
+        },
+        {
+          "trigger": "AFTER_ANY_ATTACK",
+          "action": {
+            "type": "ROLL_CHANCE",
+            "chance": 1.0,
+            "do": {
+              "type": "APPLY_STATUS",
+              "status": "脆弱",
+              "target": "target"
+            }
+          }
+        }
+      ]
+    },
+    "class_skill": {
+      "id": "FANG_HUO_QIANG",
+      "type": "CLASS_SKILL",
+      "energy_cost": 0,
+      "cd": 3,
+      "actions": [
+        {
+          "type": "MODIFY_AMMO",
+          "value": 3
+        },
+        {
+          "type": "APPLY_STATUS",
+          "status": "礼弹",
+          "target": "self"
+        },
+        {
+          "type": "ENTER_MODE",
+          "mode": "SENTINEL",
+          "range": "AOE_SQUARE_3",
+          "multiplier": 1.0,
+          "damage_type": "CONSTRUCT"
+        },
+        {
+          "type": "APPLY_STATUS",
+          "status": "信号提升",
+          "target": "self"
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "MI_YUE_PO_JIE",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 5,
+      "actions": [
+        {
+          "type": "DEAL_DAMAGE",
+          "multiplier": 2.8,
+          "range": "SINGLE_TARGET",
+          "damage_type": "CONSTRUCT",
+          "modifiers": [
+            {
+              "condition": "TARGET_HAS_STATUS('脆弱')",
+              "do": {
+                "type": "DEAL_DAMAGE",
+                "multiplier": 0.3,
+                "damage_type": "EXTRA_CONSTRUCT"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "passives": [
+    {
+      "id": "XIN_HAO_TI_SHENG",
+      "name": "信号提升",
+      "note": "Logic integrated into Normal Attack and Class Skill actions."
+    },
+    {
+      "id": "JIAN_RONG_BIAN_MA",
+      "name": "兼容编码",
+      "note": "Logic integrated into AFTER_ANY_ATTACK listeners."
+    },
+    {
+      "id": "YUN_WEN_RU_YI",
+      "name": "云纹如意",
+      "modifiers": [
+        {
+          "type": "SET_STAT_MODIFIER",
+          "stat": "ATK_PCT",
+          "value": 0.2
+        }
+      ]
+    }
+  ],
+  "zhi_zhi": {
+    "id": "WU_ZHU_QI_ZHI_ZHI_3",
+    "condition": "ZHI_ZHI_GE(3)",
+    "description": "Reflected in Normal Attack multiplier and range logic."
+  }
+}

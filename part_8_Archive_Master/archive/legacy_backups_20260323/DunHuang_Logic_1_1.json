@@ -1,0 +1,120 @@
+{
+  "character_id": "whmx-dhfx",
+  "name": "敦煌飞天",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": ["NORMAL_ATTACK"]
+  },
+  "initial_stats": {
+    "rarity": "EXQUISITE",
+    "role": "STRATEGIST",
+    "tags": ["RANGE", "SUPPORT", "HEAL", "BUFFER"],
+    "hp": 5690,
+    "atk": 2508,
+    "def_p": 441,
+    "def_c": 441,
+    "spd": 160,
+    "move": 3,
+    "energy_max": 3,
+    "ammo_cap": 9
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "JI_YUE",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "CONSTRUCT",
+      "multiplier": 1.2,
+      "range": 3
+    },
+    "class_skill": {
+      "id": "YUN_DUAN_LE_WU",
+      "type": "CLASS_SKILL",
+      "cd": 3,
+      "actions": [
+        { "type": "MODIFY_AMMO", "value": 3 },
+        { 
+          "type": "ENTER_MODE", 
+          "mode": "SENTINEL", 
+          "range": "SQUARE_3",
+          "config": {
+            "trigger": "ALLY_ENTER_RANGE",
+            "condition": "TARGET.HP_PCT < 1.0",
+            "action": { "type": "HEAL_BY_STAT_FLAT", "multiplier": 0.2, "flat": 400 }
+          }
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "TIAN_YI_FEI_YANG",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 3,
+      "actions": [
+        { "type": "HEAL_BY_STAT_PCT", "multiplier": 0.2, "target": "RADIUS_3_ALLIES" },
+        { "type": "DISPEL_DEBUFF", "filter": "CONTROL_CLASS", "target": "RADIUS_3_ALLIES" },
+        { "type": "MODIFY_AMMO", "value": 1 }
+      ]
+    }
+  },
+  "passives": [
+    {
+      "id": "LIU_YUN_FEI_XUAN",
+      "name": "流云飞旋",
+      "listeners": [
+        { 
+          "trigger": "HEAL_DEALT", 
+          "action": [
+            { "type": "SET_STAT_MODIFIER", "stat": "ATK_PCT", "value": 0.1, "target": "HEAL_TARGET" },
+            { 
+              "type": "ROLL_CHANCE", 
+              "chance": 0.5, 
+              "do": { "type": "APPLY_STATUS", "status": ["铁甲", "裳衫"], "stacks": 1, "target": "HEAL_TARGET" } 
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "XU_BU_TAI_QING",
+      "name": "虚步太清",
+      "listeners": [
+        { "trigger": "HEAL_DEALT", "action": { "type": "ADD_STATUS_STACK", "status": "妙舞", "value": 1, "max_stacks": 5 } },
+        {
+          "trigger": "BEFORE_TURN_START",
+          "condition": "STATUS_STACKS('妙舞') == 5",
+          "action": [
+            { "type": "BLINK", "target": "ALLY_SQUARE_1" },
+            { "type": "KNOCKBACK", "range": "SQUARE_1", "distance": 1, "target": "ENEMIES" }
+          ]
+        },
+        {
+          "trigger": "BEFORE_TURN_START",
+          "action": [
+            { "type": "HEAL_BY_STAT_PCT", "dynamic_multiplier": "妙舞.stacks * 0.03", "target": "self" },
+            { "type": "REMOVE_STATUS", "status": "妙舞", "target": "self", "delay": "POST_ACTION" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "MING_LE_SAN_HUA",
+      "name": "鸣乐散花",
+      "modifiers": [
+        { "type": "SET_STAT_MODIFIER", "stat": "HEAL_OUT", "value": 0.2 }
+      ],
+      "listeners": [
+        { "trigger": "TURN_START", "action": { "type": "MODIFY_EN", "value": 1 } },
+        { "trigger": "TURN_END", "action": { "type": "ADD_STATUS_STACK", "status": "妙舞", "value": 1, "max_stacks": 5 } }
+      ]
+    }
+  ],
+  "status_rules": {
+    "妙舞": {
+      "listeners": [
+        { 
+          "trigger": "BEFORE_AMMO_CONSUME", 
+          "action": { "type": "CANCEL_CONSUME", "resource": "AMMO", "dynamic_chance": "妙舞.stacks * 0.1" } 
+        }
+      ]
+    }
+  }
+}

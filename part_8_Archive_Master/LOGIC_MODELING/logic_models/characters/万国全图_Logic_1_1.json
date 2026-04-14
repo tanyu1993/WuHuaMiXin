@@ -1,0 +1,98 @@
+{
+  "character_id": "whmx-wgqt",
+  "name": "万国全图",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": ["NORMAL_ATTACK", "CLASS_SKILL", "ULTIMATE_SKILL"]
+  },
+  "initial_stats": {
+    "rarity": "COMMON",
+    "role": "SNIPER",
+    "tags": ["RANGE", "DPS", "BURST"],
+    "hp": 4798,
+    "atk": 2616,
+    "def_p": 330,
+    "def_c": 330,
+    "spd": 95,
+    "move": 3,
+    "energy_max": 5
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "EXPLORE",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "PHYSICAL",
+      "multiplier": 1.2,
+      "range": "CROSS_3"
+    },
+    "class_skill": {
+      "id": "GUIDE",
+      "type": "CLASS_SKILL",
+      "cd": 3,
+      "actions": [
+        { "type": "GRANT_EXTRA_ACTION", "count": 1, "lock": "MOVE" },
+        { "type": "APPLY_STATUS", "status": "瞄准", "duration": "NEXT_ACTION" }
+      ]
+    },
+    "ultimate": {
+      "id": "DRAW_MAP",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 5,
+      "actions": [
+        { "type": "GRANT_EXTRA_ACTION", "count": 2 },
+        { "type": "APPLY_STATUS", "status": "穿透", "duration": "CURRENT_ACTION_STREAM" }
+      ]
+    }
+  },
+  "passives": [
+    {
+      "id": "YOU_LI",
+      "name": "游历",
+      "listeners": [
+        {
+          "trigger": "ATTACK_START",
+          "condition": "TARGET.HP_PCT > 0.5",
+          "action": [
+            { "type": "APPLY_STATUS", "status": "游历", "duration": "IMMEDIATE" },
+            { "type": "SET_STATE_CONSTRAINT", "action": "SKIP_NEXT_ROUND" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "JING_WEI",
+      "name": "经纬",
+      "listeners": [
+        {
+          "trigger": "CRIT_HIT_DEALT",
+          "action": { "type": "APPLY_STATUS", "status": "有备而行", "duration": 1 }
+        },
+        {
+          "trigger": "CRIT_HIT_DEALT",
+          "condition": "ZHI_ZHI_GE(3)",
+          "action": { "type": "RESET_SKILL_CD", "skill": "GUIDE", "value": 1 }
+        }
+      ]
+    },
+    {
+      "id": "QI_GUAN",
+      "name": "奇观",
+      "modifiers": [
+        {
+          "condition": "HAS_STATUS('游历')",
+          "do": { "type": "SET_STAT_MODIFIER", "stat": "CRIT_DMG_INC", "value": 0.3 }
+        }
+      ],
+      "listeners": [
+        { "trigger": "KILL_SUCCESS", "action": { "type": "MODIFY_EN", "value": 1 } }
+      ]
+    }
+  ],
+  "zhi_zhi": {
+    "id": "WGQT_ZHI_ZHI_6",
+    "condition": "ZHI_ZHI_GE(6)",
+    "modifiers": [
+      { "type": "SET_STAT_MODIFIER", "stat": "CRIT_RATE", "value_add": 0.2 }
+    ]
+  }
+}

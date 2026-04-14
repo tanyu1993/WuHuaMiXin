@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>物华弥新：词条对账中心 (Entry Auditor)</title>
+    <style>
+        :root { --primary: #4ecca3; --bg: #f4f7f6; --card: #fff; --text: #2d3436; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); margin: 0; display: flex; height: 100vh; color: var(--text); }
+        #sidebar { width: 350px; background: #fff; border-right: 1px solid #ddd; display: flex; flex-direction: column; }
+        .header { padding: 20px; background: var(--primary); color: #fff; }
+        #entry-list { flex: 1; overflow-y: auto; }
+        .entry-item { padding: 15px 20px; border-bottom: 1px solid #eee; cursor: pointer; transition: 0.2s; }
+        .entry-item:hover { background: #f0fdf4; }
+        .entry-item.active { background: #4ecca322; border-left: 5px solid var(--primary); font-weight: bold; }
+        .entry-item .char-tag { font-size: 11px; color: #999; display: block; }
+
+        #main { flex: 1; padding: 40px; overflow-y: auto; }
+        .audit-card { background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); max-width: 800px; margin: 0 auto; }
+        .type-selector { display: flex; gap: 20px; margin-bottom: 30px; }
+        .type-btn { flex: 1; padding: 15px; border: 2px solid #eee; border-radius: 8px; text-align: center; cursor: pointer; font-weight: bold; }
+        .type-btn.active { border-color: var(--primary); color: var(--primary); background: #f0fdf4; }
+        
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        .tag-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .tag-chip { padding: 4px 12px; background: #eee; border-radius: 20px; font-size: 12px; cursor: pointer; }
+        .tag-chip.selected { background: var(--primary); color: #fff; }
+
+        .btn-save { background: var(--primary); color: #fff; border: none; padding: 15px 40px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 20px; }
+        .btn-save:hover { opacity: 0.9; }
+        
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <div class="header">
+            <h2 style="margin:0">词条对账中心</h2>
+            <p style="font-size:12px; margin:5px 0 0 0">发现 <span id="count">0</span> 个待审词条</p>
+        </div>
+        <div id="entry-list"></div>
+    </div>
+
+    <div id="main">
+        <div class="audit-card" id="editor">
+            <div style="font-size: 12px; color: var(--primary); font-weight: bold; margin-bottom: 5px;">SOURCE: <span id="cur-char">-</span></div>
+            <h1 id="cur-term" style="margin: 0 0 30px 0;">请选择左侧词条</h1>
+
+            <div class="type-selector">
+                <div class="type-btn" id="btn-status" onclick="setType('status')">✨ 标记为状态</div>
+                <div class="type-btn" id="btn-summon" onclick="setType('summon')">🐾 标记为召唤物</div>
+            </div>
+
+            <div id="status-fields" class="hidden">
+                <div class="form-group">
+                    <label>状态分类 (Category)</label>
+                    <select id="cat">
+                        <option value="1">1 - 属性增益/减益 (通用)</option>
+                        <option value="2">2 - 持续伤害</option>
+                        <option value="3">3 - 控制/负面</option>
+                        <option value="5">5 - 场地/机制</option>
+                        <option value="6">6 - 标记/特殊</option>
+                        <option value="7">7 - 额外伤害说明</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>描述内容 (Desc)</label>
+                    <textarea id="desc" rows="4" placeholder="请输入该状态的具体效果描述..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>语义标签 (Tags)</label>
+                    <input type="text" id="tags" placeholder="多个标签用空格分隔">
+                    <div class="tag-pool" id="tag-pool">
+                        <!-- 常用标签 -->
+                        <span class="tag-chip" onclick="addTag('攻击力提高')">攻击力提高</span>
+                        <span class="tag-chip" onclick="addTag('额外构素伤害')">额外构素伤害</span>
+                        <span class="tag-chip" onclick="addTag('眩晕')">眩晕</span>
+                        <span class="tag-chip" onclick="addTag('全伤害提高')">全伤害提高</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="summon-fields" class="hidden">
+                <p style="color: #666; background: #fffbe6; padding: 15px; border-radius: 8px; border-left: 4px solid #ffe58f;">
+                    判定为召唤物后，该词条将被录入召唤物注册表，且在后续清洗中作为物理区块的锚点。
+                </p>
+            </div>
+
+            <button class="btn-save" id="save-btn" onclick="saveEntry()">确认并更新真理库</button>
+        </div>
+    </div>
+
+    <script>
+        let pendingEntries = [];
+        let currentIndex = -1;
+        let currentType = null;
+
+        async function loadEntries() {
+            try {
+                // 直接尝试从 DATA_ASSETS/pending_entries.json 读取数据
+                // 在本地开发环境下，我们假设这是通过服务器提供的
+                const resp = await fetch('/api/pending');
+                pendingEntries = await resp.json();
+                renderList();
+            } catch (e) {
+                console.error("Failed to load entries", e);
+            }
+        }
+
+        function renderList() {
+            const list = document.getElementById('entry-list');
+            document.getElementById('count').innerText = pendingEntries.length;
+            list.innerHTML = pendingEntries.map((e, i) => `
+                <div class="entry-item" onclick="selectEntry(${i})" id="item-${i}">
+                    <span class="char-tag">${e.char}</span>
+                    <span class="term-name">${e.term}</span>
+                </div>
+            `).join('');
+        }
+
+        function selectEntry(index) {
+            currentIndex = index;
+            const entry = pendingEntries[index];
+            document.querySelectorAll('.entry-item').forEach(el => el.classList.remove('active'));
+            document.getElementById(`item-${index}`).classList.add('active');
+            
+            document.getElementById('cur-char').innerText = entry.char;
+            document.getElementById('cur-term').innerText = entry.term;
+            
+            // 重置表单
+            setType('status');
+            document.getElementById('desc').value = "";
+            document.getElementById('tags').value = "";
+        }
+
+        function setType(type) {
+            currentType = type;
+            document.getElementById('btn-status').classList.toggle('active', type === 'status');
+            document.getElementById('btn-summon').classList.toggle('active', type === 'summon');
+            document.getElementById('status-fields').classList.toggle('hidden', type !== 'status');
+            document.getElementById('summon-fields').classList.toggle('hidden', type !== 'summon');
+        }
+
+        function addTag(tag) {
+            const input = document.getElementById('tags');
+            const tags = input.value.split(' ').filter(t => t);
+            if (!tags.includes(tag)) tags.push(tag);
+            input.value = tags.join(' ');
+        }
+
+        async function saveEntry() {
+            if (currentIndex === -1) return;
+            const entry = pendingEntries[currentIndex];
+            const data = {
+                term: entry.term,
+                char: entry.char,
+                type: currentType,
+                cat: document.getElementById('cat').value,
+                desc: document.getElementById('desc').value,
+                tags: document.getElementById('tags').value.split(' ').filter(t => t)
+            };
+
+            const resp = await fetch('/api/save_audit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (resp.ok) {
+                alert('已同步至真理库！');
+                pendingEntries.splice(currentIndex, 1);
+                renderList();
+                if (pendingEntries.length > 0) selectEntry(0);
+            }
+        }
+
+        loadEntries();
+    </script>
+</body>
+</html>

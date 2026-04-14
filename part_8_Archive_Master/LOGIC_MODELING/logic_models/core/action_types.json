@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "STATUS_TYPES": {
+    "BUFF": "正面状态(增益)",
+    "DEBUFF": "负面状态(减益)",
+    "CONTROL": "控制类状态(硬控)",
+    "SHIELD": "护盾/屏障类",
+    "TAUNT": "嘲讽/震怒类(强制目标)",
+    "STEALTH": "隐身/不可选中类",
+    "IMMUNE": "免疫类(状态/伤害)",
+    "DOT": "持续伤害(Damage Over Time)",
+    "HOT": "持续治疗(Heal Over Time)",
+    "SPECIAL": "特殊机制/标记/标签",
+    "AURA": "光环类(周围生效)",
+    "TRANSFORM": "变身/形态切换类",
+    "SUMMON": "召唤物关联状态",
+    "DOMAIN": "领域/结界类",
+    "COMPOSITE": "复合状态(包含多种效果)",
+    "TRIGGER": "触发器类状态(条件触发)",
+    "EXECUTE": "处决/结算类(状态引爆)"
+  },
+  "ACTION_PRIMITIVES": {
+    "DEAL_DAMAGE": "造成伤害",
+    "HEAL": "治疗",
+    "APPLY_STATUS": "施加状态",
+    "REMOVE_STATUS": "移除状态",
+    "MODIFY_STAT": "修改属性",
+    "MODIFY_RESOURCE": "修改资源(HP/EN/AMMO)",
+    "SUMMON": "召唤实体",
+    "TELEPORT": "位移/传送",
+    "GRANT_ACTION": "赋予行动",
+    "FORCE_RESULT": "强制结果(暴击/命中)",
+    "LOCK_TARGET": "锁定目标(嘲讽)",
+    "DISPEL": "驱散",
+    "SET_SKILL_RANGE": "设置技能范围",
+    "MODIFY_HP_PCT": "修改生命百分比",
+    "REFUND_EN": "返还能量",
+    "ENTER_MODE": "进入特定模式(如警戒)",
+    "SET_ACTIVE_SKILL": "设置激活技能",
+    "REGISTER_EVENT": "注册事件监听"
+  },
+  "LEGACY_MAPPING": {}
+}

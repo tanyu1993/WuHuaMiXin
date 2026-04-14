@@ -1,0 +1,19 @@
+[Unit]
+Description=WuHuaMiXin Crawler Gateway
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu
+# 核心：使用虚环路径，确保包对齐
+ExecStart=/home/ubuntu/cvenv/bin/python3 /home/ubuntu/gateway.py
+# 核心：防崩溃自启动
+Restart=always
+RestartSec=5
+# 核心：记录标准输出
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

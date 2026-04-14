@@ -1,0 +1,130 @@
+{
+  "character_id": "whmx-pipa",
+  "name": "五弦琵琶",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": ["NORMAL_ATTACK", "CLASS_SKILL", "ULTIMATE_SKILL"]
+  },
+  "initial_stats": {
+    "rarity": "EXQUISITE",
+    "role": "CONSTRUCT",
+    "tags": ["RANGE", "DPS", "EXTRA_DMG"],
+    "hp": 6134,
+    "atk": 2274,
+    "def_p": 440,
+    "def_c": 440,
+    "spd": 120,
+    "move": 3,
+    "energy_init": 1,
+    "energy_max": 5
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "YIN_YIN",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "CONSTRUCT",
+      "multiplier": 1.2,
+      "range": 2
+    },
+    "class_skill": {
+      "id": "YU_YIN_RAO_LIANG",
+      "type": "CLASS_SKILL",
+      "cd": 3,
+      "actions": [
+        { "type": "CAPTURE_STACKS", "status": "余音", "to": "VAL_STORE" },
+        { "type": "REMOVE_STATUS", "status": "余音", "target": "self" },
+        { "type": "DEAL_DAMAGE", "multiplier": 0.3, "type": "CONSTRUCT" },
+        { 
+          "type": "FOR_EACH", 
+          "source": "VAL_STORE", 
+          "do": { "type": "EXECUTE_ADDITIONAL", "multiplier": 0.3, "damage_type": "EXTRA_CONSTRUCT" } 
+        },
+        { "type": "MODIFY_EN", "value": 3 }
+      ]
+    },
+    "ultimate": {
+      "id": "ZHUAN_ZHOU_BO_XIAN",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 5,
+      "actions": [
+        { "type": "APPLY_STATUS", "status": "共奏", "range": "SQUARE_3", "target": "GLOBAL_ALLIES", "duration": 2 }
+      ]
+    }
+  },
+  "passives": [
+    {
+      "id": "FU_SHOU_CHENG_XIAN",
+      "name": "覆手承弦",
+      "modifiers": [
+        { "type": "SET_STAT_MODIFIER", "stat": "CRIT_RATE", "value": -1.0 },
+        { "type": "SET_STAT_MODIFIER", "stat": "ATK_PCT", "value": 0.5 }
+      ],
+      "listeners": [
+        { "trigger": "TURN_START", "action": { "type": "ADD_STATUS_STACK", "status": "余音", "value": 1, "max_stacks": 5 } },
+        { 
+          "trigger": "COUNTER_ATTACK_DEALT", 
+          "condition": "SOURCE.HAS_STATUS('共奏')", 
+          "action": { "type": "ADD_STATUS_STACK", "status": "余音", "value": 1, "delay": "TURN_END" } 
+        }
+      ]
+    },
+    {
+      "id": "LUO_TIAN_FANG_RUI",
+      "name": "螺钿芳蕊",
+      "listeners": [
+        { 
+          "trigger": "ACTION_START", 
+          "condition": "ACTION_ID == 'YU_YIN_RAO_LIANG'", 
+          "action": [
+            { "type": "APPLY_STATUS", "status": "芳蕊" },
+            { "type": "MODIFY_EN", "target": "ALLIES_WITH_STATUS('迭奏')", "value": 3 }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "LE_YIN_DIE_ZOU_EX",
+      "name": "乐音迭奏-超群",
+      "condition": "ZHI_ZHI_GE(3)",
+      "listeners": [
+        { 
+          "trigger": "DIRECT_ATTACK_START", 
+          "condition": "SOURCE.HAS_STATUS('共奏')", 
+          "action": { "type": "APPLY_STATUS", "status": "乐音", "target": "SINGLE_TARGET" } 
+        },
+        { "trigger": "TURN_END", "action": { "type": "REMOVE_STATUS", "status": "乐音", "target": "GLOBAL_ENEMIES" } },
+        { 
+          "trigger": "STACK_REACH", 
+          "filter": "乐音", 
+          "value": 3,
+          "action": [
+            { "type": "APPLY_STATUS", "status": "迭奏", "target": "SOURCE" },
+            { "type": "REFRESH_STATUS", "status": "共奏", "target": "SOURCE" },
+            { "type": "RESET_SKILL_CD", "skill": "YU_YIN_RAO_LIANG", "value": 1 }
+          ]
+        }
+      ]
+    }
+  ],
+  "huan_zhang": {
+    "id": "LONG_XIANG_BO",
+    "name": "龙香拨",
+    "effects": [
+      { 
+        "type": "SET_STAT_MODIFIER", 
+        "condition": "HAS_STATUS('余音')", 
+        "dynamic_mapping": { "source": "余音.stacks", "EXTRA_DMG": 0.2, "DEF_PEN": 0.1, "max": 5 } 
+      },
+      {
+        "trigger": "ACTION_END",
+        "condition": "ACTION_ID == 'YU_YIN_RAO_LIANG'",
+        "action": { "type": "RESET_SKILL_CD", "target": "ALLIES_WITH_STATUS('迭奏')", "exclude": ["铜壶滴漏", "雪景寒林图"] }
+      },
+      {
+        "trigger": "DIRECT_ATTACK_START",
+        "condition": "TARGET.HP_PCT < 0.75",
+        "action": { "type": "SET_STAT_MODIFIER", "stat": "EXTRA_DMG_INC", "multiplier": 2.0 }
+      }
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "STATUS_LOGIC": {
+    "芳蕊": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": [0.2, 0.3, 0.5],
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [0.1, 0.2, 0.3]
+      },
+      "duration": "NEXT_ACTION"
+    },
+    "江中火": {
+      "type": "COMPOSITE_BUFF",
+      "effects": [
+        {
+          "changes": {
+            "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2,
+            "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": 0.2
+          }
+        },
+        {
+          "type": "NEXT_ACTION_MODIFIER",
+          "overrides": {
+            "ULT_COST_RED": 3
+          },
+          "consume": "TRUE"
+        }
+      ]
+    },
+    "祈鸣": {
+      "type": "ACTION_GRANT",
+      "trigger": "EVENT_BUS.ACTION.SKILL_DEALT",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION",
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 0
+      },
+      "consume": 1
+    },
+    "锋镝清野": {
+      "type": "AURA_DOMAIN",
+      "lock": ["ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT", "ACTION_LIBRARY.STATUS.IMMUNIZE_STATUS(瞄准)"],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": [0.15, 0.2, 0.25]
+      },
+      "overrides": {
+        "ATTRIBUTE_REGISTRY.LOGIC_MOD.NORMAL_RANGE": [3, 7],
+        "NORMAL_SCOPE": "GEOMETRY.RADIUS.SQUARE_1"
+      },
+      "duration": "INFINITE"
+    }
+  }
+}

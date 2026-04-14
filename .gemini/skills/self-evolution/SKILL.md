@@ -1,0 +1,1 @@
+﻿---\nname: self-evolution\ndescription: A simplified self-improvement skill for Gemini CLI testing.\n---\n\n# Self-Evolution\nThis is a test skill.

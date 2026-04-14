@@ -1,0 +1,1871 @@
+{
+  "version": "2.1.0",
+  "description": "物华弥新器者状态逻辑库 - V7.1 最终全量版 (274项)",
+  "STATUS_LOGIC": {
+    "啸剑": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2
+      }
+    },
+    "回溯": {
+      "type": "STATE_SNAPSHOT",
+      "action": "ACTION_LIBRARY.RESOURCE.RESTORE_PREVIOUS_STATE",
+      "targets": [
+        "HP",
+        "EN",
+        "CD"
+      ]
+    },
+    "援护": {
+      "type": "REDIRECT_DAMAGE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.TAKE_DAMAGE_FOR_ALLY",
+      "condition": "SINGLE_TARGET_ONLY"
+    },
+    "瞄准": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": 0.25
+      }
+    },
+    "礼弹": {
+      "type": "RESOURCE_GATE",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS",
+      "unlock_condition": "AMMO > 0",
+      "on_act": "CONSUME_AMMO"
+    },
+    "蓄势": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": 0.2
+      }
+    },
+    "裳衫": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.3
+      }
+    },
+    "铁甲": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.3
+      }
+    },
+    "附加移动力": {
+      "type": "DYNAMIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": "STACKS"
+      },
+      "consume_on": "MOVE"
+    },
+    "凝神": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.AIM_CD_RED": [
+          0.4,
+          0.5,
+          0.6
+        ]
+      }
+    },
+    "寒天": {
+      "type": "STACK_TRIGGER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      },
+      "trigger_at": 3,
+      "transform_to": "霜冻"
+    },
+    "滞缓": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      }
+    },
+    "破甲": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": -0.3
+      }
+    },
+    "脆弱": {
+      "type": "STACK_DEBUFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.3
+      },
+      "consume_on": "HIT"
+    },
+    "解构": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": -0.3
+      }
+    },
+    "附骨": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.EXTRA_DMG_INC": 0.3
+      }
+    },
+    "降攻": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": -0.2
+      }
+    },
+    "鲁莽": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COUNTER_DMG_INC": 0.3
+      },
+      "note": "作为受击方，受到回击伤害增加"
+    },
+    "疏忽": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.3
+      },
+      "condition": "SOURCE_IS_SENTINEL"
+    },
+    "咒溃": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.DOT_DMG_RED": -0.3
+      }
+    },
+    "萧瑟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": -0.2
+      }
+    },
+    "同命": {
+      "type": "LINKED_DEBUFF",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "trigger": "LINKED_ALLY_HIT",
+      "value": "7%"
+    },
+    "止戈": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION",
+      "sub_type": "NORMAL_ATTACK_ONLY"
+    },
+    "沉睡": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION",
+      "extra": "CRIT_TAKEN_INC_30%"
+    },
+    "眩晕": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION"
+    },
+    "肃静": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_SKILLS"
+    },
+    "震怒": {
+      "type": "TAUNT",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_TARGET",
+      "target": "SOURCE"
+    },
+    "霜冻": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT",
+      "duration": 1
+    },
+    "禁足": {
+      "type": "LOCK",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_MOVEMENT"
+    },
+    "流失": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "params": {
+        "type": "TRUE_DMG",
+        "ratio": 0.1
+      }
+    },
+    "灼烧": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "params": {
+        "type": "CONST"
+      }
+    },
+    "融伤": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "params": {
+        "type": "CONST",
+        "val_pct_lost": 0.1
+      }
+    },
+    "特殊范围": {
+      "type": "PENDING",
+      "desc": "自身十字4格与周围2格。"
+    },
+    "额外构素伤害": {
+      "type": "DMG_TAG",
+      "rule": "NO_CRIT_NO_BLOCK",
+      "dmg_type": "CONSTRUCT"
+    },
+    "额外物理伤害": {
+      "type": "DMG_TAG",
+      "rule": "NO_CRIT_NO_BLOCK",
+      "dmg_type": "PHYSICAL"
+    },
+    "额外真实伤害": {
+      "type": "DMG_TAG",
+      "rule": "IGNORE_DEFENSE",
+      "dmg_type": "TRUE"
+    },
+    "有备而行": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": [
+          1,
+          2,
+          3
+        ]
+      }
+    },
+    "游历": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.4,
+          0.6,
+          0.8
+        ]
+      }
+    },
+    "穿透": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      }
+    },
+    "锋钩": {
+      "type": "NEXT_ACTION_BUFF",
+      "trigger": "NORMAL_ATTACK",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": [
+          0.3,
+          0.4,
+          0.5
+        ]
+      },
+      "consume": "TRUE"
+    },
+    "铜锈": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.COMBO_DMG_INC": [
+          0.05,
+          0.08,
+          0.1
+        ]
+      }
+    },
+    "合范成器": {
+      "type": "HOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP",
+      "value": [
+        0.05,
+        0.1,
+        0.15
+      ]
+    },
+    "锚启": {
+      "type": "ACTION_GRANT",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "trigger": "ACTION_END",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+    },
+    "碎瓷": {
+      "type": "REACTION_DMG",
+      "trigger": "KNOCKBACK",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "val": [
+        0.6,
+        0.8
+      ]
+    },
+    "兔洞": {
+      "type": "PENDING",
+      "desc": "兔洞   地块可作为兔形陶埙职业技能选择的对象，交换位置后，该   兔洞   消失。释放职业技能后，所有   兔洞   会消失。"
+    },
+    "火印": {
+      "type": "DOT",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_START",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "val": [
+        0.1,
+        0.2,
+        0.3
+      ]
+    },
+    "雪渔": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -2
+      }
+    },
+    "如君亲临": {
+      "type": "EXTRA_PHYS",
+      "trigger": "ANY_ATTACK",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "val_hp_pct": [
+        0.06,
+        0.09,
+        0.12
+      ]
+    },
+    "韬光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.2
+      }
+    },
+    "天威": {
+      "type": "REACTION_DMG",
+      "trigger": "HIT_RECEIVED",
+      "condition": "HP < 0.35",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "val_self_hp": 0.1
+    },
+    "怜悯": {
+      "type": "TRADE_OFF",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.NORMAL_DMG_INC": -0.15,
+        "ATTRIBUTE_REGISTRY.COMBAT.BLOCK_RATE": [
+          0.2,
+          0.3
+        ]
+      }
+    },
+    "合金": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.PHYS_DMG_RED": 0.1
+      }
+    },
+    "秘辛": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.CONST_DMG_RED": 0.2
+      }
+    },
+    "回击真实伤害": {
+      "type": "PENDING",
+      "desc": "攻击类型属于   回击伤害   ，伤害类型属于   真实伤害   ，此伤害不触发暴击和贯穿效果，且无法被格挡，无视防御和减伤效果，同时也不受增伤效果影响。"
+    },
+    "连击真实伤害": {
+      "type": "PENDING",
+      "desc": "攻击类型属于   连击伤害   ，伤害类型属于   真实伤害   ，此伤害不触发暴击和贯穿效果，且无法被格挡，无视防御和减伤效果，同时也不受增伤效果影响。"
+    },
+    "游龙": {
+      "type": "DEFENSE_GATE",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_STATUS",
+      "target": "滞缓"
+    },
+    "龙凤献瑞": {
+      "type": "DEFENSE_GATE",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DEATH",
+      "duration": 1
+    },
+    "畅销": {
+      "type": "STACK_ON_TRIGGER",
+      "trigger": "GAIN_ENERGY",
+      "action": "ADD_STACK",
+      "max": 3
+    },
+    "夜刺": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_PROB": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      }
+    },
+    "重创": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.2
+      }
+    },
+    "隐夜": {
+      "type": "STEALTH_MODE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.SET_UNSELECTABLE",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          0.6,
+          0.8,
+          1.0
+        ]
+      }
+    },
+    "供奉": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "HAS_STATUS('瞄准')",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "文武显德": {
+      "type": "IMMUNITY",
+      "action": "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DMG_TYPE",
+      "count": 1,
+      "source_filter": [
+        "NORMAL",
+        "SENTINEL"
+      ]
+    },
+    "生命偷取": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.LIFESTEAL": [
+          0.03,
+          0.04,
+          0.05
+        ]
+      }
+    },
+    "皇天之赐": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_IN": [
+          0.3,
+          0.4,
+          0.5
+        ]
+      }
+    },
+    "冰雨": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.SPD": -30
+      }
+    },
+    "器韵": {
+      "type": "REACTION_HEAL",
+      "trigger": "SHIELD_ABSORB",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_HP",
+      "val_pct": [
+        0.03,
+        0.05,
+        0.08
+      ]
+    },
+    "环扣": {
+      "type": "CONSTRAINT",
+      "action": "ACTION_LIBRARY.STATE_CONSTRAINT.SET_STACK_LIMIT",
+      "value": 3
+    },
+    "割裂": {
+      "type": "REACTION_DMG",
+      "trigger": "DOT_TICK",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "chance": [
+        0.4,
+        0.7,
+        1.0
+      ]
+    },
+    "春盛": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ALL_DMG_INC": [
+          0.05,
+          0.1,
+          0.15
+        ]
+      }
+    },
+    "活力": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1,
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.05
+      },
+      "extra": "TURN_END_HEAL_10%"
+    },
+    "危险食盒": {
+      "type": "BOMB",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": -1
+      },
+      "trigger": "MOVE_END",
+      "action": "AOE_FRIENDLY_DMG"
+    },
+    "截道者": {
+      "type": "TAG_TRANSFER",
+      "trigger": "HIT_BY_SPECIFIC_UNIT",
+      "action": "APPLY('危险食盒')"
+    },
+    "同赏": {
+      "type": "REDIRECT_DAMAGE",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.TAKE_DAMAGE_FOR_ALLY",
+      "range": "SQUARE_1",
+      "duration": 1
+    },
+    "不负三光": {
+      "type": "SLEEP_MODE",
+      "action": "ACTION_LIBRARY.LOGIC_GATE.LOCK_ACTION",
+      "debuff": "CRIT_TAKEN_INC_30%"
+    },
+    "为道": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO",
+      "params": {
+        "mult": [
+          0.7,
+          0.9,
+          1.1
+        ]
+      }
+    },
+    "有归于无": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.THRU_PROB": [
+          0.2,
+          0.4,
+          0.6
+        ]
+      },
+      "duration": 2
+    },
+    "妙舞": {
+      "type": "RESOURCE_GATE",
+      "trigger": "EVENT_BUS.ACTION.SENTINEL_HEAL",
+      "chance": "0.1 * STACKS",
+      "action": "ACTION_LIBRARY.RESOURCE.CANCEL_CONSUME",
+      "target": "礼弹",
+      "max_stacks": 5
+    },
+    "侦探时间": {
+      "type": "PENDING",
+      "desc": "侦探时间   （属性增益）：攻击力提高   20%/40%/60%   ，持续   3   回合。"
+    },
+    "探源": {
+      "type": "PENDING",
+      "desc": "探源   （属性增益）：最多可叠加   6   层。"
+    },
+    "定宫": {
+      "type": "DEFENSE_GATE",
+      "trigger": "EVENT_BUS.ACTION.HIT_RECEIVED",
+      "condition": "DMG_TYPE == CONSTRUCT",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.IMMUNIZE_DMG",
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE"
+      ],
+      "params": {
+        "type": "CONSTRUCT",
+        "val_self_hp": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "duration": 2
+    },
+    "旋律": {
+      "type": "PENDING",
+      "desc": "曾侯乙编钟在常击、直接受击、援护受击后获得的状态，包括   清乐   、   燕乐   与   雅乐   。"
+    },
+    "正音": {
+      "type": "DEBUFF_PROC",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_START",
+      "chance": 0.8,
+      "action": [
+        "ACTION_LIBRARY.LOGIC_GATE.FAIL_ACTION",
+        "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE"
+      ],
+      "params": {
+        "self_dmg": 1.0
+      }
+    },
+    "警戒治疗": {
+      "type": "PENDING",
+      "desc": "当生命值低于   100%   的友方单位进入警戒范围时，为其回复生命。"
+    },
+    "烫样组件": {
+      "type": "STATIONARY_GUARD",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.4
+      },
+      "lock": "ATTRIBUTE_REGISTRY.BASE.MOVE",
+      "consume_on_hit": [
+        2,
+        3,
+        4
+      ]
+    },
+    "簇刃之锐": {
+      "type": "NEXT_ACTION_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PHYS_DMG_INC": [
+          0.6,
+          0.8,
+          1.0
+        ]
+      },
+      "consume": "TRUE"
+    },
+    "纸模之损": {
+      "type": "PENDING",
+      "desc": "下   1   次受到的伤害提高   50%   ，触发后或持续   1   回合后此状态消除。"
+    },
+    "地心说": {
+      "type": "PENDING",
+      "desc": "每层此状态使自身防御穿透提高   6%/8%/10%   ，最多可叠加   4   层，该轮次结束时清除全部此状态。"
+    },
+    "地浑环": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      }
+    },
+    "天常环": {
+      "type": "PENDING",
+      "desc": "每层此状态使自身下   1   次造成的伤害提高   10%/15%/20%   ，最多可叠加   2   层，造成伤害后清除全部此状态。"
+    },
+    "子午环": {
+      "type": "PENDING",
+      "desc": "处于此状态时，自身受到的伤害减低   70%   ；此状态持续   1   回合。"
+    },
+    "玉敛": {
+      "type": "PENDING",
+      "desc": "玉敛   （控制）：回合开始时，有概率使本回合无法获得能量。"
+    },
+    "禅定": {
+      "type": "PENDING",
+      "desc": "受到伤害时消耗   1   层，降低所受到的伤害，最大可叠加至   4   层。"
+    },
+    "金身": {
+      "type": "PENDING",
+      "desc": "免疫   1   次受到的伤害，最大可叠加   5   层。"
+    },
+    "和鸣": {
+      "type": "PENDING",
+      "desc": "下一次攻击伤害提高   10%/20%/30%   ，并限制受击目标移动   1   回合，不可叠加。"
+    },
+    "龙印": {
+      "type": "PENDING",
+      "desc": "当白龙梅瓶的友方单位对处于此状态的单位进行直接攻击时，攻击的友方单位有   50%/75%/100%   概率获得   1   层   啸剑   状态。"
+    },
+    "特别印章": {
+      "type": "PENDING",
+      "desc": "自身警戒范围扩大   2   格；自身进行警戒攻击并触发暴击时，友方皇后之玺获得   2   点能量，且职业技能冷却时间减少   1   回合，此效果每轮次最多触发   1   次。"
+    },
+    "粉色惊喜": {
+      "type": "PENDING",
+      "desc": "处于此状态时，若被敌方粉白双耳瓶的连击攻击，则受到   1   次敌方粉白双耳瓶攻击力   40%/60%/80%   的额外物理伤害。此状态只能同时存在   1   个。"
+    },
+    "暗影幢幢": {
+      "type": "PENDING",
+      "desc": "暗影幢幢   （属性减益）：受到的持续伤害提高   5%/10%/15%   ，被聊斋图说直接攻击有   20%/30%/40%   概率获得   流失   、   融伤   、   灼烧   其中的一种，持续   2   回合。"
+    },
+    "上膛": {
+      "type": "PENDING",
+      "desc": "上膛   （属性增益）：绝技伤害提升   10%/15%/20%   ，并在释放绝技时使   狙击   效果获得额外眩晕几率。"
+    },
+    "奔袭": {
+      "type": "PENDING",
+      "desc": "奔袭   （属性增益）：移动力提高   1   格，常击伤害提升   40%/70%/100%   ，常击命中后额外获得   1   点能量。"
+    },
+    "狙击": {
+      "type": "PENDING",
+      "desc": "狙击   （属性增益）：攻击时，每层效果提供   15%/20%/25%   概率对目标施加   晕眩   效果，可叠加   3   层，触发后移除所有层数。"
+    },
+    "安可": {
+      "type": "PENDING",
+      "desc": "安可   （属性增益）：常击的最大攻击距离提高   1   格，造成的构素伤害提高   80%   。\n（安可状态持续1回合，即此次再行动结束）"
+    },
+    "应援棒": {
+      "type": "PENDING",
+      "desc": "应援棒   （属性增益）：对宿卫造成的伤害提升   20%/30%/40%   ，持续   2   回合。"
+    },
+    "荧光棒": {
+      "type": "PENDING",
+      "desc": "荧光棒   （属性增益）：对宿卫造成的伤害提升   5%/7%/10%   ，持续   2   回合。"
+    },
+    "妙笔": {
+      "type": "PENDING",
+      "desc": "瞄准冷却率提升   20%/30%/40%   ，持续   1   回合。"
+    },
+    "存档": {
+      "type": "PENDING",
+      "desc": "受到直接攻击后，若当前生命值低于茶叶生产画攻击力的   60%/80%/100%   ，则受到水粉画攻击力   60%/80%/100%   的   额外真实伤害   ，持续   2   回合。"
+    },
+    "丝如雪": {
+      "type": "PENDING",
+      "desc": "自身常击和技能攻击造成伤害时，使受击敌方单位获得   1   层   寒天   状态。"
+    },
+    "增愈": {
+      "type": "PENDING",
+      "desc": "增愈   （属性增益）：提高受到治疗量   20%   ，持续   2   回合，可叠加   1   层。"
+    },
+    "桃意绵绵": {
+      "type": "PENDING",
+      "desc": "桃意绵绵   （属性增益）：构素伤害提高   4%/5%/6%   ，可叠加至   5   层，持续   2   回合。"
+    },
+    "春泥": {
+      "type": "PENDING",
+      "desc": "驱散自身   1   个负面状态，驱散后消耗此状态。消耗此状态时，使自身回复诗文执壶攻击力   3%+100/5%+200/8%+300   的生命值。"
+    },
+    "七孔回音": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "鹤骨悠声": {
+      "type": "PENDING",
+      "desc": "鹤骨悠声   （回复）：每回合开始时，回复贾湖骨笛攻击力   20%   的生命值，可叠加   2   层。"
+    },
+    "剑鸣": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_COMBO",
+      "params": {
+        "mult": [
+          0.4,
+          0.6,
+          0.8
+        ]
+      },
+      "logic": "IF_STATUS(觉醒) -> ADD_EN(1)",
+      "consume": 1
+    },
+    "蛰伏": {
+      "type": "STATUS_TRANSFORM",
+      "trigger": "EVENT_BUS.STATUS.STACK_REACH",
+      "count": 4,
+      "action": [
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(觉醒)",
+        "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+      ]
+    },
+    "觉醒": {
+      "type": "PENDING",
+      "desc": "觉醒   （属性增益）：此状态使自身贯穿率增加   40%/50%/60%   ，攻击力提高   30%   。"
+    },
+    "锋镝清野": {
+      "type": "PENDING",
+      "desc": "处于此状态时，自身受到的伤害降低   15%/20%/25%   ，无法移动并免疫敌方造成的位移效果；常击的攻击范围变为自身   周围3-7格   ，且可对选定的敌方单体或地块及其   周围1圈   敌方全体造成伤害；\n此状态持续期间，自身无法进入   瞄准   状态。"
+    },
+    "乱神": {
+      "type": "PENDING",
+      "desc": "乱神   （属性减益）：处于此状态时，造成的构素伤害降低   30%   ，持续   2   回合。"
+    },
+    "脱壳": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.25
+      },
+      "consume_on": "EVENT_BUS.ACTION.EVADE_SUCCESS",
+      "max": 2
+    },
+    "金玉": {
+      "type": "PENDING",
+      "desc": "回击的暴击率提升   40%/60%/80%   ，持续   1   回合。"
+    },
+    "隐蔽": {
+      "type": "PENDING",
+      "desc": "无法被选中为主目标，但受到伤害提高   25%   ，持续   1   回合。"
+    },
+    "灵动": {
+      "type": "STACK_TRANSFORM",
+      "trigger": "EVENT_BUS.STATUS.STACK_REACH",
+      "count": 3,
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_ACTION"
+    },
+    "热诚": {
+      "type": "PENDING",
+      "desc": "每层   热诚   状态，提高   15   速度，提高   10%   连击伤害，最多叠加   5   层，每次回合开始时将减少   1   层。"
+    },
+    "犇牛": {
+      "type": "PENDING",
+      "desc": "犇牛   （属性增益）：提升最大生命值，最大叠加   4   层。"
+    },
+    "敏捷": {
+      "type": "STACK_EVADE",
+      "action": "ACTION_LIBRARY.COMBAT.EVASION",
+      "val": 1.0,
+      "consume_on": "EVADE_SUCCESS"
+    },
+    "夜灯华": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.15
+      },
+      "max": 3
+    },
+    "残烛回光": {
+      "type": "IMMORTAL_LOCK",
+      "action": [
+        "IMMUNIZE_DEATH",
+        "LOCK_ACTION"
+      ],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.2,
+          0.4
+        ]
+      }
+    },
+    "残烛回光-超群": {
+      "type": "IMMORTAL_LOCK",
+      "action": [
+        "IMMUNIZE_DEATH",
+        "LOCK_ACTION"
+      ],
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": [
+          0.1,
+          0.2,
+          0.4
+        ]
+      }
+    },
+    "沐光": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "ACTION_TYPE('HEAL')",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": [
+          1.25,
+          1.5,
+          1.75
+        ]
+      }
+    },
+    "金戈": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.1
+      },
+      "max": 3
+    },
+    "金羽": {
+      "type": "NEXT_DEFENSE_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      },
+      "consume": "TRUE"
+    },
+    "驾鹤引雷": {
+      "type": "CHANCE_TRIGGER",
+      "trigger": "ATTACK_HIT",
+      "condition": "TARGET_HAS('嘹唳亭风')",
+      "chance": [
+        0.3,
+        0.4,
+        0.5
+      ],
+      "action": "TRIGGER_EXTRA_DMG"
+    },
+    "嘹唳亭风": {
+      "type": "CHANCE_DOT",
+      "trigger": "TURN_END",
+      "chance": [
+        0.3,
+        0.4,
+        0.5
+      ],
+      "action": "DEAL_DAMAGE",
+      "source": "鹿角立鹤"
+    },
+    "金虹乍现": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.HIT_RECEIVED",
+      "condition": "SOURCE == 金瓯永固杯",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "params": {
+        "type": "EXTRA_PHYSICAL",
+        "mult": [
+          0.3,
+          0.4,
+          0.5
+        ],
+        "multiplier_stat": "STACKS"
+      }
+    },
+    "惊蕊": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "SENTINEL_DMG_INC": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      },
+      "max": 3
+    },
+    "落花": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.2
+      }
+    },
+    "垒岩": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS('峰石') >= 3",
+      "effect": "ULT_ATK_MULT = [1.5, 1.8, 2.0]"
+    },
+    "壑川": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS('峰石')>=1 AND STACKS('流纹')>=2",
+      "effect": "ULT_RANGE = SELECT_ENEMY_AND_2_GRID_LINE"
+    },
+    "步移景异": {
+      "type": "RESOURCE_GEN",
+      "trigger": "TURN_START",
+      "action": "ADD_EN(1)"
+    },
+    "涓流": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS('峰石')>=2 AND STACKS('流纹')>=1",
+      "effect": "ULT_ATK_MULT = [1.5, 1.8, 2.0]"
+    },
+    "滔滔": {
+      "type": "TRANSFORMED_STATE",
+      "condition": "STACKS('流纹') >= 3",
+      "effect": [
+        "ULT_RANGE = AOE_2",
+        "ULT_ATK_MULT = [1.5, 1.8, 2.0]"
+      ]
+    },
+    "笔底山河": {
+      "type": "STACK_BOOST",
+      "trigger": "GAIN_STATUS('峰石' OR '流纹')",
+      "action": "ADD_EXTRA_STACK(1)"
+    },
+    "青绿设色": {
+      "type": "NEXT_ACTION_MODIFIER",
+      "changes": {
+        "ULT_RANGE_MAX": 2
+      },
+      "consume": "ON_ULT"
+    },
+    "余香": {
+      "type": "IMMUNITY",
+      "action": [
+        "IMMUNIZE_DOT",
+        "IMMUNIZE_STAT_DOWN"
+      ]
+    },
+    "沐芳": {
+      "type": "THRESHOLD_BONUS",
+      "condition": "STACKS >= 3",
+      "changes": {
+        "HEAL_OUT": [
+          0.2,
+          0.3,
+          0.4
+        ],
+        "MOVE": 1
+      }
+    },
+    "香气法则": {
+      "type": "CONDITIONAL_MODIFIER",
+      "condition": "HAS_STATUS(啸剑, 2) AND HAS_STATUS(蓄势, 2)",
+      "action": "ACTION_LIBRARY.RESOURCE.SET_STAT_MODIFIER",
+      "changes": {
+        "DAMAGE_MOD.SKILL_DMG_INC": 0.5
+      },
+      "auto_remove": "IF_STATUS_BELOW(2)"
+    },
+    "香谱": {
+      "type": "EMERGENCY_HEAL",
+      "trigger": "HP < 0.5",
+      "action": "HEAL_SELF(ATK*3.0)"
+    },
+    "落照": {
+      "type": "EXTRA_CONST",
+      "trigger": "EVENT_BUS.ACTION.NORMAL_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "range": "SQUARE_1"
+    },
+    "寒刃": {
+      "type": "ON_HIT_DEBUFF",
+      "trigger": "NORMAL_OR_COMBO",
+      "action": "APPLY_TARGET('寒天', 1)"
+    },
+    "飞雪域": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATK_PCT": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "lock": "ULTIMATE"
+    },
+    "若霜": {
+      "type": "VIRTUAL_STATUS",
+      "effect": "TREATED_AS('霜冻')"
+    },
+    "似夜奔行": {
+      "type": "DMG_CONVERSION",
+      "trigger": "NORMAL_OR_COUNTER",
+      "action": "DEAL_EXTRA_DMG(DEF_P * [1.8, 2.4, 3.0])"
+    },
+    "奇石": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "COUNTER_RATE": 1.0,
+        "ALL_DMG_RED": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "润水": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_IN": [
+          0.1,
+          0.15,
+          0.2
+        ]
+      }
+    },
+    "云峰奇险": {
+      "type": "AURA_DEBUFF",
+      "range": "SQUARE_3",
+      "trigger": "BEFORE_ENEMY_HIT",
+      "action": "APPLY_TARGET('寒天')"
+    },
+    "云峰奇险-超群": {
+      "type": "AURA_DEBUFF",
+      "range": "SQUARE_3",
+      "trigger": "BEFORE_ENEMY_HIT",
+      "action": "APPLY_TARGET('霜冻')"
+    },
+    "指针": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1
+      }
+    },
+    "钟表校准": {
+      "type": "INSTANT_CD_RESET",
+      "action": "RESET_SKILL_CD('CLASS')",
+      "buff": "CLASS_SKILL_RANGE = SQUARE_3"
+    },
+    "耀阳永辉": {
+      "type": "BURST_MODE",
+      "changes": {
+        "EXTRA_DMG_INC": [
+          0.2,
+          0.3,
+          0.4
+        ]
+      },
+      "effect": {
+        "NORMAL_SCOPE": "AOE_2",
+        "PRE_HIT_APPLY": [
+          "融伤",
+          "灼烧"
+        ]
+      },
+      "consume_on": "2_ATTACKS"
+    },
+    "和谐之美": {
+      "type": "NEXT_ACTION_RESOURCE",
+      "trigger": "CLASS_SKILL",
+      "action": [
+        "ADD_EN(2)",
+        "GRANT_EXTRA_ACTION"
+      ],
+      "consume": "TRUE"
+    },
+    "怒雷": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.2
+      },
+      "max": 2
+    },
+    "爱琴之潮": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "NORMAL_ATK_MULT": [
+          0.5,
+          0.65,
+          0.8
+        ]
+      },
+      "max": 3
+    },
+    "神人同形": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": 0.1
+      },
+      "max": 5
+    },
+    "金星之怒": {
+      "type": "CONVERT_STAT",
+      "source": "CRIT_RATE",
+      "target": "DEF_PEN",
+      "ratio": "25% -> 10%",
+      "trigger": "BEFORE_NORMAL_ATTACK"
+    },
+    "残缺雕像": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "CRIT_DMG_TAKEN": 0.6
+      }
+    },
+    "余音": {
+      "type": "STACK_EXTRA_HIT",
+      "trigger": "CLASS_SKILL",
+      "action": "DEAL_EXTRA_CONST_DMG",
+      "max": 5
+    },
+    "共奏": {
+      "type": "ACTION_AUGMENT",
+      "trigger": "EVENT_BUS.ACTION.ANY_DAMAGE_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_ADDITIONAL",
+      "params": {
+        "type": "EXTRA_CONSTRUCT",
+        "mult": [
+          0.4,
+          0.5,
+          0.6
+        ],
+        "owner": "五弦琵琶"
+      }
+    },
+    "芳蕊": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "EXTRA_DMG_INC": [
+          0.2,
+          0.3,
+          0.5
+        ],
+        "DEF_PEN": [
+          0.1,
+          0.2,
+          0.3
+        ]
+      }
+    },
+    "迭奏": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ALL_DMG_INC": 0.3
+      }
+    },
+    "乐音": {
+      "type": "STACK_ACCUMULATOR",
+      "trigger": "EVENT_BUS.ACTION.RECEIVE_DAMAGE_FROM(共奏)",
+      "threshold": 3,
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "params": {
+        "type": "EXTRA_CONSTRUCT",
+        "mult": [
+          1.2,
+          1.5,
+          1.8
+        ],
+        "owner": "五弦琵琶"
+      },
+      "consume": "TRUE"
+    },
+    "散音": {
+      "type": "REACTION_AOE",
+      "trigger": "HIT_RECEIVED",
+      "action": "AOE_DMG(SQUARE_3, ATK * 0.4)"
+    },
+    "泛音": {
+      "type": "SPECIFIC_STACK_BOMB",
+      "trigger": "HIT_BY('彩凤鸣岐', ULT)",
+      "action": "DEAL_DMG_BASED_ON_STACKS"
+    },
+    "经变": {
+      "type": "TURN_END_AOE",
+      "action": [
+        "KNOCKBACK(1)",
+        "DEAL_PHYS_DMG(0.6)"
+      ],
+      "range": "SQUARE_1"
+    },
+    "速羽": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      },
+      "max": 1
+    },
+    "净土": {
+      "type": "REACTION_BOOST",
+      "trigger": "KNOCKBACK",
+      "action": "INCREASE_DISTANCE(2)"
+    },
+    "了悟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.2
+      }
+    },
+    "学海无涯": {
+      "type": "EMERGENCY_GATE",
+      "trigger": "EVENT_BUS.DEFENSE.HIT_RECEIVED",
+      "condition": "HP_PCT < 0.5",
+      "action": [
+        "ACTION_LIBRARY.DEFENSE_GATE.SET_DMG_VALUE(1)",
+        "ACTION_LIBRARY.STATUS.ADD_STATUS_STACK(学分)",
+        "ACTION_LIBRARY.STATUS.REMOVE_STATUS(SELF)"
+      ]
+    },
+    "师恩": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.15
+      }
+    },
+    "教学相长": {
+      "type": "COOP_BUFF",
+      "condition": "NEAR_ALLY",
+      "changes": {
+        "ATK": 0.1
+      }
+    },
+    "游学心得": {
+      "type": "EXP_SHARE",
+      "action": "SHARE_EXP_WITH_TEAM"
+    },
+    "解惑": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": 0.2
+      }
+    },
+    "沁声": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": 0.2
+      }
+    },
+    "灵音": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.SPD": 20
+      }
+    },
+    "祈鸣": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": 0.15
+      }
+    },
+    "镈鸣": {
+      "type": "AOE_DMG",
+      "trigger": "TURN_END",
+      "action": "DEAL_PHYS_DMG(0.5)",
+      "range": "SQUARE_2"
+    },
+    "帝势": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.ULT_DMG_INC": 0.3
+      }
+    },
+    "车辙": {
+      "type": "MARKER",
+      "note": "Path marker for charge skill"
+    },
+    "伏龙巡猎": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1,
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.3
+      }
+    },
+    "皇威": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.25
+      }
+    },
+    "跗骨": {
+      "type": "DOT_BOOST",
+      "changes": {
+        "DOT_DMG_TAKEN": 0.3
+      }
+    },
+    "众生一相": {
+      "type": "SHARED_DMG",
+      "action": "DISTRIBUTE_DMG_TO_ALLIES"
+    },
+    "勇毅": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.2
+      }
+    },
+    "酣饮": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.3
+      }
+    },
+    "昼时": {
+      "type": "STACK_BRANCHING",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "logic": {
+        "1": "APPLY(IMMUNIZE_NEXT_DMG)",
+        "2": "APPLY(ALL_DMG_RED, [0.2, 0.35, 0.5])",
+        "3": "APPLY(IMMUNIZE_ALL_DMG, 1_ROUND)"
+      }
+    },
+    "舟浮": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      }
+    },
+    "铜人抱箭": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.2
+      }
+    },
+    "夜刻": {
+      "type": "STACK_BRANCHING",
+      "trigger": "EVENT_BUS.SYSTEM.TURN_END",
+      "logic": {
+        "1": "APPLY_DEBUFF(止戈)",
+        "2": "APPLY_DEBUFF(眩晕)",
+        "3": "DEAL_DAMAGE(EXTRA_TRUE, CUR_HP * [0.4, 0.5, 0.6])"
+      }
+    },
+    "箭尽": {
+      "type": "LOCK",
+      "action": "LOCK_SKILL('CLASS')"
+    },
+    "寿海": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.HP": 0.2
+      }
+    },
+    "水痕": {
+      "type": "MARKER",
+      "note": "Used for skill synergy"
+    },
+    "福山": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.2
+      }
+    },
+    "吉时": {
+      "type": "RESOURCE_GEN",
+      "trigger": "TURN_START",
+      "action": "ADD_EN(1)"
+    },
+    "避让": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": 0.15
+      }
+    },
+    "浑然天成": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ALL_STATS": 0.1
+      }
+    },
+    "明镜": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": 0.3
+      }
+    },
+    "业障": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SURVIVAL_MOD.ALL_DMG_RED": -0.15
+      }
+    },
+    "庆功酒": {
+      "type": "BURST_MODE",
+      "changes": {
+        "ATK_PCT": 0.3,
+        "NORMAL_MULT": 2.0,
+        "RANGE": 1
+      },
+      "extra": "AOE_TRUE_DMG_50%"
+    },
+    "粟酒": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RATE": 0.2
+      }
+    },
+    "酿酒": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.05
+      },
+      "max": 6
+    },
+    "麦酒": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_DMG": 0.4
+      }
+    },
+    "宿醉": {
+      "type": "REACTION_DEBUFF",
+      "trigger": "EVENT_BUS.ACTION.DIRECT_ATTACK_DEALT",
+      "action": "ACTION_LIBRARY.OFFENSE.EXECUTE_ADDITIONAL",
+      "dmg_inc": 0.2
+    },
+    "成窟": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.3
+      }
+    },
+    "铭刻千载": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.3
+      }
+    },
+    "镌岩": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.2
+      }
+    },
+    "花神": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.3
+      }
+    },
+    "截招": {
+      "type": "REACTION_BLOCK",
+      "trigger": "HIT_RECEIVED",
+      "action": "REDUCE_DMG(50%)"
+    },
+    "折射": {
+      "type": "REFLECT_DMG",
+      "action": "REFLECT_DMG_PCT(0.2)"
+    },
+    "质坚": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.2
+      }
+    },
+    "色散": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RESIST": -0.2
+      }
+    },
+    "烟雾": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.15
+      }
+    },
+    "素纱": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.2
+      }
+    },
+    "蚕丝": {
+      "type": "LOCK",
+      "action": "LOCK_MOVEMENT"
+    },
+    "超脱": {
+      "type": "IMMUNITY",
+      "action": "IMMUNIZE_CONTROL"
+    },
+    "透光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": 0.2
+      }
+    },
+    "舍利": {
+      "type": "REVIVE_TOKEN",
+      "action": "REVIVE_ON_DEATH",
+      "val": "50%_HP"
+    },
+    "业报": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.05
+      },
+      "max": 5
+    },
+    "业报-超群": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.08
+      },
+      "max": 5
+    },
+    "虚实": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.2
+      }
+    },
+    "将义": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1
+      }
+    },
+    "孙子兵法": {
+      "type": "CONDITIONAL_MODIFIER",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TARGET_TYPE",
+      "condition": "SINGLE_TARGET",
+      "effect": "ACTION_LIBRARY.DAMAGE_MOD.NORMAL_DMG_INC"
+    },
+    "孙膑兵法": {
+      "type": "PENDING",
+      "desc": "擅长范围攻击和配合友方战略单位行动。"
+    },
+    "临摹": {
+      "type": "COPY_STATE",
+      "action": "COPY_TARGET_BUFFS"
+    },
+    "形似": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.EVASION": 0.1
+      }
+    },
+    "神似": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": 0.1
+      }
+    },
+    "星云": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.MOVE": 1
+      }
+    },
+    "烈阳": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.DAMAGE_MOD.PHYS_DMG_INC": 0.2
+      }
+    },
+    "泼色": {
+      "type": "AOE_DEBUFF",
+      "action": "APPLY_RANDOM_DEBUFF"
+    },
+    "瑞莲": {
+      "type": "HOT",
+      "trigger": "TURN_START",
+      "action": "HEAL_TEAM"
+    },
+    "迟夜": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.SPD": -20
+      }
+    },
+    "天星": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": 0.2
+      }
+    },
+    "报时": {
+      "type": "PRE_HIT_VULNERABILITY",
+      "condition": "SOURCE_TYPE == SUMMON",
+      "action": [
+        "ACTION_LIBRARY.OFFENSE.SET_DEFENSE_IGNORE(0.7)",
+        "ACTION_LIBRARY.STATUS.APPLY_STATUS(易伤, 0.5)"
+      ]
+    },
+    "赞文": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1
+      }
+    },
+    "图记": {
+      "type": "MARKER",
+      "note": "Used for Strategy Skill range calculation"
+    },
+    "错杂": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.HIT_RATE": -0.2
+      }
+    },
+    "莲台": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": 0.15
+      }
+    },
+    "莲心": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_C": 0.15
+      }
+    },
+    "莲花": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.SUPPORT.HEAL_OUT": 0.1
+      }
+    },
+    "澄明": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.CRIT_RESIST": 0.3
+      }
+    },
+    "镂孔": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.COMBAT.DEF_PEN": 0.15
+      }
+    },
+    "江中火": {
+      "type": "DOT",
+      "trigger": "TURN_END",
+      "action": "DEAL_FIRE_DMG"
+    },
+    "纸上书": {
+      "type": "MARKER",
+      "note": "Visual effect only"
+    },
+    "蔽空": {
+      "type": "TEAM_BUFF",
+      "gate": "IF_TEAM_COMP(FLIER)",
+      "changes": {
+        "FLIER.EVASION": 0.2
+      }
+    },
+    "蔽空-超群": {
+      "type": "TEAM_BUFF",
+      "gate": "IF_TEAM_COMP(FLIER)",
+      "changes": {
+        "ALL.EVASION": 0.2
+      }
+    },
+    "才名": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1
+      }
+    },
+    "辑录": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.1
+      }
+    },
+    "佚失": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.DEF_P": -0.2
+      }
+    },
+    "凛冬": {
+      "type": "TEAM_BUFF",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TEAM_COMP",
+      "condition": "TANK",
+      "changes": {
+        "TANK.DAMAGE_MOD.COUNTER_DMG_INC": 0.3,
+        "TANK.SURVIVAL_MOD.ALL_DMG_RED": 0.3
+      }
+    },
+    "凛冬-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        "TANK >= 1": "COUNTER_DMG_INC 0.3",
+        "TANK >= 3": "ALL_DMG_RED 0.3"
+      }
+    },
+    "四季同鸣": {
+      "type": "MULTI_MODE",
+      "action": "ACTION_LIBRARY.STATUS.ADD_VIRTUAL_TAGS",
+      "values": [
+        "阳春",
+        "炎夏",
+        "暮秋",
+        "凛冬",
+        "恒时"
+      ],
+      "p_dmg_inc": 0.4
+    },
+    "天时往复": {
+      "type": "RESOURCE_RULE",
+      "trigger": "EVENT_BUS.SYSTEM.ANY_UNIT_TURN_END",
+      "action": "ACTION_LIBRARY.RESOURCE.MODIFY_AMMO",
+      "value": 4
+    },
+    "恒时": {
+      "type": "TEAM_BUFF",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TEAM_COMP",
+      "condition": "STRAT",
+      "changes": {
+        "ALL.ATTRIBUTE_REGISTRY.BASE.ATK": 0.3,
+        "ALL.SURVIVAL_MOD.ALL_DMG_RED": 0.3
+      }
+    },
+    "恒时-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        "STRAT >= 1": "ATK 0.4",
+        "STRAT >= 3": "HEAL_BY_HIT 0.4"
+      }
+    },
+    "暮秋": {
+      "type": "TEAM_BUFF",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TEAM_COMP",
+      "condition": "CONSTR",
+      "changes": {
+        "CONSTR.DAMAGE_MOD.SKILL_DMG_INC": 0.3,
+        "CONSTR.SURVIVAL_MOD.CONST_DMG_RED": 0.3
+      }
+    },
+    "暮秋-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        "CONSTR >= 1": "SKILL_DMG_INC 0.3",
+        "CONSTR >= 3": "CONST_DMG_INC 0.3"
+      }
+    },
+    "灿金": {
+      "type": "STACK_MODIFIER",
+      "changes": {
+        "ATTRIBUTE_REGISTRY.BASE.ATK": 0.06
+      },
+      "max": 5
+    },
+    "炎夏": {
+      "type": "TEAM_BUFF",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TEAM_COMP",
+      "condition": "SNIPER",
+      "changes": {
+        "SNIPER.DAMAGE_MOD.COMBO_DMG_INC": 0.3,
+        "SNIPER.COMBAT.DEF_PEN": 0.3
+      }
+    },
+    "炎夏-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        "SNIPER >= 1": "COMBO_DMG_INC 0.3",
+        "SNIPER >= 3": "DEF_PEN 0.3"
+      }
+    },
+    "阳春": {
+      "type": "TEAM_BUFF",
+      "gate": "ACTION_LIBRARY.LOGIC_GATE.IF_TEAM_COMP",
+      "condition": "FIGHTER",
+      "changes": {
+        "FIGHTER.DAMAGE_MOD.NORMAL_DMG_INC": 0.3,
+        "FIGHTER.COMBAT.CRIT_DMG": 0.6
+      }
+    },
+    "阳春-超群": {
+      "type": "TEAM_COMP_BOOST",
+      "scope": "GLOBAL_ALLIES",
+      "logic": {
+        "FIGHTER >= 1": "NORMAL_DMG_INC 0.3",
+        "FIGHTER >= 3": "CRIT_DMG 0.6"
+      }
+    },
+    "打卡": {
+      "type": "ACCUMULATOR",
+      "trigger_at": 6,
+      "action": "ACTION_LIBRARY.OFFENSE.DEAL_DAMAGE",
+      "range": "SQUARE_2",
+      "mult": 2.0
+    },
+    "抛光": {
+      "type": "STATIC_MODIFIER",
+      "changes": {
+        "CRIT_RATE": 0.2,
+        "PURSUIT_DMG": 0.2
+      },
+      "duration": 2
+    },
+    "特例": {
+      "type": "TURN_RULE",
+      "trigger": "EVENT_BUS.ACTION.ULT_DEALT",
+      "action": "ACTION_LIBRARY.TURN_LOGIC.GRANT_EXTRA_TURN",
+      "extra": {
+        "LOCK_ULT": true,
+        "EXECUTE_COMBO": true
+      }
+    },
+    "镂金卷云": {
+      "type": "ULT_BUFFER",
+      "max": 3,
+      "bonus_per_stack": 0.5
+    },
+    "未琢": {
+      "type": "VULNERABILITY",
+      "trigger": "EVENT_BUS.ACTION.PURSUIT_ATTACK_DEALT",
+      "dmg_inc": 0.3,
+      "consume_on": "HIT"
+    }
+  }
+}

@@ -1,0 +1,226 @@
+﻿{
+  "character_id": "whmx-yznz",
+  "name": "亚长牛尊",
+  "logic_registry": {
+    "version": "1.1",
+    "direct_attack_mask": [
+      "NORMAL_ATTACK",
+      "CLASS_SKILL",
+      "ULTIMATE_SKILL",
+      "COMBO_ATTACK"
+    ]
+  },
+  "initial_stats": {
+    "rarity": "EXQUISITE",
+    "role": "LIGHT",
+    "tags": [
+      "MELEE",
+      "DPS",
+      "COMBO",
+      "BURST"
+    ],
+    "hp": 6689,
+    "atk": 2511,
+    "def_p": 546,
+    "def_c": 546,
+    "spd": 120,
+    "move": 4,
+    "energy_init": 1,
+    "energy_max": 3
+  },
+  "skills": {
+    "normal_attack": {
+      "id": "SHAN_ZUO",
+      "type": "NORMAL_ATTACK",
+      "damage_type": "PHYSICAL",
+      "multiplier": 1.2,
+      "range": "SINGLE_TARGET",
+      "listeners": [
+        {
+          "trigger": "AFTER_NORMAL_ATTACK",
+          "condition": "SELF_HAS_STATUS('众生一相')",
+          "action": {
+            "type": "EXECUTE_COMBO",
+            "multiplier": 1.3,
+            "damage_type": "PHYSICAL"
+          }
+        }
+      ]
+    },
+    "class_skill": {
+      "id": "CUI_FENG_ZHAN_QI",
+      "type": "CLASS_SKILL",
+      "energy_cost": 0,
+      "cd": 2,
+      "actions": [
+        {
+          "type": "GRANT_EXTRA_ACTION",
+          "move_mod": -2
+        }
+      ]
+    },
+    "ultimate": {
+      "id": "FU_YIN_CHANG_GE",
+      "type": "ULTIMATE_SKILL",
+      "energy_cost": 3,
+      "actions": [
+        {
+          "type": "APPLY_STATUS",
+          "status": [
+            "啸剑",
+            "蓄势"
+          ],
+          "stacks": 2,
+          "target": "self"
+        },
+        {
+          "type": "APPLY_STATUS",
+          "status": "酣饮",
+          "target": "self",
+          "duration": "1R"
+        },
+        {
+          "type": "APPLY_STATUS",
+          "status": "众生一相",
+          "target": "self",
+          "duration": "2R"
+        }
+      ]
+    }
+  },
+  "passives": [
+    {
+      "id": "WAN_WU_YOU_LING",
+      "name": "万物有灵",
+      "modifiers": [
+        {
+          "type": "SET_STAT_MODIFIER",
+          "stat": "SPD",
+          "value": 200
+        },
+        {
+          "type": "SET_STAT_MODIFIER",
+          "stat": "ATK_PCT",
+          "dynamic_value": "count(STACKS('万物提升')) * 0.15",
+          "max_stacks": 10
+        }
+      ],
+      "listeners": [
+        {
+          "trigger": "ALLY_COMBO_DEALT",
+          "condition": "SELF_HAS_STATUS('众生一相')",
+          "action": {
+            "type": "ADD_STATUS_STACK",
+            "status": "万物提升",
+            "target": "self"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SI_YI_LEI_SHANG",
+      "name": "祀以酹觞",
+      "listeners": [
+        {
+          "trigger": "COMBO_ATTACK_DEALT",
+          "condition": "TARGET_IS_DEFEATED",
+          "action": {
+            "type": "DEAL_DAMAGE",
+            "multiplier": 0.5,
+            "damage_type": "TRUE_DAMAGE",
+            "range": "AOE_SQUARE_2",
+            "is_splash": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "XIAO_YONG",
+      "name": "骁勇",
+      "listeners": [
+        {
+          "trigger": "ROUND_START",
+          "action": {
+            "type": "SET_STAT_MODIFIER",
+            "stat": "COMBO_DMG_INC",
+            "dynamic_value": "GET_PREVIOUS_ACTION_COUNT() * 0.3",
+            "max_stacks": 5,
+            "duration": "2R"
+          }
+        }
+      ]
+    }
+  ],
+  "huan_zhang": {
+    "id": "NIU_NIU_SHUI_CHE",
+    "name": "牛牛洒水车",
+    "modifiers": [
+      {
+        "type": "SET_STAT_MODIFIER",
+        "stat": "THRU_STRENGTH",
+        "value": 0.1
+      },
+      {
+        "type": "SET_STAT_MODIFIER",
+        "stat": "CRIT_DMG_INC",
+        "dynamic_value": "count(STACKS('万物提升')) * 0.2",
+        "condition": "SELF_HAS_STATUS('众生一相')"
+      }
+    ],
+    "listeners": [
+      {
+        "trigger": "COMBO_ATTACK_DEALT",
+        "condition": "TARGET_HP_BELOW_PCT(0.5)",
+        "action": {
+          "type": "DEAL_DAMAGE",
+          "multiplier": 0.5,
+          "damage_type": "TRUE_DAMAGE",
+          "range": "AOE_SQUARE_2",
+          "is_splash": true
+        }
+      },
+      {
+        "trigger": "BATTLE_START",
+        "action": {
+          "type": "APPLY_STATUS",
+          "status": "骁勇加成",
+          "stacks": 5,
+          "target": "self"
+        }
+      },
+      {
+        "trigger": "ALLY_COMBO_DEALT",
+        "condition": "SELF_HAS_STATUS('酣饮')",
+        "action": [
+          {
+            "type": "GRANT_EXTRA_ACTION",
+            "modifiers": [
+              {
+                "type": "SET_STAT_MODIFIER",
+                "stat": "NORMAL_ATK_MULT",
+                "value": -0.99
+              }
+            ]
+          },
+          {
+            "type": "REFRESH_STATUS",
+            "status": [
+              "啸剑",
+              "蓄势"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "status_definitions": {
+    "酣饮": {
+      "type": "SPECIAL",
+      "note": "友方连击后获得额外行动，常击伤害降低99%，刷新攻击增益"
+    },
+    "众生一相": {
+      "type": "BUFF",
+      "note": "常击后触发130%连击"
+    }
+  }
+}
