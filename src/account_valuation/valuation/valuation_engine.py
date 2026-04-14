@@ -1,21 +1,12 @@
 
+
 import os, sys
-# 1. 模块自适应注入 (Local & Root Glue)
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
+# 重构后新架构：向上2层到达 account_valuation/
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-# whmx/valuation/valuation_engine.py
 from core.database import CharacterDB
 from core.settings import ValuationSettings
-from valuation.advisors import AccountAdvisor
-import os
+from .advisors import AccountAdvisor
 import json
 import time
 
@@ -23,12 +14,13 @@ class ValuationEngine:
     def __init__(self, excel_path=None, settings_path=None):
         # 1. 初始化数据库 (传入 Excel 路径)
         self.db = CharacterDB(excel_path)
-        
+
         # 2. 加载配置 (如果不传，则从模块默认位置找 settings.json)
         if not settings_path:
-            settings_path = os.path.join(_MOD_ROOT, 'valuation', 'settings.json')
+            _MODULE_DIR = os.path.dirname(__file__)  # src/account_valuation/valuation/
+            settings_path = os.path.join(os.path.dirname(_MODULE_DIR), 'core', 'settings.json')
         self.cfg = ValuationSettings(settings_path)
-        
+
         # 3. 加载顾问层 (阵容模拟)
         self.advisor = AccountAdvisor(self.db, self.db.tier_data)
 

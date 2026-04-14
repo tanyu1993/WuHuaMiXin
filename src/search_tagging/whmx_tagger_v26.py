@@ -1,25 +1,14 @@
 
-import os, sys
-# 1. 模块自适应注入 (Local & Root Glue)
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
 
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
-
-import json
-import re
-import os
+import os, sys, json, re
+# 重构后新架构：向上2层到达项目根
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from src._project_root import PROJECT_ROOT, DATA
 
 # --- Path Configuration ---
-JS_FILE = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_data.js")
-METADATA_FILE = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-SEARCH_DB_FILE = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
+JS_FILE = os.path.join(PROJECT_ROOT, "src", "search_tagging", "status_data.js")
+METADATA_FILE = os.path.join(DATA, "status_library_ssot.json")
+SEARCH_DB_FILE = os.path.join(DATA, "status_library_ssot.json")
 
 def get_v26_tags(raw_desc, category, status_name):
     # 1. 预处理与噪音隔离

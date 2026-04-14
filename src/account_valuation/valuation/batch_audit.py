@@ -1,25 +1,15 @@
 
+
 import os, sys
-# 1. 模块自适应注入 (Local & Root Glue)
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
+# 重构后新架构：向上3层到达项目根
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..', '..'))
 # whmx/valuation/batch_audit.py
-import os
-import sys
 import shutil
 from paddleocr import PaddleOCR
 
-# 统一引用方式 (基于 _MOD_ROOT)
-from valuation.batch_processor import load_all_char_names, process_image_for_verification
-from valuation.valuation_engine import ValuationEngine
+# 统一引用方式 (相对于当前模块)
+from .batch_processor import load_all_char_names, process_image_for_verification
+from .valuation_engine import ValuationEngine
 
 def generate_two_stage_verification_html(all_detections, all_chars, output_file):
     """ 生成资产校验工作台 V7.0 (模块化增强版) """

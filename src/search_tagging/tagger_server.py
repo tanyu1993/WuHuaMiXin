@@ -2,12 +2,10 @@
 import http.server, json, os, sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT = _DIR
-while PROJECT != os.path.dirname(PROJECT) and not os.path.basename(PROJECT).startswith('part_'):
-    PROJECT = os.path.dirname(PROJECT)
-PROJECT = os.path.dirname(PROJECT)
+# 重构后新架构：向上2层到达项目根
+PROJECT = os.path.normpath(os.path.join(_DIR, '..', '..'))
 
-SSOT = os.path.join(PROJECT, "DATA_ASSETS", "status_library_ssot.json")
+SSOT = os.path.join(PROJECT, "data", "status_library_ssot.json")
 STATUS_JS = os.path.join(_DIR, "status_data.js")
 HTML = os.path.join(_DIR, "status_tagger_ui.html")
 

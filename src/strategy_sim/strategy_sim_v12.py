@@ -468,7 +468,7 @@ if __name__ == "__main__":
     print()
 
     # 保存 Excel
-    out_dir  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "DATA_ASSETS")
+    out_dir  = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "..", "data")
     out_file = os.path.join(out_dir, "物华弥新_1000年模拟_v12_B档.xlsx")
     max_dd_val, final_pulls, final_reds = sim.save_excel(out_file)
 

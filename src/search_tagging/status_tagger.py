@@ -1,24 +1,15 @@
 
-import os, sys
-# 1. 模块自适应注入 (Local & Root Glue)
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-# 递归向上寻找直到发现 part_ 目录作为模块根
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
-if _MOD_ROOT not in sys.path: sys.path.insert(0, _MOD_ROOT)
-if _PROJECT_ROOT not in sys.path: sys.path.insert(0, _PROJECT_ROOT)
 
 import os, sys, re, json, glob
+# 重构后新架构：向上2层到达项目根
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from src._project_root import PROJECT_ROOT, DATA
 
-# 核心路径注入 (指向 DATA_ASSETS)
+# 核心路径注入 (指向 data/)
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-JS_OUTPUT_PATH = os.path.join(BASE_DIR, 'status_data.js') # 保持在本地供 UI 使用
-SSOT_PATH = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-REF_DIR = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "wiki_data", "refined_v10")
+JS_OUTPUT_PATH = os.path.join(BASE_DIR, 'status_data.js')  # 保持在本地供 UI 使用
+SSOT_PATH = os.path.join(DATA, "status_library_ssot.json")
+REF_DIR = os.path.join(DATA, "wiki_data")  # 状态打标器不再依赖 refined_v10
 
 def load_db():
     if os.path.exists(SSOT_PATH):

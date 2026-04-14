@@ -1,18 +1,14 @@
 import os, sys, json
+# 重构后新架构：向上2层到达项目根
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+from src._project_root import PROJECT_ROOT, DATA
 from flask import Flask, jsonify, request, render_template_string
 
-# 1. 模块自适应注入
-_FILE_DIR = os.path.dirname(os.path.realpath(__file__))
-_MOD_ROOT = _FILE_DIR
-while _MOD_ROOT != os.path.dirname(_MOD_ROOT) and not os.path.basename(_MOD_ROOT).startswith('part_'):
-    _MOD_ROOT = os.path.dirname(_MOD_ROOT)
-_PROJECT_ROOT = os.path.dirname(_MOD_ROOT)
-
 # --- Path Configuration ---
-PENDING_FILE = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "pending_entries.json")
-STATUS_SSOT = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "status_library_ssot.json")
-SUMMON_REGISTRY = os.path.join(_PROJECT_ROOT, "DATA_ASSETS", "summon_registry.json")
-HTML_FILE = os.path.join(_PROJECT_ROOT, "part_3_Search_Tagging", "entry_auditor_ui.html")
+PENDING_FILE = os.path.join(DATA, "pending_entries.json")
+STATUS_SSOT = os.path.join(DATA, "status_library_ssot.json")
+SUMMON_REGISTRY = os.path.join(DATA, "summon_registry.json")
+HTML_FILE = os.path.join(os.path.dirname(__file__), "entry_auditor_ui.html")
 
 app = Flask(__name__)
 
